@@ -119,11 +119,12 @@ def get_youtube_stats_for_dashboard():
     Returns:
         List[Dict]: YouTube 통계 정보 리스트
     """
-    # DAY6 뮤직비디오 ID들
+    # TODO: DAY6 신앨범 발표 후 다시 DAY6 뮤직비디오 ID로 교체
+    # 현재는 데모용으로 실제 존재하는 BLACKPINK 뮤직비디오 사용 중
     VIDEOS = [
-        {"id": "uFqJDgIaNNg", "title": "Melt Down"},
-        {"id": "ooxqwAc1dIg", "title": "HAPPY"},
-        {"id": "_4-LWtJ2CAg", "title": "예뻤어"}
+        {"id": "CgCVZdcKcqY", "title": "뛰어(JUMP)"},     # BLACKPINK - JUMP Official MV (2025)
+        {"id": "IHNzOHi8sJs", "title": "DDU-DU DDU-DU"},  # BLACKPINK - DDU-DU DDU-DU Official MV
+        {"id": "32si5cfrCNc", "title": "Pink Venom"}       # BLACKPINK - Pink Venom Official MV
     ]
     
     crawler = YouTubeCrawler()
@@ -157,7 +158,7 @@ def get_youtube_stats_for_dashboard():
     
     # 통합 통계 파일로 저장
     try:
-        output_file = "docs/youtube_stats.json"
+        output_file = "../frontend/public/data/youtube_stats.json"
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         
         with open(output_file, 'w', encoding='utf-8') as f:

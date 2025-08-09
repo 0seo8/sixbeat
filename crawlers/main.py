@@ -5,6 +5,10 @@
 import json
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+# .env 파일 로드
+load_dotenv()
 from melon_crawler import MelonCrawler
 from genie_crawler import GenieCrawler
 from bugs_crawler import BugsCrawler
@@ -447,6 +451,96 @@ def generate_service_sections(chart_data, is_filtered=True):
     return ''.join(sections)
 
 
+def save_frontend_data(filtered_data, youtube_stats, timestamp, rank_changes=None):
+    """
+    프론트엔드용 latest.json과 summary.json 파일 생성
+    
+    Args:
+        filtered_data (dict): 필터링된 차트 데이터
+        youtube_stats (list): YouTube 통계 데이터
+        timestamp (str): 수집 타임스탬프
+        rank_changes (dict): 순위 변화 정보
+    """
+    import os
+    
+    # frontend/public/data 디렉토리 생성 (직접 생성)
+    os.makedirs("../frontend/public/data", exist_ok=True)
+    
+    # latest.json 생성 (차트 데이터)
+    latest_data = {
+        "collectedAtKST": timestamp,
+        "artist": "BLACKPINK",  # TODO: DAY6로 교체
+        "tracks": [
+            {
+                "title": "뛰어(JUMP)",
+                "album": "뛰어(JUMP)",
+                "releaseDate": "2025-07-11"
+            }
+        ],
+        "melon": [],
+        "genie": [],
+        "bugs": [],
+        "vibe": [],
+        "flo": []
+    }
+    
+    # 필터링된 데이터를 latest.json 형태로 변환
+    for service, songs in filtered_data.items():
+        if service in latest_data and songs:
+            converted_songs = []
+            for song in songs:
+                # 순위 변화 찾기
+                change_value = 0
+                if rank_changes and service in rank_changes:
+                    for change_info in rank_changes[service]:
+                        if (change_info.get('artist') == song.get('artist') and 
+                            change_info.get('title') == song.get('title')):
+                            change_value = change_info.get('change', 0)
+                            break
+                
+                converted_songs.append({
+                    "rank": song.get("rank"),
+                    "title": song.get("title"),
+                    "artist": song.get("artist"),
+                    "change": change_value
+                })
+            latest_data[service] = converted_songs
+    
+    # latest.json 저장
+    with open("../frontend/public/data/latest.json", "w", encoding="utf-8") as f:
+        json.dump(latest_data, f, ensure_ascii=False, indent=2)
+    
+    print("📊 latest.json 생성 완료")
+    
+    # summary.json 생성 (YouTube 통계 기반)
+    total_views = sum(stat.get("views", 0) for stat in youtube_stats)
+    total_likes = sum(stat.get("likes", 0) for stat in youtube_stats)
+    
+    summary_data = {
+        "totalStreams": total_views,
+        "dailyGrowth": 0,  # TODO: 실제 일일 증가량 계산
+        "chartPositions": {},
+        "youtubeStats": {
+            "views": total_views,
+            "likes": total_likes,
+            "dailyViews": 0,  # TODO: 실제 일일 증가량
+            "dailyLikes": 0   # TODO: 실제 일일 증가량
+        },
+        "lastUpdated": timestamp
+    }
+    
+    # 차트 포지션 추가
+    for service, songs in filtered_data.items():
+        if songs and service in ["melon", "genie", "bugs", "vibe", "flo"]:
+            summary_data["chartPositions"][service] = songs[0].get("rank", 0)
+    
+    # summary.json 저장
+    with open("../frontend/public/data/summary.json", "w", encoding="utf-8") as f:
+        json.dump(summary_data, f, ensure_ascii=False, indent=2)
+    
+    print("📊 summary.json 생성 완료")
+
+
 def main():
     """
     메인 실행 함수
@@ -474,6 +568,7 @@ def main():
     
     # 순위 변화 계산 (이미 필터링된 데이터 사용)
     rank_changes = rank_tracker.get_rank_changes(filtered_data, target_songs_only=False)
+    print(f"🔄 계산된 순위 변화: {rank_changes}")
     
     # 트위터로 현재 순위 알림 (변화 유무 상관없이, KST 기준)
     # current_time을 None으로 전달해서 트위터 봇이 자동으로 정각 시간을 계산하도록 함
@@ -496,12 +591,14 @@ def main():
     # 타겟 곡 요약 출력 (순위 변화 포함)
     print_target_summary(filtered_data, rank_changes)
     
-    # 타겟 곡 웹페이지 생성
-    generate_html_page(filtered_data.copy(), is_filtered=True)
+    # 타겟 곡 웹페이지는 제거 (프론트엔드에서 처리)
     
     # YouTube 통계 수집
     print("\n📹 YouTube 통계 수집 중...")
     youtube_stats = get_youtube_stats_for_dashboard()
+    
+    # frontend용 데이터 파일 생성
+    save_frontend_data(filtered_data, youtube_stats, current_timestamp, rank_changes)
     
     print("Music chart crawling completed successfully!")
 

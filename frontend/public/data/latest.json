@@ -1,86 +1,44 @@
 {
-  "collectedAtKST": "2025-08-09T14:30:00+09:00",
-  "artist": "DAY6",
+  "collectedAtKST": "2025-08-10 03:00:00",
+  "artist": "BLACKPINK",
   "tracks": [
     {
-      "title": "Melt Down",
-      "album": "Band Aid",
-      "releaseDate": "2025-07-17"
-    },
-    {
-      "title": "HAPPY",
-      "album": "Band Aid",
-      "releaseDate": "2025-07-17"
+      "title": "뛰어(JUMP)",
+      "album": "뛰어(JUMP)",
+      "releaseDate": "2025-07-11"
     }
   ],
   "melon": [
     {
-      "rank": 1,
-      "title": "Melt Down",
-      "artist": "DAY6",
-      "change": 0
-    },
-    {
-      "rank": 5,
-      "title": "HAPPY",
-      "artist": "DAY6",
-      "change": 2
+      "rank": 3,
+      "title": "뛰어(JUMP)",
+      "artist": "BLACKPINK",
+      "change": -2
     }
   ],
   "genie": [
     {
-      "rank": 1,
-      "title": "Melt Down",
-      "artist": "DAY6",
-      "change": 0
-    },
-    {
-      "rank": 3,
-      "title": "HAPPY", 
-      "artist": "DAY6",
-      "change": 1
+      "rank": 7,
+      "title": "뛰어(JUMP)",
+      "artist": "BLACKPINK",
+      "change": -1
     }
   ],
-  "bugs": [
-    {
-      "rank": 9,
-      "title": "Melt Down",
-      "artist": "DAY6",
-      "change": -2
-    },
-    {
-      "rank": 10,
-      "title": "HAPPY",
-      "artist": "DAY6",
-      "change": 3
-    }
-  ],
+  "bugs": [],
   "vibe": [
     {
-      "rank": 1,
-      "title": "Melt Down",
-      "artist": "DAY6",
+      "rank": 3,
+      "title": "뛰어(JUMP)",
+      "artist": "BLACKPINK",
       "change": 0
-    },
-    {
-      "rank": 4,
-      "title": "HAPPY",
-      "artist": "DAY6",
-      "change": 1
     }
   ],
   "flo": [
     {
-      "rank": 5,
-      "title": "Melt Down",
-      "artist": "DAY6",
-      "change": -1
-    },
-    {
-      "rank": 8,
-      "title": "HAPPY",
-      "artist": "DAY6",
-      "change": 2
+      "rank": 3,
+      "title": "뛰어(JUMP)",
+      "artist": "BLACKPINK",
+      "change": 0
     }
   ]
 }

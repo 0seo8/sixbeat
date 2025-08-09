@@ -54,19 +54,18 @@ jobs:
         TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
     
-    - name: Copy data to frontend
+    - name: Verify data generation
       run: |
-        # 크롤러에서 생성된 데이터를 frontend/public/data로 복사
-        mkdir -p frontend/public/data
-        cp -f docs/latest.json frontend/public/data/ || echo "latest.json not found"
-        cp -f docs/summary.json frontend/public/data/ || echo "summary.json not found"
-        ls -la frontend/public/data/
+        # 크롤러가 직접 생성한 데이터 확인
+        echo "Generated data files:"
+        ls -la frontend/public/data/ || echo "frontend/public/data not found"
+        ls -la crawlers/docs/ || echo "crawlers/docs not found"
     
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add docs/ frontend/public/data/
+        git add frontend/public/data/ crawlers/docs/
         # 변경 사항이 있을 때만 커밋
         if ! git diff --staged --quiet; then
           git commit -m "📈 차트 데이터 자동 업데이트 - $(date +'%Y-%m-%d %H:%M KST')"

@@ -15,7 +15,7 @@ class RankTracker:
     음악 차트 순위 변화를 추적하고 기록하는 클래스
     """
     
-    def __init__(self, history_file="docs/rank_history.json"):
+    def __init__(self, history_file="../frontend/public/data/rank_history.json"):
         """
         RankTracker 초기화
         
@@ -136,9 +136,20 @@ class RankTracker:
         if not self.history:
             return {}
         
-        # 가장 최근 히스토리 가져오기
-        latest_timestamp = max(self.history.keys())
+        # 현재 시점보다 이전의 가장 최근 히스토리 가져오기
+        from utils import get_current_kst_timestamp_short
+        current_time = get_current_kst_timestamp_short()
+        
+        # 현재 시점보다 이전 시점들만 필터링
+        previous_timestamps = [t for t in self.history.keys() if t < current_time]
+        
+        if not previous_timestamps:
+            print("⚠️ 비교할 이전 시점 데이터가 없습니다.")
+            return {}
+            
+        latest_timestamp = max(previous_timestamps)
         previous_data = self.history[latest_timestamp]
+        print(f"🔍 순위 변화 비교: {latest_timestamp} → {current_time}")
         
         changes = {}
         

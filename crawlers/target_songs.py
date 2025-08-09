@@ -2,14 +2,21 @@
 찾고 싶은 가수와 곡 설정 파일
 """
 
+# TODO: DAY6 신앨범 발표 후 다시 DAY6로 교체
+# 현재는 데모용으로 차트에 있는 BLACKPINK 사용 중
+# DAY6 신곡이 차트에 진입하면 아래와 같이 변경:
+# TARGET_ARTIST = "DAY6"
+# TARGET_SONG = "신곡명"
+# TARGET_ARTIST_SONG = ("DAY6", "신곡명")
+
 # 찾고 싶은 가수 (단일 문자열로 최적화)
-TARGET_ARTIST = "DAY6"
+TARGET_ARTIST = "BLACKPINK"
 
 # 찾고 싶은 특정 곡 (단일 문자열로 최적화)
-TARGET_SONG = "Melt Down"
+TARGET_SONG = "뛰어(JUMP)"
 
 # 특정 가수의 특정 곡 조합 (튜플로 최적화)
-TARGET_ARTIST_SONG = ("DAY6", "Melt Down")
+TARGET_ARTIST_SONG = ("BLACKPINK", "뛰어(JUMP)")
 
 # 검색 모드 설정
 # "artists" - 지정된 가수들의 모든 곡
