@@ -24,7 +24,7 @@ export function StatusBar() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-4 py-1 text-xs font-medium text-gray-900 bg-white border-b border-gray-100 h-8 md:hidden">
+    <div className="flex items-center justify-between px-4 py-1 text-xs font-medium text-gray-900 bg-white border-b border-gray-100 h-8">
       {/* Left side - Time */}
       <div className="font-semibold">
         {currentTime}
