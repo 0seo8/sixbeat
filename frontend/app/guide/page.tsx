@@ -1,36 +1,12 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { 
   BookOpen, Clock, User, Music, Vote, Play, 
   Heart, Share2, AlertTriangle, CheckCircle, 
   Smartphone, Globe, Star, ArrowRight, 
   MessageCircle, Headphones, Trophy
 } from 'lucide-react';
-
-function Badge({ children, className = '', variant = 'default', ...props }: { 
-  children: React.ReactNode; 
-  className?: string;
-  variant?: 'default' | 'secondary' | 'destructive' | 'outline';
-}) {
-  const variants = {
-    default: 'bg-primary text-primary-foreground',
-    secondary: 'bg-secondary text-secondary-foreground',
-    destructive: 'bg-destructive text-destructive-foreground',
-    outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground'
-  };
-  
-  return (
-    <span 
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${variants[variant]} ${className}`}
-      {...props}
-    >
-      {children}
-    </span>
-  );
-}
 
 function QuickStartGuide() {
   const steps = [
@@ -115,40 +91,40 @@ function QuickStartGuide() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Clock className="h-5 w-5 text-primary" />
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+      <div className="p-4 md:p-5 border-b border-gray-100">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+          <Clock className="h-5 w-5 text-blue-600" />
           5분 완성! 초보자 가이드
-        </CardTitle>
-        <CardDescription>
+        </h2>
+        <p className="text-gray-600 mt-1">
           DAY6 응원이 처음이신가요? 차근차근 따라해보세요!
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+        </p>
+      </div>
+      <div className="p-4 md:p-5">
         <div className="space-y-6">
           {steps.map((step, index) => (
             <div key={index} className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
                   {index + 1}
                 </div>
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <step.icon className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold">{step.title}</h3>
-                  <Badge className={getDifficultyColor(step.difficulty)}>
+                  <step.icon className="h-5 w-5 text-blue-600" />
+                  <h3 className="font-semibold text-gray-900">{step.title}</h3>
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${getDifficultyColor(step.difficulty)}`}>
                     {getDifficultyText(step.difficulty)}
-                  </Badge>
-                  <Badge variant="outline">{step.time}</Badge>
+                  </span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{step.time}</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
+                <p className="text-sm text-gray-600 mb-3">{step.description}</p>
                 <ul className="space-y-1">
                   {step.details.map((detail, detailIndex) => (
                     <li key={detailIndex} className="flex items-center gap-2 text-sm">
                       <CheckCircle className="h-4 w-4 text-green-500" />
-                      <span>{detail}</span>
+                      <span className="text-gray-700">{detail}</span>
                     </li>
                   ))}
                 </ul>
@@ -157,18 +133,18 @@ function QuickStartGuide() {
           ))}
         </div>
         
-        <div className="mt-6 p-4 bg-primary/10 rounded-lg">
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
-            <Star className="h-5 w-5 text-primary" />
-            <span className="font-semibold">성공 팁!</span>
+            <Star className="h-5 w-5 text-blue-600" />
+            <span className="font-semibold text-gray-900">성공 팁!</span>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-600">
             처음에는 부담스러울 수 있지만, 하나씩 차근차근 시작해보세요. 
             무엇보다 DAY6의 음악을 사랑하는 마음이 가장 중요합니다! 💙
           </p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
@@ -230,44 +206,46 @@ function DetailedGuides() {
   return (
     <div className="space-y-6">
       {guides.map((guide, index) => (
-        <Card key={index}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <guide.icon className="h-5 w-5 text-primary" />
-              {guide.title}
-            </CardTitle>
-            <Badge variant="outline">{guide.category}</Badge>
-          </CardHeader>
-          <CardContent>
+        <div key={index} className="bg-white rounded-lg border border-gray-200 shadow-sm">
+          <div className="p-4 md:p-5 border-b border-gray-100">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+                <guide.icon className="h-5 w-5 text-blue-600" />
+                {guide.title}
+              </h3>
+              <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{guide.category}</span>
+            </div>
+          </div>
+          <div className="p-4 md:p-5">
             <div className="space-y-4">
               <div>
-                <h4 className="font-medium mb-2">상세 가이드</h4>
+                <h4 className="font-medium text-gray-900 mb-2">상세 가이드</h4>
                 <ul className="space-y-2">
                   {guide.items.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start gap-2 text-sm">
-                      <ArrowRight className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      <span>{item}</span>
+                      <ArrowRight className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               
-              <div className="border-t pt-4">
-                <h4 className="font-medium mb-2 flex items-center gap-1">
+              <div className="border-t border-gray-100 pt-4">
+                <h4 className="font-medium text-gray-900 mb-2 flex items-center gap-1">
                   <Star className="h-4 w-4 text-yellow-500" />
                   핵심 팁
                 </h4>
                 <ul className="space-y-1">
                   {guide.tips.map((tip, tipIndex) => (
-                    <li key={tipIndex} className="text-sm text-muted-foreground">
+                    <li key={tipIndex} className="text-sm text-gray-600">
                       • {tip}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -308,34 +286,34 @@ function ImportantWarnings() {
   ];
 
   return (
-    <Card className="border-destructive/20 bg-destructive/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-destructive">
+    <div className="bg-red-50 border border-red-200 rounded-lg shadow-sm">
+      <div className="p-4 md:p-5 border-b border-red-200">
+        <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 text-red-800">
           <AlertTriangle className="h-5 w-5" />
           반드시 지켜야 할 주의사항
-        </CardTitle>
-        <CardDescription>
+        </h2>
+        <p className="text-red-700 mt-1">
           올바른 응원 문화를 위해 다음 사항들을 꼭 지켜주세요.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+        </p>
+      </div>
+      <div className="p-4 md:p-5">
         <div className="space-y-6">
           {warnings.map((warning, index) => (
             <div key={index}>
-              <h4 className="font-medium mb-3">{warning.title}</h4>
+              <h4 className="font-medium text-red-800 mb-3">{warning.title}</h4>
               <ul className="space-y-2">
                 {warning.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex items-start gap-2 text-sm">
-                    <span className="text-destructive font-bold">⚠️</span>
-                    <span>{item}</span>
+                    <span className="text-red-600 font-bold">⚠️</span>
+                    <span className="text-red-700">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
@@ -364,24 +342,24 @@ function FAQ() {
   ];
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MessageCircle className="h-5 w-5 text-primary" />
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+      <div className="p-4 md:p-5 border-b border-gray-100">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+          <MessageCircle className="h-5 w-5 text-blue-600" />
           자주 묻는 질문 (FAQ)
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+        </h2>
+      </div>
+      <div className="p-4 md:p-5">
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="border-b pb-4 last:border-b-0">
-              <h4 className="font-medium mb-2">{faq.question}</h4>
-              <p className="text-sm text-muted-foreground">{faq.answer}</p>
+            <div key={index} className="border-b border-gray-100 pb-4 last:border-b-0">
+              <h4 className="font-medium text-gray-900 mb-2">{faq.question}</h4>
+              <p className="text-sm text-gray-600">{faq.answer}</p>
             </div>
           ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
@@ -390,11 +368,11 @@ export default function GuidePage() {
     <div className="space-y-6">
       {/* 헤더 */}
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <BookOpen className="h-8 w-8 text-primary" />
+        <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
+          <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />
           DAY6 응원 가이드
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600">
           효과적인 스트리밍과 투표 방법을 배우고 DAY6와 함께 성장해요!
         </p>
       </div>
@@ -404,8 +382,8 @@ export default function GuidePage() {
 
       {/* 상세 가이드 */}
       <div>
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <Trophy className="h-6 w-6 text-primary" />
+        <h2 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2">
+          <Trophy className="h-5 w-5 md:h-6 md:w-6 text-blue-600" />
           심화 가이드
         </h2>
         <DetailedGuides />
@@ -418,12 +396,12 @@ export default function GuidePage() {
       <FAQ />
 
       {/* 마무리 메시지 */}
-      <Card className="bg-primary/10 border-primary/20">
-        <CardContent className="pt-6">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg shadow-sm">
+        <div className="p-6 md:p-8">
           <div className="text-center">
-            <Heart className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2">함께 만들어가는 DAY6의 성장</h3>
-            <p className="text-muted-foreground mb-4">
+            <Heart className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">함께 만들어가는 DAY6의 성장</h3>
+            <p className="text-gray-600 mb-4">
               여러분의 작은 참여가 모여 DAY6의 큰 성과를 만듭니다.<br />
               건전하고 즐거운 응원 문화를 함께 만들어가요! 💙
             </p>
@@ -436,8 +414,8 @@ export default function GuidePage() {
               </Button>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

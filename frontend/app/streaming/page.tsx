@@ -1,8 +1,5 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Play, Smartphone, Globe, ExternalLink, Clock, 
@@ -11,29 +8,11 @@ import {
 } from 'lucide-react';
 import { StreamingPlatform } from '@/lib/types';
 
-function Badge({ children, className = '', variant = 'default', ...props }: { 
-  children: React.ReactNode; 
-  className?: string;
-  variant?: 'default' | 'secondary' | 'destructive' | 'outline';
-}) {
-  const variants = {
-    default: 'bg-primary text-primary-foreground',
-    secondary: 'bg-secondary text-secondary-foreground',
-    destructive: 'bg-destructive text-destructive-foreground',
-    outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground'
-  };
-  
-  return (
-    <span 
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${variants[variant]} ${className}`}
-      {...props}
-    >
-      {children}
-    </span>
-  );
+interface ExtendedStreamingPlatform extends StreamingPlatform {
+  isActive?: boolean;
 }
 
-const streamingPlatforms: StreamingPlatform[] = [
+const streamingPlatforms: ExtendedStreamingPlatform[] = [
   {
     id: 'melon',
     name: '멜론',
@@ -41,7 +20,8 @@ const streamingPlatforms: StreamingPlatform[] = [
     webLink: 'https://www.melon.com/chart/index.htm',
     playlist: 'https://www.melon.com/mymusic/playlist/mymusicplaylist_list.htm',
     lastUpdated: '2024-12-15',
-    icon: '🎵'
+    icon: '🎵',
+    isActive: true
   },
   {
     id: 'genie',
@@ -50,7 +30,8 @@ const streamingPlatforms: StreamingPlatform[] = [
     webLink: 'https://www.genie.co.kr/chart/top200',
     playlist: 'https://www.genie.co.kr/playlist/list',
     lastUpdated: '2024-12-14',
-    icon: '🎶'
+    icon: '🎶',
+    isActive: true
   },
   {
     id: 'bugs',
@@ -59,7 +40,8 @@ const streamingPlatforms: StreamingPlatform[] = [
     webLink: 'https://music.bugs.co.kr/chart',
     playlist: 'https://music.bugs.co.kr/playlist',
     lastUpdated: '2024-12-13',
-    icon: '🐛'
+    icon: '🐛',
+    isActive: false
   },
   {
     id: 'vibe',
@@ -68,7 +50,8 @@ const streamingPlatforms: StreamingPlatform[] = [
     webLink: 'https://vibe.naver.com/chart',
     playlist: 'https://vibe.naver.com/playlist',
     lastUpdated: '2024-12-12',
-    icon: '📻'
+    icon: '📻',
+    isActive: false
   },
   {
     id: 'flo',
@@ -77,7 +60,8 @@ const streamingPlatforms: StreamingPlatform[] = [
     webLink: 'https://www.music-flo.com/chart',
     playlist: 'https://www.music-flo.com/playlist',
     lastUpdated: '2024-12-11',
-    icon: '🌊'
+    icon: '🌊',
+    isActive: false
   }
 ];
 
@@ -111,7 +95,7 @@ const youtubeVideos = [
   }
 ];
 
-function PlatformCard({ platform }: { platform: StreamingPlatform }) {
+function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
   const getPlatformColor = (id: string) => {
     const colors: Record<string, string> = {
       melon: 'bg-green-500',
@@ -130,111 +114,151 @@ function PlatformCard({ platform }: { platform: StreamingPlatform }) {
     return diffDays <= 3;
   };
 
+  const isActive = platform.isActive !== false;
+
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
+    <div className={`bg-white rounded-lg border shadow-sm transition-all ${
+      isActive ? 'border-gray-200' : 'border-gray-100 opacity-60'
+    }`}>
+      <div className="p-4 md:p-5">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-lg ${getPlatformColor(platform.id)} flex items-center justify-center text-white text-lg`}>
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg ${
+              isActive ? getPlatformColor(platform.id) : 'bg-gray-300'
+            }`}>
               {platform.icon}
             </div>
             <div>
-              <CardTitle className="text-lg">{platform.name}</CardTitle>
-              <CardDescription>
-                음원 스트리밍 플랫폼
-              </CardDescription>
+              <h3 className={`text-lg font-bold ${
+                isActive ? 'text-gray-900' : 'text-gray-500'
+              }`}>{platform.name}</h3>
+              <p className={`text-sm ${
+                isActive ? 'text-gray-600' : 'text-gray-400'
+              }`}>
+                {isActive ? '음원 스트리밍 플랫폼' : '서비스 준비 중'}
+              </p>
             </div>
           </div>
-          {isRecentlyUpdated(platform.lastUpdated) && (
-            <Badge className="bg-green-500 text-white">
+          {isActive && isRecentlyUpdated(platform.lastUpdated) && (
+            <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
               NEW
-            </Badge>
+            </span>
           )}
         </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {platform.playlist && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Music className="h-4 w-4" />
-            <span>추천 플레이리스트 업데이트: {platform.lastUpdated}</span>
+        
+        <div className="space-y-4">
+          {platform.playlist && (
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Music className="h-4 w-4" />
+              <span>추천 플레이리스트 업데이트: {platform.lastUpdated}</span>
+            </div>
+          )}
+          
+          <div className="grid grid-cols-2 gap-2">
+            {isActive ? (
+              <>
+                <a 
+                  href={platform.appLink} 
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm"
+                >
+                  <Smartphone className="h-4 w-4" />
+                  앱으로 열기
+                </a>
+                <a 
+                  href={platform.webLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
+                >
+                  <Globe className="h-4 w-4" />
+                  웹으로 열기
+                </a>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
+                  <Smartphone className="h-4 w-4" />
+                  앱으로 열기
+                </div>
+                <div className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
+                  <Globe className="h-4 w-4" />
+                  웹으로 열기
+                </div>
+              </>
+            )}
           </div>
-        )}
-        
-        <div className="flex gap-2">
-          <Button className="flex-1" asChild>
-            <a href={platform.appLink} className="flex items-center gap-2">
-              <Smartphone className="h-4 w-4" />
-              앱으로 열기
-            </a>
-          </Button>
-          <Button variant="outline" className="flex-1" asChild>
-            <a href={platform.webLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-              <Globe className="h-4 w-4" />
-              웹으로 열기
-            </a>
-          </Button>
+          
+          {platform.playlist && (
+            isActive ? (
+              <a 
+                href={platform.playlist} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
+              >
+                <Heart className="h-4 w-4" />
+                추천 플레이리스트
+                <ExternalLink className="h-4 w-4 ml-auto" />
+              </a>
+            ) : (
+              <div className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-50 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
+                <Heart className="h-4 w-4" />
+                추천 플레이리스트
+                <ExternalLink className="h-4 w-4 ml-auto opacity-50" />
+              </div>
+            )
+          )}
         </div>
-        
-        {platform.playlist && (
-          <Button variant="secondary" className="w-full" asChild>
-            <a href={platform.playlist} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-              <Heart className="h-4 w-4" />
-              추천 플레이리스트
-              <ExternalLink className="h-4 w-4 ml-auto" />
-            </a>
-          </Button>
-        )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
 function YouTubeSection() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+      <div className="p-4 md:p-5 border-b border-gray-100">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
           <Play className="h-5 w-5 text-red-500" />
           YouTube 스트리밍
-        </CardTitle>
-        <CardDescription>
+        </h2>
+        <p className="text-gray-600 mt-1">
           MV와 퍼포먼스 영상을 시청하여 조회수를 높여주세요.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+        </p>
+      </div>
+      <div className="p-4 md:p-5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {youtubeVideos.map(video => (
             <div key={video.id} className="group">
-              <Button 
-                variant="ghost" 
-                className="w-full h-auto p-0 flex-col items-start hover:bg-muted/50"
-                asChild
+              <a 
+                href={video.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
               >
-                <a href={video.url} target="_blank" rel="noopener noreferrer">
-                  <div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center mb-2 group-hover:bg-muted/80 transition-colors">
-                    <Play className="h-8 w-8 text-muted-foreground" />
+                <div className="w-full aspect-video bg-gray-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-200 transition-colors">
+                  <Play className="h-8 w-8 text-gray-400" />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm line-clamp-2 text-gray-900">{video.title}</h4>
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                      {video.type}
+                    </span>
+                    <span>{video.views} views</span>
                   </div>
-                  <div className="w-full text-left px-2 pb-2">
-                    <h4 className="font-medium text-sm line-clamp-2 mb-1">{video.title}</h4>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <Badge variant="outline" className="text-xs">
-                        {video.type}
-                      </Badge>
-                      <span>{video.views} views</span>
-                    </div>
-                  </div>
-                </a>
-              </Button>
+                </div>
+              </a>
             </div>
           ))}
         </div>
         
-        <div className="mt-4 p-4 bg-muted/30 rounded-lg">
+        <div className="mt-4 p-4 bg-blue-50 rounded-lg">
           <div className="flex items-start gap-3">
-            <Volume2 className="h-5 w-5 text-primary mt-0.5" />
+            <Volume2 className="h-5 w-5 text-blue-600 mt-0.5" />
             <div className="space-y-1">
-              <h4 className="font-medium">효과적인 YouTube 스트리밍 팁</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <h4 className="font-medium text-gray-900">효과적인 YouTube 스트리밍 팁</h4>
+              <ul className="text-sm text-gray-600 space-y-1">
                 <li>• 음소거하지 말고 최소 음량으로 재생하세요</li>
                 <li>• 영상을 끝까지 시청하면 더 큰 효과가 있습니다</li>
                 <li>• 좋아요와 댓글도 함께 남겨주세요</li>
@@ -243,105 +267,105 @@ function YouTubeSection() {
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
 function StreamingGuide() {
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Star className="h-5 w-5 text-primary" />
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="p-4 md:p-5 border-b border-gray-100">
+          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <Star className="h-5 w-5 text-blue-600" />
             스트리밍 가이드
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+          </h2>
+        </div>
+        <div className="p-4 md:p-5 space-y-4">
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
               <div>
-                <h4 className="font-medium">올바른 스트리밍</h4>
-                <p className="text-sm text-muted-foreground">30초 이상 재생, 음소거 금지, 자연스러운 재생</p>
+                <h4 className="font-medium text-gray-900">올바른 스트리밍</h4>
+                <p className="text-sm text-gray-600">30초 이상 재생, 음소거 금지, 자연스러운 재생</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
               <div>
-                <h4 className="font-medium">다양한 곡 섞어 듣기</h4>
-                <p className="text-sm text-muted-foreground">타겟곡만 반복하지 말고 다른 곡들과 함께 재생하세요</p>
+                <h4 className="font-medium text-gray-900">다양한 곡 섞어 듣기</h4>
+                <p className="text-sm text-gray-600">타겟곡만 반복하지 말고 다른 곡들과 함께 재생하세요</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
               <div>
-                <h4 className="font-medium">적절한 간격 유지</h4>
-                <p className="text-sm text-muted-foreground">같은 곡을 너무 연속으로 듣지 마세요</p>
+                <h4 className="font-medium text-gray-900">적절한 간격 유지</h4>
+                <p className="text-sm text-gray-600">같은 곡을 너무 연속으로 듣지 마세요</p>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card className="border-destructive/20 bg-destructive/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-destructive">
+      <div className="bg-red-50 border border-red-200 rounded-lg shadow-sm">
+        <div className="p-4 md:p-5 border-b border-red-200">
+          <h2 className="text-lg font-bold flex items-center gap-2 text-red-800">
             <AlertTriangle className="h-5 w-5" />
             주의사항
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          </h2>
+        </div>
+        <div className="p-4 md:p-5">
           <ul className="space-y-2 text-sm">
             <li className="flex items-start gap-2">
-              <span className="text-destructive">•</span>
-              <span>로봇 재생으로 인식될 수 있는 패턴은 피해주세요</span>
+              <span className="text-red-600">•</span>
+              <span className="text-red-700">로봇 재생으로 인식될 수 있는 패턴은 피해주세요</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-destructive">•</span>
-              <span>여러 계정으로 동시 재생하지 마세요</span>
+              <span className="text-red-600">•</span>
+              <span className="text-red-700">여러 계정으로 동시 재생하지 마세요</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-destructive">•</span>
-              <span>스트리밍 프로그램 사용은 금지되어 있습니다</span>
+              <span className="text-red-600">•</span>
+              <span className="text-red-700">스트리밍 프로그램 사용은 금지되어 있습니다</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-destructive">•</span>
-              <span>VPN 사용 시 차트 반영이 안 될 수 있습니다</span>
+              <span className="text-red-600">•</span>
+              <span className="text-red-700">VPN 사용 시 차트 반영이 안 될 수 있습니다</span>
             </li>
           </ul>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="p-4 md:p-5 border-b border-gray-100">
+          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <Zap className="h-5 w-5 text-yellow-500" />
             최적 스트리밍 시간
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          </h2>
+        </div>
+        <div className="p-4 md:p-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <h4 className="font-medium mb-2">실시간 차트</h4>
-              <ul className="space-y-1 text-muted-foreground">
+              <h4 className="font-medium text-gray-900 mb-2">실시간 차트</h4>
+              <ul className="space-y-1 text-gray-600">
                 <li>• 매시간 정각 업데이트</li>
                 <li>• 1시간 단위로 집계</li>
                 <li>• 실시간 반영</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-2">일간 차트</h4>
-              <ul className="space-y-1 text-muted-foreground">
+              <h4 className="font-medium text-gray-900 mb-2">일간 차트</h4>
+              <ul className="space-y-1 text-gray-600">
                 <li>• 자정(00:00) 업데이트</li>
                 <li>• 전날 00:00 ~ 23:59 집계</li>
                 <li>• 꾸준한 스트리밍이 중요</li>
               </ul>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
@@ -351,11 +375,11 @@ export default function StreamingPage() {
     <div className="space-y-6">
       {/* 헤더 */}
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <Headphones className="h-8 w-8 text-primary" />
+        <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
+          <Headphones className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />
           스트리밍 허브
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600">
           음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!
         </p>
       </div>

@@ -6,14 +6,38 @@ const DATA_BASE_URL = process.env.NEXT_PUBLIC_DATA_BASE_URL || '/data';
 export async function fetchChartData(): Promise<ChartData> {
   try {
     const response = await fetch(`${DATA_BASE_URL}/latest.json`, {
-      next: { revalidate: 300 } // Cache for 5 minutes
+      cache: 'no-cache' // Disable cache for development
     });
     
     if (!response.ok) {
       throw new Error('Failed to fetch chart data');
     }
     
-    return response.json();
+    const rawData = await response.json();
+    
+    // Transform the data to match our types
+    const transformSongs = (songs: any[]): ChartSong[] => {
+      return songs.map(song => ({
+        rank: song.rank,
+        title: song.title,
+        artist: song.artist,
+        album: song.album || 'Band Aid', // Default album if not provided
+        delta: song.change || 0,
+        timestamp: rawData.collectedAtKST
+      }));
+    };
+    
+    return {
+      collectedAtKST: rawData.collectedAtKST,
+      artist: rawData.artist,
+      tracks: rawData.tracks || [],
+      melon: transformSongs(rawData.melon || []),
+      genie: transformSongs(rawData.genie || []),
+      bugs: transformSongs(rawData.bugs || []),
+      vibe: transformSongs(rawData.vibe || []),
+      flo: transformSongs(rawData.flo || []),
+      last_updated: rawData.collectedAtKST
+    };
   } catch (error) {
     console.error('Error fetching chart data:', error);
     // Return mock data for development
@@ -81,8 +105,36 @@ export async function fetchVotes(): Promise<VoteItem[]> {
   ];
 }
 
-// Mock MV stats
+// Fetch MV stats from summary data
 export async function fetchMVStats(): Promise<MVStats[]> {
+  try {
+    const summaryData = await fetchSummaryData();
+    if (summaryData?.youtubeStats) {
+      // Use the aggregated YouTube stats for now
+      return [
+        {
+          title: 'Melt Down',
+          views: Math.floor(summaryData.youtubeStats.views * 0.6), // Approximate split
+          likes: Math.floor(summaryData.youtubeStats.likes * 0.6),
+          viewsDelta24h: Math.floor(summaryData.youtubeStats.dailyViews * 0.6),
+          likesDelta24h: Math.floor(summaryData.youtubeStats.dailyLikes * 0.6),
+          link: 'https://youtube.com/watch?v=meltdown'
+        },
+        {
+          title: 'HAPPY',
+          views: Math.floor(summaryData.youtubeStats.views * 0.4),
+          likes: Math.floor(summaryData.youtubeStats.likes * 0.4),
+          viewsDelta24h: Math.floor(summaryData.youtubeStats.dailyViews * 0.4),
+          likesDelta24h: Math.floor(summaryData.youtubeStats.dailyLikes * 0.4),
+          link: 'https://youtube.com/watch?v=happy'
+        }
+      ];
+    }
+  } catch (error) {
+    console.error('Error fetching MV stats:', error);
+  }
+  
+  // Fallback to mock data
   return [
     {
       title: 'Melt Down',
