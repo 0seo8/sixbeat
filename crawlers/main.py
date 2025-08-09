@@ -5,11 +5,11 @@
 import json
 import os
 from datetime import datetime
-from crawlers.melon_crawler import MelonCrawler
-from crawlers.genie_crawler import GenieCrawler
-from crawlers.bugs_crawler import BugsCrawler
-from crawlers.vibe_crawler import VibeCrawler
-from crawlers.flo_crawler import FloCrawler
+from melon_crawler import MelonCrawler
+from genie_crawler import GenieCrawler
+from bugs_crawler import BugsCrawler
+from vibe_crawler import VibeCrawler
+from flo_crawler import FloCrawler
 from utils import get_current_timestamp, get_current_kst_timestamp_short, get_current_kst_iso
 from target_songs import is_target_song, get_target_info
 from rank_tracker import RankTracker

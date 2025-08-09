@@ -6,9 +6,9 @@ on:
     # KST = UTC + 9시간이므로, UTC로 9시간 전에 실행하면 KST 정각이 됨
     - cron: '0 15-23,0-14 * * *'
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -32,17 +32,19 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        cd crawlers
         pip install -r requirements.txt
     
     - name: Run chart crawler
       run: |
         # 최신 변경사항을 먼저 가져오기 (특히 last_tweet_timestamp.json)
-        git pull origin master --no-rebase
+        git pull origin main --no-rebase
         # last_tweet_timestamp.json 파일이 없으면 생성
         mkdir -p docs
         if [ ! -f docs/last_tweet_timestamp.json ]; then
           echo '{}' > docs/last_tweet_timestamp.json
         fi
+        cd crawlers
         python main.py
       env:
         TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
@@ -52,17 +54,25 @@ jobs:
         TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
     
+    - name: Copy data to frontend
+      run: |
+        # 크롤러에서 생성된 데이터를 frontend/public/data로 복사
+        mkdir -p frontend/public/data
+        cp -f docs/latest.json frontend/public/data/ || echo "latest.json not found"
+        cp -f docs/summary.json frontend/public/data/ || echo "summary.json not found"
+        ls -la frontend/public/data/
+    
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add docs/
+        git add docs/ frontend/public/data/
         # 변경 사항이 있을 때만 커밋
         if ! git diff --staged --quiet; then
-          git commit -m "📈 차트 데이터 자동 업데이트"
+          git commit -m "📈 차트 데이터 자동 업데이트 - $(date +'%Y-%m-%d %H:%M KST')"
           # 원격 변경사항을 먼저 가져오기
-          git pull origin master --no-rebase
-          git push origin master
+          git pull origin main --no-rebase
+          git push origin main
         else
           echo "No changes to commit."
         fi
