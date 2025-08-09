@@ -21,16 +21,6 @@ interface ChartTableProps {
   isLoading?: boolean;
 }
 
-function Badge({ children, className = '', ...props }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span 
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${className}`}
-      {...props}
-    >
-      {children}
-    </span>
-  );
-}
 
 function ChartTable({ songs, platform, isLoading }: ChartTableProps) {
   if (isLoading) {

@@ -1,8 +1,7 @@
 import { ChartData, VoteItem, MVStats } from './types';
 
-// GitHub Pages base URL - replace with actual repository
-const DATA_BASE_URL = process.env.NEXT_PUBLIC_DATA_BASE_URL || 
-  'https://raw.githubusercontent.com/sixbeat/sixbeat/master/docs/public-data';
+// Use local data files for development
+const DATA_BASE_URL = process.env.NEXT_PUBLIC_DATA_BASE_URL || '/data';
 
 export async function fetchChartData(): Promise<ChartData> {
   try {

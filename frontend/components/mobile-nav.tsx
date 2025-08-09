@@ -17,8 +17,13 @@ export function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t md:hidden">
-      <div className="grid grid-cols-5 h-16">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg">
+      {/* Home indicator */}
+      <div className="flex justify-center pt-1 pb-2">
+        <div className="w-32 h-1 bg-gray-300 rounded-full"></div>
+      </div>
+      
+      <div className="grid grid-cols-5 pb-2">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -26,14 +31,14 @@ export function MobileNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 text-xs font-medium transition-colors',
+                'flex flex-col items-center justify-center gap-1 py-2 px-1 text-xs font-medium transition-colors rounded-lg mx-1',
                 isActive 
-                  ? 'text-primary bg-primary/10' 
-                  : 'text-muted-foreground hover:text-foreground'
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               )}
             >
-              <item.icon className={cn('h-5 w-5', isActive && 'text-primary')} />
-              <span className={cn(isActive && 'text-primary font-semibold')}>
+              <item.icon className={cn('h-5 w-5', isActive && 'text-blue-600')} />
+              <span className={cn('text-[10px]', isActive && 'text-blue-600 font-semibold')}>
                 {item.name}
               </span>
             </Link>

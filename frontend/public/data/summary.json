@@ -1,0 +1,18 @@
+{
+  "totalStreams": 12456789,
+  "dailyGrowth": 234567,
+  "chartPositions": {
+    "melon": 1,
+    "genie": 1,
+    "bugs": 9,
+    "vibe": 1,
+    "flo": 5
+  },
+  "youtubeStats": {
+    "views": 9449625,
+    "likes": 445123,
+    "dailyViews": 156789,
+    "dailyLikes": 12456
+  },
+  "lastUpdated": "2025-08-09T14:30:00+09:00"
+}

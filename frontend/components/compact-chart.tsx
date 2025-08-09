@@ -1,8 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   BarChart3,
   ExternalLink,
@@ -28,33 +26,27 @@ export function CompactChart() {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">실시간 차트</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="animate-pulse h-12 bg-muted rounded" />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="space-y-3">
+        <h2 className="text-lg font-bold text-gray-900">실시간 차트</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="animate-pulse h-20 bg-gray-200 rounded-lg" />
+          ))}
+        </div>
+      </div>
     );
   }
 
   // Get top songs from each platform
   const platforms = ["melon", "genie", "bugs", "vibe", "flo"];
-  const topSongs: { platform: string; song: ChartSong }[] = [];
+  const platformData: { platform: string; song: ChartSong | null }[] = [];
 
   platforms.forEach((platform) => {
     const songs = (chartData as any)?.[platform] || [];
     const topSong = songs.find(
       (song: ChartSong) => song.rank && song.rank <= 100
-    );
-    if (topSong) {
-      topSongs.push({ platform, song: topSong });
-    }
+    ) || null;
+    platformData.push({ platform, song: topSong });
   });
 
   const getPlatformIcon = (platform: string) => {
@@ -80,64 +72,60 @@ export function CompactChart() {
   };
 
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-primary" />
-            실시간 차트
-          </CardTitle>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/charts">
-              <ExternalLink className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        {topSongs.length > 0 ? (
-          topSongs.map(({ platform, song }, index) => (
-            <div
-              key={platform}
-              className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50"
-            >
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-bold text-gray-900">실시간 차트</h2>
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/charts">
+            <ExternalLink className="h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-3">
+        {platformData.slice(0, 6).map(({ platform, song }) => (
+          <div
+            key={platform}
+            className="bg-white rounded-lg border border-gray-200 p-3 shadow-sm"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">{getPlatformIcon(platform)}</span>
+                <span className="text-sm font-medium text-gray-700">
+                  {getPlatformName(platform)}
+                </span>
+              </div>
+              {song?.delta !== undefined && (
+                <div className={`text-xs font-medium ${getRankChangeColor(song.delta)}`}>
+                  {getRankChangeIcon(song.delta)}
+                </div>
+              )}
+            </div>
+            
+            <div className="flex items-center gap-2">
               <div
-                className={`w-6 h-6 rounded-full ${getPlatformColor(
+                className={`w-8 h-8 rounded-full ${getPlatformColor(
                   platform
-                )} flex items-center justify-center text-xs text-white font-bold`}
+                )} flex items-center justify-center text-sm text-white font-bold`}
               >
-                {song.rank}
+                {song?.rank || '-'}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs">{getPlatformIcon(platform)}</span>
-                  <span className="text-xs text-muted-foreground truncate">
-                    {getPlatformName(platform)}
-                  </span>
-                </div>
-                <p className="font-medium text-sm truncate">{song.title}</p>
-              </div>
-              <div
-                className={`text-xs font-medium ${getRankChangeColor(
-                  song.delta
-                )}`}
-              >
-                {getRankChangeIcon(song.delta)}
+                <p className="font-medium text-sm truncate text-gray-900">
+                  {song?.title || 'No Data'}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {song?.artist || ''}
+                </p>
               </div>
             </div>
-          ))
-        ) : (
-          <div className="text-center py-4 text-muted-foreground">
-            <p className="text-sm">차트 데이터를 불러오는 중...</p>
           </div>
-        )}
+        ))}
+      </div>
 
-        {topSongs.length > 0 && (
-          <Button variant="outline" size="sm" className="w-full mt-3" asChild>
-            <Link href="/charts">전체 차트 보기</Link>
-          </Button>
-        )}
-      </CardContent>
-    </Card>
+      <Button variant="outline" size="sm" className="w-full" asChild>
+        <Link href="/charts">전체 차트 보기</Link>
+      </Button>
+    </div>
   );
 }
