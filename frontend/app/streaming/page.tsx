@@ -1,11 +1,19 @@
-'use client';
+"use client";
 
-import { 
-  Play, Smartphone, Globe, ExternalLink, Clock, 
-  Music, Headphones, Heart, Share2, AlertTriangle,
-  CheckCircle, Star, Zap, Volume2
-} from 'lucide-react';
-import { StreamingPlatform } from '@/lib/types';
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Play,
+  Smartphone,
+  Globe,
+  ExternalLink,
+  Heart,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+  Zap,
+  Volume2,
+} from "lucide-react";
+import { StreamingPlatform } from "@/lib/types";
 
 interface ExtendedStreamingPlatform extends StreamingPlatform {
   isActive?: boolean;
@@ -13,159 +21,155 @@ interface ExtendedStreamingPlatform extends StreamingPlatform {
 
 const streamingPlatforms: ExtendedStreamingPlatform[] = [
   {
-    id: 'melon',
-    name: '멜론',
-    appLink: 'melonapp://chart',
-    webLink: 'https://www.melon.com/chart/index.htm',
-    playlist: 'https://www.melon.com',
-    icon: '🎵',
-    isActive: true
+    id: "melon",
+    name: "멜론",
+    appLink: "melonapp://chart",
+    webLink: "https://www.melon.com/chart/index.htm",
+    playlist: "https://www.melon.com",
+    icon: "🎵",
+    isActive: true,
   },
   {
-    id: 'genie',
-    name: '지니뮤직',
-    appLink: 'genie://chart',
-    webLink: 'https://www.genie.co.kr/chart/top200',
-    playlist: 'https://www.genie.co.kr',
-    icon: '🎶',
-    isActive: true
+    id: "genie",
+    name: "지니뮤직",
+    appLink: "genie://chart",
+    webLink: "https://www.genie.co.kr/chart/top200",
+    playlist: "https://www.genie.co.kr",
+    icon: "🎶",
+    isActive: true,
   },
   {
-    id: 'bugs',
-    name: '벅스뮤직',
-    appLink: 'bugs://chart',
-    webLink: 'https://music.bugs.co.kr/chart',
-    playlist: 'https://music.bugs.co.kr',
-    icon: '🐛',
-    isActive: false
+    id: "bugs",
+    name: "벅스뮤직",
+    appLink: "bugs://chart",
+    webLink: "https://music.bugs.co.kr/chart",
+    playlist: "https://music.bugs.co.kr",
+    icon: "🐛",
+    isActive: false,
   },
   {
-    id: 'vibe',
-    name: '바이브',
-    appLink: 'vibeapp://chart',
-    webLink: 'https://vibe.naver.com/chart',
-    playlist: 'https://vibe.naver.com',
-    icon: '📻',
-    isActive: false
+    id: "vibe",
+    name: "바이브",
+    appLink: "vibeapp://chart",
+    webLink: "https://vibe.naver.com/chart",
+    playlist: "https://vibe.naver.com",
+    icon: "📻",
+    isActive: false,
   },
   {
-    id: 'flo',
-    name: 'FLO',
-    appLink: 'flo://chart',
-    webLink: 'https://www.music-flo.com/chart',
-    playlist: 'https://www.music-flo.com',
-    icon: '🌊',
-    isActive: false
-  }
+    id: "flo",
+    name: "FLO",
+    appLink: "flo://chart",
+    webLink: "https://www.music-flo.com/chart",
+    playlist: "https://www.music-flo.com",
+    icon: "🌊",
+    isActive: false,
+  },
 ];
 
-// DAY6 대표 MV 리스트 (실제 YouTube API 연동 시 동적 데이터로 교체 예정)
 const youtubeVideos = [
   {
-    id: '1',
-    title: 'Melt Down',
-    type: 'MV',
-    url: 'https://youtu.be/uFqJDgIaNNg'
+    id: "1",
+    title: "Melt Down",
+    type: "MV",
+    url: "https://youtu.be/uFqJDgIaNNg",
   },
   {
-    id: '2',
-    title: 'HAPPY',
-    type: 'MV',
-    url: 'https://youtu.be/ooxqwAc1dIg'
+    id: "2",
+    title: "HAPPY",
+    type: "MV",
+    url: "https://youtu.be/ooxqwAc1dIg",
   },
   {
-    id: '3',
-    title: 'Welcome to the Show',
-    type: 'MV',
-    url: 'https://youtu.be/3wdWk8Ph9hQ'
+    id: "3",
+    title: "Welcome to the Show",
+    type: "MV",
+    url: "https://youtu.be/3wdWk8Ph9hQ",
   },
   {
-    id: '4',
-    title: 'You Were Beautiful',
-    type: 'MV',
-    url: 'https://youtu.be/BS7tz2rAOSA'
+    id: "4",
+    title: "You Were Beautiful",
+    type: "MV",
+    url: "https://youtu.be/BS7tz2rAOSA",
   },
   {
-    id: '5',
-    title: 'Time of Our Life',
-    type: 'MV',
-    url: 'https://youtu.be/vnS_jn2uibs'
+    id: "5",
+    title: "Time of Our Life",
+    type: "MV",
+    url: "https://youtu.be/vnS_jn2uibs",
   },
   {
-    id: '6',
-    title: 'Congratulations',
-    type: 'MV',
-    url: 'https://youtu.be/x3sFsHrUyLQ'
-  }
+    id: "6",
+    title: "Congratulations",
+    type: "MV",
+    url: "https://youtu.be/x3sFsHrUyLQ",
+  },
 ];
 
 function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
   const getPlatformColor = (id: string) => {
     const colors: Record<string, string> = {
-      melon: 'bg-green-500',
-      genie: 'bg-blue-500',
-      bugs: 'bg-orange-500',
-      vibe: 'bg-purple-500',
-      flo: 'bg-pink-500'
+      melon: "bg-green-500",
+      genie: "bg-blue-500",
+      bugs: "bg-orange-500",
+      vibe: "bg-purple-500",
+      flo: "bg-pink-500",
     };
-    return colors[id] || 'bg-gray-500';
-  };
-
-  const isRecentlyUpdated = (lastUpdated: string) => {
-    const updateDate = new Date(lastUpdated);
-    const now = new Date();
-    const diffDays = Math.floor((now.getTime() - updateDate.getTime()) / (1000 * 60 * 60 * 24));
-    return diffDays <= 3;
+    return colors[id] || "bg-gray-500";
   };
 
   const isActive = platform.isActive !== false;
 
   return (
-    <div className={`bg-white rounded-lg border shadow-sm transition-all ${
-      isActive ? 'border-gray-200' : 'border-gray-100 opacity-60'
-    }`}>
-      <div className="p-4 md:p-5">
+    <Card
+      className={`transition-all ${
+        isActive ? "" : "opacity-60"
+      } shadow-md rounded-lg`}
+    >
+      <CardContent className="p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg ${
-              isActive ? getPlatformColor(platform.id) : 'bg-gray-300'
-            }`}>
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg ${
+                isActive ? getPlatformColor(platform.id) : "bg-gray-300"
+              }`}
+            >
               {platform.icon}
             </div>
             <div>
-              <h3 className={`text-lg font-bold ${
-                isActive ? 'text-gray-900' : 'text-gray-500'
-              }`}>{platform.name}</h3>
-              <p className={`text-sm ${
-                isActive ? 'text-gray-600' : 'text-gray-400'
-              }`}>
-                {isActive ? '음원 스트리밍 플랫폼' : '서비스 준비 중'}
+              <h3
+                className={`text-lg font-bold ${
+                  isActive ? "text-gray-900" : "text-gray-500"
+                }`}
+              >
+                {platform.name}
+              </h3>
+              <p
+                className={`text-sm ${
+                  isActive ? "text-gray-600" : "text-gray-400"
+                }`}
+              >
+                {isActive ? "음원 스트리밍 플랫폼" : "서비스 준비 중"}
               </p>
             </div>
           </div>
-          {isActive && isRecentlyUpdated(platform.lastUpdated) && (
-            <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
-              NEW
-            </span>
-          )}
         </div>
-        
+
         <div className="space-y-4">
-          
           <div className="grid grid-cols-2 gap-2">
             {isActive ? (
               <>
-                <a 
-                  href={platform.appLink} 
+                <a
+                  href={platform.appLink}
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm"
                 >
                   <Smartphone className="h-4 w-4" />
                   앱으로 열기
                 </a>
-                <a 
-                  href={platform.webLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={platform.webLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
                 >
                   <Globe className="h-4 w-4" />
@@ -185,13 +189,13 @@ function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
               </>
             )}
           </div>
-          
-          {platform.playlist && (
-            isActive ? (
-              <a 
-                href={platform.playlist} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+
+          {platform.playlist &&
+            (isActive ? (
+              <a
+                href={platform.playlist}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
               >
                 <Heart className="h-4 w-4" />
@@ -204,33 +208,29 @@ function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
                 서비스 준비중
                 <ExternalLink className="h-4 w-4 ml-auto opacity-50" />
               </div>
-            )
-          )}
+            ))}
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
 function YouTubeSection() {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      <div className="p-4 md:p-5 border-b border-gray-100">
-        <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
-          <Play className="h-5 w-5 text-red-500" />
-          YouTube 스트리밍
-        </h2>
-        <p className="text-gray-600 mt-1">
-          MV와 퍼포먼스 영상을 시청하여 조회수를 높여주세요.
-        </p>
-      </div>
-      <div className="p-4 md:p-5">
+    <Card className="p-4">
+      <CardContent className="p-0">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+            <Play className="h-5 w-5 text-red-500" />
+            YouTube 스트리밍
+          </h2>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-          {youtubeVideos.map(video => (
+          {youtubeVideos.map((video) => (
             <div key={video.id} className="group">
-              <a 
-                href={video.url} 
-                target="_blank" 
+              <a
+                href={video.url}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
               >
@@ -238,7 +238,9 @@ function YouTubeSection() {
                   <Play className="h-8 w-8 text-gray-400" />
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm line-clamp-2 text-gray-900">{video.title}</h4>
+                  <h4 className="font-medium text-sm line-clamp-2 text-gray-900">
+                    {video.title}
+                  </h4>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
                     <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
                       {video.type}
@@ -250,12 +252,14 @@ function YouTubeSection() {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-4 p-4 bg-blue-50 rounded-lg">
           <div className="flex items-start gap-3">
             <Volume2 className="h-5 w-5 text-blue-600 mt-0.5" />
             <div className="space-y-1">
-              <h4 className="font-medium text-gray-900">효과적인 YouTube 스트리밍 팁</h4>
+              <h4 className="font-medium text-gray-900">
+                효과적인 YouTube 스트리밍 팁
+              </h4>
               <ul className="text-sm text-gray-600 space-y-1">
                 <li>• 음소거하지 말고 최소 음량으로 재생하세요</li>
                 <li>• 영상을 끝까지 시청하면 더 큰 효과가 있습니다</li>
@@ -265,85 +269,105 @@ function YouTubeSection() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
 function StreamingGuide() {
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-        <div className="p-4 md:p-5 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <Star className="h-5 w-5 text-blue-600" />
-            스트리밍 가이드
-          </h2>
-        </div>
-        <div className="p-4 md:p-5 space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-              <div>
-                <h4 className="font-medium text-gray-900">올바른 스트리밍</h4>
-                <p className="text-sm text-gray-600">30초 이상 재생, 음소거 금지, 자연스러운 재생</p>
+      <Card className="p-4">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+              <Star className="h-5 w-5 text-blue-600" />
+              스트리밍 가이드
+            </h2>
+          </div>
+          <div className="space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-gray-900">올바른 스트리밍</h4>
+                  <p className="text-sm text-gray-600">
+                    30초 이상 재생, 음소거 금지, 자연스러운 재생
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-              <div>
-                <h4 className="font-medium text-gray-900">다양한 곡 섞어 듣기</h4>
-                <p className="text-sm text-gray-600">타겟곡만 반복하지 말고 다른 곡들과 함께 재생하세요</p>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-gray-900">
+                    다양한 곡 섞어 듣기
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    타겟곡만 반복하지 말고 다른 곡들과 함께 재생하세요
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-              <div>
-                <h4 className="font-medium text-gray-900">적절한 간격 유지</h4>
-                <p className="text-sm text-gray-600">같은 곡을 너무 연속으로 듣지 마세요</p>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-gray-900">
+                    적절한 간격 유지
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    같은 곡을 너무 연속으로 듣지 마세요
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className="bg-red-50 border border-red-200 rounded-lg shadow-sm">
-        <div className="p-4 md:p-5 border-b border-red-200">
-          <h2 className="text-lg font-bold flex items-center gap-2 text-red-800">
-            <AlertTriangle className="h-5 w-5" />
-            주의사항
-          </h2>
-        </div>
-        <div className="p-4 md:p-5">
+      <Card className="p-4 bg-red-50 border-red-200">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 text-red-800">
+              <AlertTriangle className="h-5 w-5" />
+              주의사항
+            </h2>
+          </div>
           <ul className="space-y-2 text-sm">
             <li className="flex items-start gap-2">
               <span className="text-red-600">•</span>
-              <span className="text-red-700">로봇 재생으로 인식될 수 있는 패턴은 피해주세요</span>
+              <span className="text-red-700">
+                로봇 재생으로 인식될 수 있는 패턴은 피해주세요
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-red-600">•</span>
-              <span className="text-red-700">여러 계정으로 동시 재생하지 마세요</span>
+              <span className="text-red-700">
+                여러 계정으로 동시 재생하지 마세요
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-red-600">•</span>
-              <span className="text-red-700">스트리밍 프로그램 사용은 금지되어 있습니다</span>
+              <span className="text-red-700">
+                스트리밍 프로그램 사용은 금지되어 있습니다
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-red-600">•</span>
-              <span className="text-red-700">VPN 사용 시 차트 반영이 안 될 수 있습니다</span>
+              <span className="text-red-700">
+                VPN 사용 시 차트 반영이 안 될 수 있습니다
+              </span>
             </li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-        <div className="p-4 md:p-5 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <Zap className="h-5 w-5 text-yellow-500" />
-            최적 스트리밍 시간
-          </h2>
-        </div>
-        <div className="p-4 md:p-5">
+      <Card className="p-4">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+              <Zap className="h-5 w-5 text-yellow-500" />
+              최적 스트리밍 시간
+            </h2>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
               <h4 className="font-medium text-gray-900 mb-2">실시간 차트</h4>
@@ -362,8 +386,8 @@ function StreamingGuide() {
               </ul>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
@@ -372,39 +396,36 @@ export default function StreamingPage() {
   return (
     <div className="space-y-6">
       {/* 헤더 */}
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
-          <Headphones className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />
+      <div>
+        <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
           스트리밍 허브
         </h1>
-        <p className="text-gray-600">
+        <p className="text-xs md:text-sm text-gray-500">
           음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!
         </p>
       </div>
 
       {/* 음원 플랫폼 */}
-      <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-4">음원 플랫폼</h2>
-        <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {streamingPlatforms.map(platform => (
-            <PlatformCard key={platform.id} platform={platform} />
-          ))}
-        </div>
-      </div>
+      <Card className="p-4 ">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900">
+              음원 플랫폼
+            </h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {streamingPlatforms.map((platform) => (
+              <PlatformCard key={platform.id} platform={platform} />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* YouTube 섹션 */}
-      <div>
-        <YouTubeSection />
-      </div>
+      <YouTubeSection />
 
       {/* 스트리밍 가이드 */}
-      <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <Star className="h-5 w-5 text-blue-600" />
-          스트리밍 가이드
-        </h2>
-        <StreamingGuide />
-      </div>
+      <StreamingGuide />
     </div>
   );
 }
