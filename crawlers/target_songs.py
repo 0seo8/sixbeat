@@ -3,20 +3,20 @@
 """
 
 # 찾고 싶은 가수 (단일 문자열로 최적화)
-TARGET_ARTIST = "NCT DREAM"
+TARGET_ARTIST = "DAY6"
 
 # 찾고 싶은 특정 곡 (단일 문자열로 최적화)
-TARGET_SONG = "BTTF"
+TARGET_SONG = "Melt Down"
 
 # 특정 가수의 특정 곡 조합 (튜플로 최적화)
-TARGET_ARTIST_SONG = ("NCT DREAM", "BTTF")
+TARGET_ARTIST_SONG = ("DAY6", "Melt Down")
 
 # 검색 모드 설정
 # "artists" - 지정된 가수들의 모든 곡
 # "songs" - 지정된 곡들만 (가수 무관)  
 # "artist_songs" - 지정된 가수의 지정된 곡들만
 # "all" - 위 모든 조건에 해당하는 곡들
-SEARCH_MODE = "artist_songs"
+SEARCH_MODE = "artists"
 
 def is_target_song(artist_name, song_title):
     """

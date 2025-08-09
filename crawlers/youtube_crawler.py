@@ -114,37 +114,60 @@ class YouTubeCrawler:
 
 def get_youtube_stats_for_dashboard():
     """
-    대시보드용 YouTube 통계 가져오기 (NCT DREAM - BTTF)
+    대시보드용 YouTube 통계 가져오기 (DAY6 뮤직비디오들)
     
     Returns:
-        Dict: YouTube 통계 정보
+        List[Dict]: YouTube 통계 정보 리스트
     """
-    # NCT DREAM - BTTF 뮤직비디오 ID
-    VIDEO_ID = "3rsBWr3JOUI"
+    # DAY6 뮤직비디오 ID들
+    VIDEOS = [
+        {"id": "uFqJDgIaNNg", "title": "Melt Down"},
+        {"id": "ooxqwAc1dIg", "title": "HAPPY"},
+        {"id": "_4-LWtJ2CAg", "title": "예뻤어"}
+    ]
     
     crawler = YouTubeCrawler()
-    stats = crawler.get_video_stats(VIDEO_ID)
+    all_stats = []
     
-    if stats:
-        # 파일로 저장
-        crawler.save_stats_to_file(stats)
-        return stats
-    else:
-        # API가 실패한 경우 기본값 반환 및 저장 (실시간 순위와 동일하게 "-" 표시)
-        print("🔄 YouTube API 실패로 기본값 사용")
-        default_stats = {
-            'video_id': VIDEO_ID,
-            'title': 'NCT DREAM - BTTF',
-            'view_count': 0,
-            'like_count': 0,
-            'view_count_formatted': '-',
-            'like_count_formatted': '-',
-            'last_updated': get_current_kst_iso()
-        }
+    for video in VIDEOS:
+        print(f"📹 {video['title']} 통계 수집 중...")
+        stats = crawler.get_video_stats(video['id'])
         
-        # 기본값도 파일로 저장
-        crawler.save_stats_to_file(default_stats)
-        return default_stats
+        if stats:
+            all_stats.append({
+                'title': video['title'],
+                'views': stats['view_count'],
+                'likes': stats['like_count'],
+                'viewsDelta24h': 0,  # 24시간 변화량은 별도 계산 필요
+                'likesDelta24h': 0,  # 24시간 변화량은 별도 계산 필요
+                'link': f"https://youtu.be/{video['id']}",
+                'last_updated': stats['last_updated']
+            })
+        else:
+            # API 실패시 기본값
+            all_stats.append({
+                'title': video['title'],
+                'views': 0,
+                'likes': 0,
+                'viewsDelta24h': 0,
+                'likesDelta24h': 0,
+                'link': f"https://youtu.be/{video['id']}",
+                'last_updated': get_current_kst_iso()
+            })
+    
+    # 통합 통계 파일로 저장
+    try:
+        output_file = "docs/youtube_stats.json"
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(all_stats, f, ensure_ascii=False, indent=2)
+        
+        print(f"📊 YouTube 통계 저장 완료: {output_file}")
+    except Exception as e:
+        print(f"❌ YouTube 통계 저장 실패: {e}")
+    
+    return all_stats
 
 
 if __name__ == "__main__":
