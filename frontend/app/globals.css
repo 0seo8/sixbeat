@@ -177,3 +177,55 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* DAY6 Swiper Styles */
+.day6-swiper {
+  --swiper-theme-color: #ffffff;
+  --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.5);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+}
+
+.day6-swiper .swiper-pagination {
+  bottom: 20px;
+}
+
+.day6-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+}
+
+.day6-swiper .swiper-button-next,
+.day6-swiper .swiper-button-prev {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.day6-swiper .swiper-button-next:hover,
+.day6-swiper .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.day6-swiper .swiper-button-next::after,
+.day6-swiper .swiper-button-prev::after {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .day6-swiper .swiper-button-next,
+  .day6-swiper .swiper-button-prev {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .day6-swiper .swiper-button-next::after,
+  .day6-swiper .swiper-button-prev::after {
+    font-size: 14px;
+  }
+}

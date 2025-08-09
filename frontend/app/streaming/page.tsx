@@ -1,6 +1,5 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Play, Smartphone, Globe, ExternalLink, Clock, 
   Music, Headphones, Heart, Share2, AlertTriangle,
@@ -18,8 +17,7 @@ const streamingPlatforms: ExtendedStreamingPlatform[] = [
     name: '멜론',
     appLink: 'melonapp://chart',
     webLink: 'https://www.melon.com/chart/index.htm',
-    playlist: 'https://www.melon.com/mymusic/playlist/mymusicplaylist_list.htm',
-    lastUpdated: '2024-12-15',
+    playlist: 'https://www.melon.com',
     icon: '🎵',
     isActive: true
   },
@@ -28,8 +26,7 @@ const streamingPlatforms: ExtendedStreamingPlatform[] = [
     name: '지니뮤직',
     appLink: 'genie://chart',
     webLink: 'https://www.genie.co.kr/chart/top200',
-    playlist: 'https://www.genie.co.kr/playlist/list',
-    lastUpdated: '2024-12-14',
+    playlist: 'https://www.genie.co.kr',
     icon: '🎶',
     isActive: true
   },
@@ -38,8 +35,7 @@ const streamingPlatforms: ExtendedStreamingPlatform[] = [
     name: '벅스뮤직',
     appLink: 'bugs://chart',
     webLink: 'https://music.bugs.co.kr/chart',
-    playlist: 'https://music.bugs.co.kr/playlist',
-    lastUpdated: '2024-12-13',
+    playlist: 'https://music.bugs.co.kr',
     icon: '🐛',
     isActive: false
   },
@@ -48,8 +44,7 @@ const streamingPlatforms: ExtendedStreamingPlatform[] = [
     name: '바이브',
     appLink: 'vibeapp://chart',
     webLink: 'https://vibe.naver.com/chart',
-    playlist: 'https://vibe.naver.com/playlist',
-    lastUpdated: '2024-12-12',
+    playlist: 'https://vibe.naver.com',
     icon: '📻',
     isActive: false
   },
@@ -58,40 +53,49 @@ const streamingPlatforms: ExtendedStreamingPlatform[] = [
     name: 'FLO',
     appLink: 'flo://chart',
     webLink: 'https://www.music-flo.com/chart',
-    playlist: 'https://www.music-flo.com/playlist',
-    lastUpdated: '2024-12-11',
+    playlist: 'https://www.music-flo.com',
     icon: '🌊',
     isActive: false
   }
 ];
 
+// DAY6 대표 MV 리스트 (실제 YouTube API 연동 시 동적 데이터로 교체 예정)
 const youtubeVideos = [
   {
     id: '1',
     title: 'Melt Down',
     type: 'MV',
-    url: 'https://youtu.be/example1',
-    thumbnail: '/placeholder-mv1.jpg',
-    views: '5.2M',
-    uploadDate: '2024-12-01'
+    url: 'https://youtu.be/uFqJDgIaNNg'
   },
   {
     id: '2',
     title: 'HAPPY',
     type: 'MV',
-    url: 'https://youtu.be/example2',
-    thumbnail: '/placeholder-mv2.jpg',
-    views: '8.1M',
-    uploadDate: '2024-11-15'
+    url: 'https://youtu.be/ooxqwAc1dIg'
   },
   {
     id: '3',
-    title: 'DAY6 - Melt Down (Performance Video)',
-    type: 'Performance',
-    url: 'https://youtu.be/example3',
-    thumbnail: '/placeholder-perf1.jpg',
-    views: '2.3M',
-    uploadDate: '2024-12-05'
+    title: 'Welcome to the Show',
+    type: 'MV',
+    url: 'https://youtu.be/3wdWk8Ph9hQ'
+  },
+  {
+    id: '4',
+    title: 'You Were Beautiful',
+    type: 'MV',
+    url: 'https://youtu.be/BS7tz2rAOSA'
+  },
+  {
+    id: '5',
+    title: 'Time of Our Life',
+    type: 'MV',
+    url: 'https://youtu.be/vnS_jn2uibs'
+  },
+  {
+    id: '6',
+    title: 'Congratulations',
+    type: 'MV',
+    url: 'https://youtu.be/x3sFsHrUyLQ'
   }
 ];
 
@@ -147,12 +151,6 @@ function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
         </div>
         
         <div className="space-y-4">
-          {platform.playlist && (
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Music className="h-4 w-4" />
-              <span>추천 플레이리스트 업데이트: {platform.lastUpdated}</span>
-            </div>
-          )}
           
           <div className="grid grid-cols-2 gap-2">
             {isActive ? (
@@ -197,13 +195,13 @@ function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
               >
                 <Heart className="h-4 w-4" />
-                추천 플레이리스트
+                사이트 바로가기
                 <ExternalLink className="h-4 w-4 ml-auto" />
               </a>
             ) : (
               <div className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-50 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
                 <Heart className="h-4 w-4" />
-                추천 플레이리스트
+                서비스 준비중
                 <ExternalLink className="h-4 w-4 ml-auto opacity-50" />
               </div>
             )
@@ -227,7 +225,7 @@ function YouTubeSection() {
         </p>
       </div>
       <div className="p-4 md:p-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {youtubeVideos.map(video => (
             <div key={video.id} className="group">
               <a 
@@ -245,7 +243,7 @@ function YouTubeSection() {
                     <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
                       {video.type}
                     </span>
-                    <span>{video.views} views</span>
+                    <span>DAY6 공식</span>
                   </div>
                 </div>
               </a>
@@ -384,30 +382,29 @@ export default function StreamingPage() {
         </p>
       </div>
 
-      {/* 메인 컨텐츠 */}
-      <Tabs defaultValue="platforms">
-        <TabsList>
-          <TabsTrigger value="platforms">음원 플랫폼</TabsTrigger>
-          <TabsTrigger value="youtube">YouTube</TabsTrigger>
-          <TabsTrigger value="guide">가이드</TabsTrigger>
-        </TabsList>
+      {/* 음원 플랫폼 */}
+      <div>
+        <h2 className="text-xl font-bold text-gray-900 mb-4">음원 플랫폼</h2>
+        <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {streamingPlatforms.map(platform => (
+            <PlatformCard key={platform.id} platform={platform} />
+          ))}
+        </div>
+      </div>
 
-        <TabsContent value="platforms" className="mt-4 sm:mt-6">
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {streamingPlatforms.map(platform => (
-              <PlatformCard key={platform.id} platform={platform} />
-            ))}
-          </div>
-        </TabsContent>
+      {/* YouTube 섹션 */}
+      <div>
+        <YouTubeSection />
+      </div>
 
-        <TabsContent value="youtube" className="mt-6">
-          <YouTubeSection />
-        </TabsContent>
-
-        <TabsContent value="guide" className="mt-6">
-          <StreamingGuide />
-        </TabsContent>
-      </Tabs>
+      {/* 스트리밍 가이드 */}
+      <div>
+        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <Star className="h-5 w-5 text-blue-600" />
+          스트리밍 가이드
+        </h2>
+        <StreamingGuide />
+      </div>
     </div>
   );
 }

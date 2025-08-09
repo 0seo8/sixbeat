@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { 
   BookOpen, Clock, User, Music, Vote, Play, 
   Heart, Share2, AlertTriangle, CheckCircle, 
@@ -175,13 +174,13 @@ function DetailedGuides() {
         '각 음악방송별 사전투표 방법',
         '시상식 투표 일정 체크하기',
         '글로벌 투표 플랫폼 활용하기',
-        '투표 포인트 효율적으로 모으기',
+        '매일 꾸준하게 투표 참여하기',
         '마감 임박 시 전략'
       ],
       tips: [
         '사전투표는 보통 방송 3-7일 전 마감',
         '시상식은 몇 달 전부터 시작하는 경우가 많음',
-        'SNS 미션으로 추가 포인트 획득 가능'
+        'SNS 공유로 추가 투표권 획득 가능'
       ]
     },
     {
@@ -324,8 +323,8 @@ function FAQ() {
       answer: '정해진 시간은 없지만, 자연스럽게 음악을 들으시는 패턴으로 하루에 1-2시간 정도면 충분합니다. 무리하지 마세요!'
     },
     {
-      question: 'Q. 여러 플랫폼에 모두 가입해야 하나요?',
-      answer: '모든 플랫폼에 가입할 필요는 없습니다. 본인이 주로 사용하는 1-2개 플랫폼에서 꾸준히 하시는 것이 더 효과적입니다.'
+      question: 'Q. 여러 플랫폼을 모두 사용해야 하나요?',
+      answer: '모든 플랫폼을 사용할 필요는 없습니다. 본인이 주로 사용하는 1-2개 플랫폼에서 꾸준히 스트리밍하시는 것이 더 효과적입니다.'
     },
     {
       question: 'Q. 투표는 언제 하는 것이 가장 좋나요?',
@@ -406,12 +405,18 @@ export default function GuidePage() {
               건전하고 즐거운 응원 문화를 함께 만들어가요! 💙
             </p>
             <div className="flex justify-center gap-2">
-              <Button asChild>
-                <a href="/">홈으로 돌아가기</a>
-              </Button>
-              <Button variant="outline" asChild>
-                <a href="/streaming">스트리밍 시작하기</a>
-              </Button>
+              <a 
+                href="/" 
+                className="px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors"
+              >
+                홈으로 돌아가기
+              </a>
+              <a 
+                href="/streaming" 
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+              >
+                스트리밍 시작하기
+              </a>
             </div>
           </div>
         </div>

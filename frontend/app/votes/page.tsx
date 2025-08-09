@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Vote, ExternalLink, Clock, Trophy, Tv, Globe, 
@@ -76,11 +75,6 @@ function VoteCard({ vote }: { vote: VoteItem }) {
               <span className={`px-2 py-1 rounded text-xs font-medium ${difficultyColors[vote.difficulty]}`}>
                 {difficultyNames[vote.difficulty]}
               </span>
-              {vote.requiredPoints && (
-                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">
-                  {vote.requiredPoints.toLocaleString()}P 필요
-                </span>
-              )}
             </div>
           </div>
 
@@ -98,17 +92,22 @@ function VoteCard({ vote }: { vote: VoteItem }) {
           </div>
 
           {/* 액션 버튼 */}
-          <Button 
-            className="w-full" 
-            asChild
-            disabled={isExpired}
-            variant={isUrgent && !isExpired ? "destructive" : "default"}
+          <a 
+            href={vote.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium transition-colors ${
+              isExpired 
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                : isUrgent 
+                  ? 'bg-red-600 text-white hover:bg-red-700'
+                  : 'bg-gray-900 text-white hover:bg-gray-800'
+            }`}
+            onClick={isExpired ? (e) => e.preventDefault() : undefined}
           >
-            <a href={vote.link} target="_blank" rel="noopener noreferrer">
-              {isExpired ? '마감됨' : '투표하러 가기'}
-              {!isExpired && <ExternalLink className="h-4 w-4 ml-2" />}
-            </a>
-          </Button>
+            {isExpired ? '마감됨' : '투표하러 가기'}
+            {!isExpired && <ExternalLink className="h-4 w-4" />}
+          </a>
         </div>
       </div>
     </div>
@@ -163,7 +162,7 @@ function VotingGuide() {
           <ul className="text-sm text-gray-600 space-y-1">
             <li>• 여러 기기로 투표할 수 있는 경우 활용하세요</li>
             <li>• SNS 공유로 추가 투표권을 받을 수 있습니다</li>
-            <li>• 일일 미션 완료로 포인트를 모으세요</li>
+            <li>• 매일 꾸준히 투표하여 순위를 올려보세요</li>
             <li>• 마감 임박 시 집중 투표로 순위를 올려보세요</li>
           </ul>
         </div>

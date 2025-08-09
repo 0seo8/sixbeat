@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   BarChart3, Filter, ExternalLink, TrendingUp, TrendingDown, 
@@ -173,127 +174,68 @@ export default function ChartsPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 py-6">
       {/* 헤더 */}
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
-          <BarChart3 className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />
-          음원 차트
+      <div>
+        <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+          실시간 차트 순위
         </h1>
-        <p className="text-gray-600">
-          실시간 음원 차트 순위를 확인하고 DAY6의 순위 변동을 추적하세요.
+        <p className="text-xs md:text-sm text-gray-500">
+          BLACKPINK의 차트 순위 변동을 추적하세요.
         </p>
       </div>
 
       {/* 필터 섹션 */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <Filter className="h-5 w-5 text-gray-600" />
-          필터
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">플랫폼 선택</label>
-            <PlatformFilters 
-              selectedPlatforms={selectedPlatforms}
-              onPlatformChange={setSelectedPlatforms}
-            />
+      <Card className="p-4">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900">
+              플랫폼 필터
+            </h2>
           </div>
-          
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">기간 선택</label>
-            <div className="flex gap-2">
-              {periods.map(period => (
-                <Button
-                  key={period.id}
-                  variant={selectedPeriod === period.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedPeriod(period.id as ChartPeriod)}
-                >
-                  <period.icon className="h-4 w-4 mr-1" />
-                  {period.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+          <PlatformFilters 
+            selectedPlatforms={selectedPlatforms}
+            onPlatformChange={setSelectedPlatforms}
+          />
+        </CardContent>
+      </Card>
 
       {/* 차트 섹션 */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         {selectedPlatforms.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-8 md:p-12 shadow-sm text-center">
-            <Filter className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">플랫폼을 선택해주세요</h3>
-            <p className="text-gray-500">
-              위의 필터에서 확인하고 싶은 플랫폼을 선택하세요.
-            </p>
-          </div>
+          <Card className="p-4">
+            <CardContent className="p-0 text-center py-8">
+              <Filter className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">플랫폼을 선택해주세요</h3>
+              <p className="text-gray-500">
+                위의 필터에서 확인하고 싶은 플랫폼을 선택하세요.
+              </p>
+            </CardContent>
+          </Card>
         ) : (
           selectedPlatforms.map(platform => (
-            <div key={platform} className="bg-white rounded-lg border border-gray-200 shadow-sm">
-              <div className="p-4 md:p-6 border-b border-gray-100">
-                <div className="flex items-center justify-between mb-2">
+            <Card key={platform} className="p-4">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 rounded-full ${getPlatformColor(platform)}`} />
-                    <h2 className="text-lg md:text-xl font-bold text-gray-900">{getPlatformName(platform)} 차트</h2>
+                    <h2 className="text-lg md:text-xl font-bold text-gray-900">{getPlatformName(platform)}</h2>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm font-medium">
-                      {selectedPeriod === 'realtime' ? '실시간' : 
-                       selectedPeriod === 'daily' ? '일간' : '주간'}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {chartData?.last_updated && formatKSTDate(chartData.last_updated)}
-                    </span>
-                  </div>
+                  <span className="text-xs md:text-sm text-gray-500">
+                    {chartData?.collectedAtKST}
+                  </span>
                 </div>
-                <p className="text-gray-600">
-                  DAY6 곡들의 {getPlatformName(platform)} 차트 순위입니다.
-                </p>
-              </div>
-              <div className="p-4 md:p-6">
                 <ChartTable
                   songs={(chartData as any)?.[platform] || []}
                   platform={platform}
                   isLoading={isLoading}
                 />
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))
         )}
       </div>
 
-      {/* 범례 */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">범례</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-green-600" />
-              <span className="text-gray-700">↑ 순위 상승</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <TrendingDown className="h-4 w-4 text-red-600" />
-              <span className="text-gray-700">↓ 순위 하락</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Minus className="h-4 w-4 text-gray-500" />
-              <span className="text-gray-700">– 순위 변동 없음</span>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-blue-600 rounded" />
-              <span className="text-gray-700">TOP 10</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-medium">차트아웃</span>
-              <span className="text-gray-700">100위 밖 또는 차트에서 제외</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

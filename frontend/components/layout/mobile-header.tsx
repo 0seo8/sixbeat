@@ -23,7 +23,7 @@ export function MobileHeader({ onMenuClick }: MobileHeaderProps) {
       {/* Center - Title */}
       <div className="flex items-center gap-2">
         <Music className="h-5 w-5 text-blue-600" />
-        <h1 className="text-lg font-bold text-gray-900">SixBeat</h1>
+        <h1 className="text-lg font-bold text-gray-900">DAY6 STRM</h1>
       </div>
       
       {/* Right side - Balance for layout */}
