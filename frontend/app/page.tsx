@@ -6,7 +6,7 @@ import DAY6ImageSwiper from "@/components/home/day6-image-swiper";
 import MVStatsCard from "@/components/home/mv-stats-card";
 import QuickAccessCard from "@/components/home/quick-access-card";
 import AlertBanner from "@/components/home/alert-banner";
-import { SocialLinks } from "@/components/social-links";
+
 import { formatKoreanDate, formatKoreanDateTime } from "@/lib/date-utils";
 import { useSidebar } from "@/components/layout/mobile-app-layout";
 import { useEffect, useState } from "react";

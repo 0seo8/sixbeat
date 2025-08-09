@@ -1,7 +1,10 @@
 // API client for fetching data from GitHub Pages
-import { ChartData, SummaryData, MVData, ApiResponse } from '@/lib/types';
+import { ChartData, MVData, ApiResponse } from "@/lib/types/index";
+import { PlatformType } from "@/lib/types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_DATA_BASE_URL || 'https://raw.githubusercontent.com/YOUR_USERNAME/sixbeat/main/public-data';
+const BASE_URL =
+  process.env.NEXT_PUBLIC_DATA_BASE_URL ||
+  "https://raw.githubusercontent.com/YOUR_USERNAME/sixbeat/main/public-data";
 
 class ApiClient {
   private async fetchWithRetry<T>(url: string, retries = 3): Promise<T> {
@@ -9,8 +12,8 @@ class ApiClient {
       try {
         const response = await fetch(url, {
           headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
           },
         });
 
@@ -23,33 +26,41 @@ class ApiClient {
       } catch (error) {
         if (i === retries - 1) throw error;
         // Wait before retry with exponential backoff
-        await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.pow(2, i) * 1000)
+        );
       }
     }
-    throw new Error('Max retries exceeded');
+    throw new Error("Max retries exceeded");
   }
 
-  async getSummary(): Promise<ApiResponse<SummaryData>> {
+  async getSummary(): Promise<ApiResponse<unknown>> {
     try {
-      const data = await this.fetchWithRetry<SummaryData>(`${BASE_URL}/summary.json`);
+      const data = await this.fetchWithRetry<unknown>(
+        `${BASE_URL}/summary.json`
+      );
       return {
         data,
         success: true,
-        lastUpdated: data.updatedAtKST,
+        lastUpdated:
+          (data as { updatedAtKST?: string })?.updatedAtKST ||
+          new Date().toISOString(),
       };
     } catch (error) {
       return {
-        data: {} as SummaryData,
+        data: {} as unknown,
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
         lastUpdated: new Date().toISOString(),
       };
     }
   }
 
-  async getChartData(platform: string): Promise<ApiResponse<ChartData>> {
+  async getChartData(platform: PlatformType): Promise<ApiResponse<ChartData>> {
     try {
-      const data = await this.fetchWithRetry<ChartData>(`${BASE_URL}/charts/${platform}/latest.json`);
+      const data = await this.fetchWithRetry<ChartData>(
+        `${BASE_URL}/charts/${platform}/latest.json`
+      );
       return {
         data,
         success: true,
@@ -59,15 +70,20 @@ class ApiClient {
       return {
         data: {} as ChartData,
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
         lastUpdated: new Date().toISOString(),
       };
     }
   }
 
-  async getHistoricalData(platform: string, days = 7): Promise<ApiResponse<ChartData[]>> {
+  async getHistoricalData(
+    platform: PlatformType,
+    days = 7
+  ): Promise<ApiResponse<ChartData[]>> {
     try {
-      const data = await this.fetchWithRetry<ChartData[]>(`${BASE_URL}/charts/${platform}/history-${days}d.json`);
+      const data = await this.fetchWithRetry<ChartData[]>(
+        `${BASE_URL}/charts/${platform}/history-${days}d.json`
+      );
       return {
         data,
         success: true,
@@ -77,7 +93,7 @@ class ApiClient {
       return {
         data: [],
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
         lastUpdated: new Date().toISOString(),
       };
     }
@@ -85,7 +101,9 @@ class ApiClient {
 
   async getMVData(): Promise<ApiResponse<MVData[]>> {
     try {
-      const data = await this.fetchWithRetry<MVData[]>(`${BASE_URL}/youtube/latest.json`);
+      const data = await this.fetchWithRetry<MVData[]>(
+        `${BASE_URL}/youtube/latest.json`
+      );
       return {
         data,
         success: true,
@@ -95,16 +113,18 @@ class ApiClient {
       return {
         data: [],
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
         lastUpdated: new Date().toISOString(),
       };
     }
   }
 
-  async getVoteData(): Promise<ApiResponse<any[]>> {
+  async getVoteData(): Promise<ApiResponse<unknown[]>> {
     try {
       // This would fetch from a votes.json file or similar
-      const data = await this.fetchWithRetry<any[]>(`${BASE_URL}/votes.json`);
+      const data = await this.fetchWithRetry<unknown[]>(
+        `${BASE_URL}/votes.json`
+      );
       return {
         data,
         success: true,
@@ -115,7 +135,8 @@ class ApiClient {
       return {
         data: [],
         success: false,
-        error: error instanceof Error ? error.message : 'Vote data not available',
+        error:
+          error instanceof Error ? error.message : "Vote data not available",
         lastUpdated: new Date().toISOString(),
       };
     }
