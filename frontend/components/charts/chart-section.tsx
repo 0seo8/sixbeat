@@ -2,9 +2,10 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Filter } from "lucide-react";
+import Image from "next/image";
 import { ChartTable } from "./chart-table";
 import { ChartData, PlatformType } from "@/lib/types";
-import { getPlatformColor, getPlatformName } from "@/lib/utils";
+import { getPlatformName } from "@/lib/utils";
 
 interface ChartSectionProps {
   selectedPlatforms: PlatformType[];
@@ -33,12 +34,31 @@ function PlatformChart({ platform, chartData, isLoading }: {
   chartData: ChartData | undefined;
   isLoading: boolean;
 }) {
+  const getPlatformLogo = (platform: PlatformType) => {
+    const logos: Record<PlatformType, string> = {
+      melon: "/melone.webp",
+      genie: "/Geenie.png",
+      bugs: "/bucks.png",
+      vibe: "/vibe.jpeg",
+      flo: "/fillo.png",
+    };
+    return logos[platform];
+  };
+
   return (
     <Card key={platform} className="p-4">
       <CardContent className="p-0">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`w-4 h-4 rounded-full ${getPlatformColor(platform)}`} />
+            <div className="w-6 h-6 relative">
+              <Image
+                src={getPlatformLogo(platform)}
+                alt={getPlatformName(platform)}
+                width={24}
+                height={24}
+                className="object-contain"
+              />
+            </div>
             <h2 className="text-lg md:text-xl font-bold text-gray-900">
               {getPlatformName(platform)}
             </h2>
