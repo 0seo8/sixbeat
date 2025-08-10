@@ -71,39 +71,9 @@ const streamingPlatforms: ExtendedStreamingPlatform[] = [
 const youtubeVideos = [
   {
     id: "1",
-    title: "Melt Down",
+    title: "Maybe Tomorrow",
     type: "MV",
-    url: "https://youtu.be/uFqJDgIaNNg",
-  },
-  {
-    id: "2",
-    title: "HAPPY",
-    type: "MV",
-    url: "https://youtu.be/ooxqwAc1dIg",
-  },
-  {
-    id: "3",
-    title: "Welcome to the Show",
-    type: "MV",
-    url: "https://youtu.be/3wdWk8Ph9hQ",
-  },
-  {
-    id: "4",
-    title: "You Were Beautiful",
-    type: "MV",
-    url: "https://youtu.be/BS7tz2rAOSA",
-  },
-  {
-    id: "5",
-    title: "Time of Our Life",
-    type: "MV",
-    url: "https://youtu.be/vnS_jn2uibs",
-  },
-  {
-    id: "6",
-    title: "Congratulations",
-    type: "MV",
-    url: "https://youtu.be/x3sFsHrUyLQ",
+    url: "https://youtu.be/0fyZqS0N19o",
   },
 ];
 

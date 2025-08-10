@@ -3,13 +3,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Link as LinkIcon } from "lucide-react";
 import { GUIDE_CATEGORIES } from "@/content/guide.config";
+import { CategoryTabs } from "@/components/guide/category-tabs";
 
 type Props = { params: Promise<{ slug: string }> };
+
+// 카테고리별 탭 그룹핑
+function getCategoryItems(category: string | undefined) {
+  return GUIDE_CATEGORIES.filter(item => item.category === category);
+}
 
 export default async function GuideDetailPage({ params }: Props) {
   const { slug } = await params;
   const c = GUIDE_CATEGORIES.find((x) => x.slug === slug);
   if (!c) return notFound();
+
+  // 현재 항목과 같은 카테고리의 모든 항목들
+  const categoryItems = getCategoryItems(c.category);
 
   return (
     <div className="mx-auto w-full max-w-screen-sm px-4 pb-24">
@@ -45,12 +54,8 @@ export default async function GuideDetailPage({ params }: Props) {
           )}
         </div>
 
-        {/* 현재 가이드 타이틀 */}
-        <div className="mt-3 pb-2">
-          <h2 className="text-base font-semibold text-gray-900">
-            {c.label} 가이드
-          </h2>
-        </div>
+        {/* 카테고리 탭 */}
+        <CategoryTabs categoryItems={categoryItems} activeSlug={slug} />
       </header>
 
       {/* 큰 이미지(히어로) + 상세 이미지 리스트 */}
@@ -61,31 +66,15 @@ export default async function GuideDetailPage({ params }: Props) {
               key={i}
               className="overflow-hidden rounded-lg border bg-gray-50"
             >
-              {src.startsWith("/guide/") ? (
-                // 가이드 이미지 플레이스홀더
-                <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">📖</div>
-                    <p className="text-sm font-medium text-gray-700">
-                      {c.label} 가이드 {i + 1}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      단계별 스크린샷
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                // 실제 플랫폼 로고
-                <div className="flex aspect-[3/4] items-center justify-center p-8">
-                  <Image
-                    src={src}
-                    alt={`${c.label} 가이드 ${i + 1}`}
-                    width={300}
-                    height={300}
-                    className="object-contain"
-                  />
-                </div>
-              )}
+              <div className="w-full">
+                <Image
+                  src={src}
+                  alt={`${c.label} 가이드 ${i + 1}`}
+                  width={400}
+                  height={600}
+                  className="object-contain w-full h-auto"
+                />
+              </div>
             </div>
           ) : null
         )}
@@ -131,27 +120,19 @@ export default async function GuideDetailPage({ params }: Props) {
       </section>
 
       {/* 하단 고정 버튼(모바일 UX) */}
-      <div className="fixed inset-x-0 bottom-20 z-20 mx-auto w-full max-w-screen-sm px-4">
-        <div className="flex gap-2">
-          {c.cta && (
-            <Link
-              href={c.cta.href}
-              {...(c.cta.external
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-              className="flex-1 py-3 bg-gray-900 text-white text-center rounded-lg font-medium hover:bg-gray-800 transition-colors"
-            >
-              {c.cta.label.replace(" >", "")}
-            </Link>
-          )}
+      {c.cta && (
+        <div className="fixed inset-x-0 bottom-20 z-20 mx-auto w-full max-w-screen-sm px-4">
           <Link
-            href="/guide"
-            className="flex-1 py-3 border border-gray-300 text-gray-700 text-center rounded-lg font-medium hover:bg-gray-50 transition-colors"
+            href={c.cta.href}
+            {...(c.cta.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+            className="block w-full py-3 bg-gray-900 text-white text-center rounded-lg font-medium hover:bg-gray-800 transition-colors"
           >
-            가이드 목록
+            {c.cta.label.replace(" >", "")}
           </Link>
         </div>
-      </div>
+      )}
     </div>
   );
 }

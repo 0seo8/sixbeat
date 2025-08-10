@@ -1,172 +1,340 @@
 // 가이드 데이터/타입 (필요 시 이 파일만 수정)
 export type GuideCategory = {
-  slug: string;                 // 2뎁스 라우트용 (/guide/[slug])
-  label: string;                // 탭 라벨
-  date?: string;                // YYYY.MM.DD (없으면 자동 오늘 표기)
-  link?: string;                // 헤더의 링크 아이콘 대상(공지/원문 등)
-  heroImage?: string;           // 1뎁스 큰 이미지
-  images?: string[];            // 2뎁스 상세 이미지들
+  slug: string; // 2뎁스 라우트용 (/guide/[slug])
+  label: string; // 탭 라벨
+  date?: string; // YYYY.MM.DD (없으면 자동 오늘 표기)
+  link?: string; // 헤더의 링크 아이콘 대상(공지/원문 등)
+  heroImage?: string; // 1뎁스 큰 이미지
+  images?: string[]; // 2뎁스 상세 이미지들
   cta?: { label: string; href: string; external?: boolean }; // 하단 버튼
-  category?: "streaming" | "voting" | "support"; // 카테고리 분류
+  category?: "streaming" | "voting" | "support" | "donation"; // 카테고리 분류
   subcategories?: GuideCategory[]; // 서브 카테고리 (투표 하위 항목들)
 };
 
 export const GUIDE_CATEGORIES: GuideCategory[] = [
-  {
-    slug: "streaming-basics",
-    label: "스트리밍 기초",
-    date: "2025.08.10",
-    link: "https://dystrm.kr/guide",
-    heroImage: "/guide/streaming-hero.png",
-    images: [
-      "/guide/streaming-step1.png",
-      "/guide/streaming-step2.png",
-      "/guide/streaming-step3.png",
-    ],
-    cta: { label: "스트리밍 시작하기 >", href: "/streaming" },
-  },
-  // 한국 음원 플랫폼
+  // === 스트리밍 ===
+  // 국내 음원 플랫폼
   {
     slug: "melon",
     label: "멜론",
-    date: "2025.08.10",
     heroImage: "/guide/melon-streaming.webp",
     images: ["/guide/melon-streaming.webp"],
-    cta: { label: "멜론 스트리밍 가이드 보기", href: "/guide/melon" },
+    cta: {
+      label: "멜론으로 이동",
+      href: "https://www.melon.com",
+      external: true,
+    },
+    category: "streaming",
   },
   {
     slug: "genie",
     label: "지니",
     heroImage: "/guide/genie-streaming.png",
     images: ["/guide/genie-streaming.png"],
-    cta: { label: "지니 스트리밍 가이드 보기", href: "/guide/genie" },
+    cta: {
+      label: "지니로 이동",
+      href: "https://www.genie.co.kr",
+      external: true,
+    },
+    category: "streaming",
   },
   {
     slug: "bugs",
     label: "벅스",
     heroImage: "/guide/bugs-streaming.webp",
     images: ["/guide/bugs-streaming.webp"],
-    cta: { label: "벅스 스트리밍 가이드 보기", href: "/guide/bugs" },
-  },
-  {
-    slug: "vibe",
-    label: "바이브",
-    heroImage: "/guide/vibe-streaming.webp",
-    images: ["/guide/vibe-streaming.webp"],
-    cta: { label: "바이브 스트리밍 가이드 보기", href: "/guide/vibe" },
+    cta: {
+      label: "벅스로 이동",
+      href: "https://music.bugs.co.kr",
+      external: true,
+    },
+    category: "streaming",
   },
   {
     slug: "flo",
     label: "플로",
     heroImage: "/guide/flo-streaming.webp",
     images: ["/guide/flo-streaming.webp"],
-    cta: { label: "플로 스트리밍 가이드 보기", href: "/guide/flo" },
+    cta: {
+      label: "플로로 이동",
+      href: "https://www.music-flo.com",
+      external: true,
+    },
+    category: "streaming",
   },
-  // 글로벌 플랫폼
   {
-    slug: "spotify",
-    label: "Spotify",
-    heroImage: "/guide/spotify-streaming.webp",
-    images: ["/guide/spotify-streaming.webp"],
-    cta: { label: "Spotify 스트리밍 가이드", href: "/guide/spotify" },
+    slug: "vibe",
+    label: "바이브",
+    heroImage: "/guide/vibe-streaming.webp",
+    images: ["/guide/vibe-streaming.webp"],
+    cta: {
+      label: "바이브로 이동",
+      href: "https://vibe.naver.com",
+      external: true,
+    },
+    category: "streaming",
   },
+  // 글로벌 음원 플랫폼
   {
     slug: "apple-music",
-    label: "Apple Music",
+    label: "애플뮤직",
     heroImage: "/guide/apple-streaming.webp",
     images: ["/guide/apple-streaming.webp"],
-    cta: { label: "Apple Music 가이드", href: "/guide/apple-music" },
+    cta: {
+      label: "Apple Music으로 이동",
+      href: "https://music.apple.com",
+      external: true,
+    },
+    category: "streaming",
+  },
+  {
+    slug: "spotify",
+    label: "스포티파이",
+    heroImage: "/guide/spotify-streaming.webp",
+    images: ["/guide/spotify-streaming.webp"],
+    cta: {
+      label: "Spotify로 이동",
+      href: "https://open.spotify.com",
+      external: true,
+    },
+    category: "streaming",
   },
   {
     slug: "youtube-music",
-    label: "YouTube Music",
+    label: "유튜브뮤직",
     heroImage: "/guide/youtube-streaming.png",
     images: ["/guide/youtube-streaming.png"],
-    cta: { label: "YouTube Music 가이드", href: "/guide/youtube-music" },
+    cta: {
+      label: "YouTube Music으로 이동",
+      href: "https://music.youtube.com",
+      external: true,
+    },
+    category: "streaming",
   },
   {
     slug: "youtube",
-    label: "YouTube MV",
+    label: "유튜브 뮤직비디오",
     heroImage: "/guide/youtube-mv-streaming.webp",
     images: ["/guide/youtube-mv-streaming.webp"],
-    cta: { label: "YouTube MV 스트리밍", href: "/guide/youtube" },
+    cta: {
+      label: "YouTube로 이동",
+      href: "https://www.youtube.com",
+      external: true,
+    },
+    category: "streaming",
+  },
+
+  // === 다운로드 ===
+  // 음원 다운로드
+  {
+    slug: "download-melon",
+    label: "멜론 음원",
+    heroImage: "/guide/melon-download.webp",
+    images: ["/guide/melon-download.webp"],
+    cta: {
+      label: "멜론 다운로드",
+      href: "https://www.melon.com",
+      external: true,
+    },
+    category: "support",
   },
   {
-    slug: "samsung-music",
-    label: "삼성뮤직",
-    heroImage: "/guide/samsung-streaming.webp",
-    images: ["/guide/samsung-streaming.webp"],
-    cta: { label: "삼성뮤직 활용 가이드", href: "/guide/samsung-music" },
+    slug: "download-genie",
+    label: "지니 음원",
+    heroImage: "/guide/genie-download.jpg",
+    images: ["/guide/genie-download.jpg"],
+    cta: {
+      label: "지니 다운로드",
+      href: "https://www.genie.co.kr",
+      external: true,
+    },
+    category: "support",
   },
-  // 투표 및 음악방송
   {
-    slug: "vote-schedule",
-    label: "투표일정",
-    date: "2025.08.10",
-    link: "https://www.musicbank.com",
-    heroImage: "/guide/vote-hero.png",
-    images: [
-      "/guide/vote-step1.png",
-      "/guide/vote-step2.png",
-    ],
-    cta: { label: "음원사별 투표 바로가기 >", href: "/votes" },
+    slug: "download-bugs",
+    label: "벅스 음원",
+    heroImage: "/guide/bugs-download.jpg",
+    images: ["/guide/bugs-download.jpg"],
+    cta: {
+      label: "벅스 다운로드",
+      href: "https://music.bugs.co.kr",
+      external: true,
+    },
+    category: "support",
   },
+  {
+    slug: "download-vibe",
+    label: "바이브 음원",
+    heroImage: "/guide/vibe-download.webp",
+    images: ["/guide/vibe-download.webp"],
+    cta: {
+      label: "바이브 다운로드",
+      href: "https://vibe.naver.com",
+      external: true,
+    },
+    category: "support",
+  },
+  {
+    slug: "download-kakao",
+    label: "카카오뮤직",
+    heroImage: "/guide/kakao-download.webp",
+    images: ["/guide/kakao-download.webp"],
+    cta: {
+      label: "카카오뮤직 다운로드",
+      href: "https://music.kakao.com",
+      external: true,
+    },
+    category: "support",
+  },
+  // 뮤비 다운로드
+  {
+    slug: "download-mv-melon",
+    label: "멜론 뮤비",
+    heroImage: "/guide/melon-music-vedio-download.webp",
+    images: ["/guide/melon-music-vedio-download.webp"],
+    cta: {
+      label: "멜론 뮤비 다운로드",
+      href: "https://www.melon.com",
+      external: true,
+    },
+    category: "support",
+  },
+  {
+    slug: "download-mv-bugs",
+    label: "벅스 뮤비",
+    heroImage: "/guide/bugs-music-vedio-download.webp",
+    images: ["/guide/bugs-music-vedio-download.webp"],
+    cta: {
+      label: "벅스 뮤비 다운로드",
+      href: "https://music.bugs.co.kr",
+      external: true,
+    },
+    category: "support",
+  },
+  // 기타 다운로드
+  {
+    slug: "itunes-gift",
+    label: "iTunes 기프트",
+    heroImage: "/guide/iTunes-giftt-download.webp",
+    images: ["/guide/iTunes-giftt-download.webp"],
+    cta: {
+      label: "iTunes로 이동",
+      href: "https://www.apple.com/itunes/",
+      external: true,
+    },
+    category: "support",
+  },
+  {
+    slug: "melon-gift",
+    label: "멜론 기프트",
+    heroImage: "/guide/melon-giftt-download.webp",
+    images: ["/guide/melon-giftt-download.webp"],
+    cta: {
+      label: "멜론 기프트샵",
+      href: "https://www.melon.com",
+      external: true,
+    },
+    category: "support",
+  },
+  {
+    slug: "amazon-download",
+    label: "아마존 뮤직",
+    heroImage: "/guide/Amozon-download.webp",
+    images: ["/guide/Amozon-download.webp"],
+    cta: {
+      label: "Amazon Music으로 이동",
+      href: "https://music.amazon.com",
+      external: true,
+    },
+    category: "support",
+  },
+  // v컬러링
+  {
+    slug: "vcoloring",
+    label: "v컬러링",
+    heroImage: "/guide/v-coloring-download.webp",
+    images: ["/guide/v-coloring-download.webp"],
+    cta: { 
+      label: "v컬러링 설정하기", 
+      href: "https://www.sktelecom.com/index_real.html",
+      external: true
+    },
+    category: "support",
+  },
+
+  // === 아이디 기부 ===
+  {
+    slug: "genie-donation",
+    label: "지니 기부",
+    heroImage: "/guide/genie-streaming.png",
+    images: ["/guide/genie-streaming.png"],
+    cta: { 
+      label: "지니 아이디 기부하기", 
+      href: "https://www.genie.co.kr",
+      external: true 
+    },
+    category: "donation",
+  },
+  {
+    slug: "bugs-donation",
+    label: "벅스 기부",
+    heroImage: "/guide/bugs-streaming.webp",
+    images: ["/guide/bugs-streaming.webp"],
+    cta: { 
+      label: "벅스 아이디 기부하기", 
+      href: "https://music.bugs.co.kr",
+      external: true 
+    },
+    category: "donation",
+  },
+  
+  // === 음악방송 투표 ===
   {
     slug: "inkigayo",
     label: "인기가요",
-    date: "2025.08.10",
-    heroImage: "/guide/inkigayo-hero.png",
-    images: ["/guide/inkigayo-1.png", "/guide/inkigayo-2.png"],
-    cta: { label: "인기가요 투표 안내 보기", href: "/guide/inkigayo" },
+    heroImage: "/guide/voting-placeholder.png",
+    images: ["/guide/voting-placeholder.png"],
+    cta: {
+      label: "인기가요 투표하기",
+      href: "https://www.sbs.co.kr/now/app",
+      external: true,
+    },
+    category: "voting",
   },
   {
     slug: "musicbank",
     label: "뮤직뱅크",
-    heroImage: "/guide/musicbank-hero.png",
-    images: ["/guide/musicbank-1.png"],
-    cta: { label: "뮤직뱅크 가이드 열기", href: "/guide/musicbank" },
+    heroImage: "/guide/voting-placeholder.png",
+    images: ["/guide/voting-placeholder.png"],
+    cta: {
+      label: "뮤직뱅크 투표하기",
+      href: "https://www.kbs.co.kr/2tv/enter/musicbank/",
+      external: true,
+    },
+    category: "voting",
   },
   {
     slug: "musiccore",
     label: "음악중심",
-    heroImage: "/guide/musiccore-hero.png",
-    images: ["/guide/musiccore-1.png"],
-    cta: { label: "음중 가이드 열기", href: "/guide/musiccore" },
+    heroImage: "/guide/voting-placeholder.png",
+    images: ["/guide/voting-placeholder.png"],
+    cta: {
+      label: "음악중심 투표하기",
+      href: "https://www.imbc.com/broad/tv/ent/musiccore/",
+      external: true,
+    },
+    category: "voting",
   },
   {
     slug: "mcountdown",
     label: "엠카운트다운",
-    heroImage: "/guide/mcountdown-hero.png",
-    images: ["/guide/mcountdown-1.png"],
-    cta: { label: "엠카운트다운 가이드 열기", href: "/guide/mcountdown" },
-  },
-  // 응원법 및 추가 가이드
-  {
-    slug: "fanchant",
-    label: "응원법",
-    heroImage: "/guide/fanchant-placeholder.png",
-    images: ["/guide/fanchant-placeholder.png"],
-    cta: { label: "응원법 배우기", href: "/guide/fanchant" },
-  },
-  {
-    slug: "awards-voting",
-    label: "시상식 투표",
-    heroImage: "/guide/awards-placeholder.png",
-    images: ["/guide/awards-placeholder.png"],
-    cta: { label: "시상식 투표 가이드", href: "/guide/awards-voting" },
-  },
-  {
-    slug: "streaming-tips",
-    label: "유용한 팁",
-    heroImage: "/guide/tips-placeholder.png",
-    images: ["/guide/tips-placeholder.png"],
-    cta: { label: "꿀팁 모아보기", href: "/guide/streaming-tips" },
-  },
-  {
-    slug: "calculator",
-    label: "계산기",
-    heroImage: "/guide/calculator-placeholder.png",
-    images: ["/guide/calculator-placeholder.png"],
-    cta: { label: "스트리밍 계산기 사용", href: "/calculator" },
+    heroImage: "/guide/voting-placeholder.png",
+    images: ["/guide/voting-placeholder.png"],
+    cta: {
+      label: "엠카운트다운 투표하기",
+      href: "https://www.mnet.com/",
+      external: true,
+    },
+    category: "voting",
   },
 ];

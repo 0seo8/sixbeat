@@ -229,3 +229,13 @@
     font-size: 14px;
   }
 }
+
+/* 가로 스크롤바 숨김 - overflow-x-auto에 적용 */
+.overflow-x-auto {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
