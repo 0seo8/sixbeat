@@ -11,7 +11,7 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "SixBeat - DAY6 팬덤 지원 센터",
+  title: "SixBeat - DAY6 음원정보팀",
   description: "DAY6 음원 차트 실시간 추적 및 스트리밍/투표 지원 서비스",
 };
 
@@ -24,9 +24,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${notoSansKR.variable} antialiased font-sans`}>
         <Providers>
-          <MobileAppLayout>
-            {children}
-          </MobileAppLayout>
+          <MobileAppLayout>{children}</MobileAppLayout>
         </Providers>
       </body>
     </html>

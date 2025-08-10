@@ -1,28 +1,13 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
 
 interface DAY6ImageSwiperProps {
   onMenuClick?: () => void;
 }
 
 export default function DAY6ImageSwiper({ onMenuClick }: DAY6ImageSwiperProps) {
-  const images = [
-    { src: "/day6-1.webp", alt: "DAY6 Photo 1" },
-    { src: "/day6-2.jpg", alt: "DAY6 Photo 2" },
-    { src: "/day6-3.webp", alt: "DAY6 Photo 3" },
-    { src: "/day6-4.jpg", alt: "DAY6 Photo 4" },
-    { src: "/day6-5.webp", alt: "DAY6 Photo 5" },
-  ];
-
   return (
     <div className="relative w-full">
       {/* Header Overlay */}
@@ -44,37 +29,17 @@ export default function DAY6ImageSwiper({ onMenuClick }: DAY6ImageSwiperProps) {
         <div className="w-9"></div>
       </div>
 
-      <Swiper
-        spaceBetween={0}
-        centeredSlides={true}
-        autoplay={{
-          delay: 4000,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-          bulletClass: "swiper-pagination-bullet",
-          bulletActiveClass: "swiper-pagination-bullet-active",
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="day6-swiper overflow-hidden"
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-gradient-to-b from-gray-100 to-gray-200">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover"
-                priority={index === 0}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Banner Image */}
+      <div className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-gradient-to-b from-gray-100 to-gray-200">
+        <Image
+          src="/day6-banner.jpeg"
+          alt="DAY6 Banner"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
+      </div>
     </div>
   );
 }
