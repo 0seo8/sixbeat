@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
+import { ShareButton } from "@/components/guide/share-button";
 
 interface PageHeaderProps {
   title: string;
@@ -9,6 +10,8 @@ interface PageHeaderProps {
   date?: string;
   externalLink?: string;
   children?: React.ReactNode;
+  enableShare?: boolean;
+  shareSlug?: string;
 }
 
 export function PageHeader({
@@ -17,6 +20,8 @@ export function PageHeader({
   date,
   externalLink,
   children,
+  enableShare = false,
+  shareSlug = "",
 }: PageHeaderProps) {
   const currentDate =
     date ||
@@ -35,7 +40,9 @@ export function PageHeader({
         <div>
           <h1 className="text-lg font-bold">{title}</h1>
         </div>
-        {externalLink ? (
+        {enableShare ? (
+          <ShareButton title={title} slug={shareSlug} />
+        ) : externalLink ? (
           <Link
             href={externalLink}
             target="_blank"

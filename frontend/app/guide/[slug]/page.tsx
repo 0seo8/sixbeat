@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Link as LinkIcon } from "lucide-react";
 import { GUIDE_CATEGORIES } from "@/content/guide.config";
 import { CategoryTabs } from "@/components/guide/category-tabs";
+import { ImageGallery } from "@/components/guide/image-gallery";
+import { ShareButton } from "@/components/guide/share-button";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -24,59 +24,36 @@ export default async function GuideDetailPage({ params }: Props) {
     <div className="mx-auto w-full max-w-screen-sm px-4 pb-24">
       {/* 헤더 동일 */}
       <header className="sticky top-0 z-30 bg-white pb-3 pt-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-lg font-bold">DAY6 응원 가이드</h1>
-            <p className="text-xs text-gray-500">
-              {c.date ??
-                new Intl.DateTimeFormat("ko-KR", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })
-                  .format(new Date())
-                  .replace(/\. /g, ".")
-                  .replace(".", "")}
-            </p>
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg font-bold">DAY6 응원 가이드</h1>
+          <div className="text-xs text-gray-500">
+            {c.date ??
+              new Intl.DateTimeFormat("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+                .format(new Date())
+                .replace(/\. /g, ".")
+                .replace(".", "")}
           </div>
-          {c.link ? (
-            <Link
-              href={c.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="관련 링크 열기"
-              className="rounded p-2 hover:bg-gray-100"
-            >
-              <LinkIcon className="h-4 w-4" />
-            </Link>
-          ) : (
-            <span aria-hidden className="p-2" />
-          )}
+
+          <ShareButton title={c.label} slug={slug} />
         </div>
 
         {/* 카테고리 탭 */}
         <CategoryTabs categoryItems={categoryItems} activeSlug={slug} />
       </header>
 
-      {/* 가이드 이미지 - 연속으로 이어붙임 */}
-      <section className="mt-4">
-        <div className="overflow-hidden rounded-lg bg-gray-50">
-          <div className="w-full">
-            {(c.images?.length ? c.images : [c.heroImage]).map((src, i) =>
-              src ? (
-                <Image
-                  key={i}
-                  src={src}
-                  alt={`${c.label} 가이드 ${i + 1}`}
-                  width={400}
-                  height={600}
-                  className="w-full h-auto block"
-                />
-              ) : null
-            )}
-          </div>
-        </div>
-      </section>
+      {/* 가이드 이미지 갤러리 - 클릭 시 팝업 */}
+      <ImageGallery
+        images={
+          c.images?.length
+            ? c.images
+            : [c.heroImage].filter((img): img is string => Boolean(img))
+        }
+        label={c.label}
+      />
 
       {/* 간단한 설명 텍스트 */}
       <section className="mt-6 p-4 bg-gray-50 rounded-lg">

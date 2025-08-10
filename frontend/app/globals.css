@@ -239,3 +239,8 @@
 .overflow-x-auto::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* 모달 오픈 시 배경 스크롤 방지 */
+body.modal-open {
+  overflow: hidden;
+}

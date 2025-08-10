@@ -369,7 +369,8 @@ export default function StreamingPage() {
       <PageHeader
         title="스트리밍 허브"
         description="음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!"
-        externalLink="https://www.melon.com"
+        enableShare={true}
+        shareSlug=""
       />
 
       <div className="space-y-6">

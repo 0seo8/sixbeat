@@ -16,7 +16,10 @@ const PLATFORMS = [
   { id: "flo" as const, name: "플로", color: "bg-pink-500" },
 ];
 
-export function PlatformFilters({ selectedPlatforms, onPlatformChange }: PlatformFiltersProps) {
+export function PlatformFilters({
+  selectedPlatforms,
+  onPlatformChange,
+}: PlatformFiltersProps) {
   const togglePlatform = (platform: PlatformType) => {
     if (selectedPlatforms.includes(platform)) {
       onPlatformChange(selectedPlatforms.filter((p) => p !== platform));
@@ -26,11 +29,13 @@ export function PlatformFilters({ selectedPlatforms, onPlatformChange }: Platfor
   };
 
   return (
-    <div className="flex flex-wrap gap-1 sm:gap-2">
+    <div className="flex flex-wrap gap-2 sm:gap-3">
       {PLATFORMS.map((platform) => (
         <Button
           key={platform.id}
-          variant={selectedPlatforms.includes(platform.id) ? "default" : "outline"}
+          variant={
+            selectedPlatforms.includes(platform.id) ? "default" : "outline"
+          }
           size="sm"
           onClick={() => togglePlatform(platform.id)}
           className={

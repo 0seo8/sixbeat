@@ -24,7 +24,7 @@ export default function ChartsPage() {
       <PageHeader
         title="실시간 차트 순위"
         description="DAY6의 차트 순위 변동을 추적하세요."
-        externalLink="https://www.melon.com/chart/index.htm"
+        enableShare={true}
       />
 
       <div className="space-y-4">

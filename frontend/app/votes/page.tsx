@@ -223,6 +223,7 @@ export default function VotesPage() {
         <PageHeader
           title="투표 센터"
           description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
+          enableShare={true}
         />
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {[1, 2, 3, 4].map((i) => (
@@ -240,7 +241,7 @@ export default function VotesPage() {
       <PageHeader
         title="투표 센터"
         description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
-        externalLink="https://mwave.me/en/vote"
+        enableShare={true}
       />
 
       <div className="space-y-6">
