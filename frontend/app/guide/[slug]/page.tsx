@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import { Link as LinkIcon } from "lucide-react";
 import { GUIDE_CATEGORIES } from "@/content/guide.config";
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
-export default function GuideDetailPage({ params }: Props) {
-  const c = GUIDE_CATEGORIES.find((x) => x.slug === params.slug);
+export default async function GuideDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const c = GUIDE_CATEGORIES.find((x) => x.slug === slug);
   if (!c) return notFound();
 
   return (

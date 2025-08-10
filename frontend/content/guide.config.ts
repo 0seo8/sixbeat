@@ -7,6 +7,8 @@ export type GuideCategory = {
   heroImage?: string;           // 1뎁스 큰 이미지
   images?: string[];            // 2뎁스 상세 이미지들
   cta?: { label: string; href: string; external?: boolean }; // 하단 버튼
+  category?: "streaming" | "voting" | "support"; // 카테고리 분류
+  subcategories?: GuideCategory[]; // 서브 카테고리 (투표 하위 항목들)
 };
 
 export const GUIDE_CATEGORIES: GuideCategory[] = [
