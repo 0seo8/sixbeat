@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
+import { Clock, ExternalLink } from "lucide-react";
 import { CompactChart } from "@/components/compact-chart";
 import DAY6ImageSwiper from "@/components/home/day6-image-swiper";
 import MVStatsCard from "@/components/home/mv-stats-card";
@@ -10,6 +10,7 @@ import AlertBanner from "@/components/home/alert-banner";
 import { formatKoreanDate, formatKoreanDateTime } from "@/lib/date-utils";
 import { useSidebar } from "@/components/layout/mobile-app-layout";
 import { useEffect, useState } from "react";
+import { getLastUpdateTime } from "@/lib/utils/index";
 
 export default function HomePage() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
@@ -55,13 +56,17 @@ export default function HomePage() {
 
         {/* YouTube Stats Section */}
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <h2 className="text-lg md:text-xl font-bold text-gray-900">
               뮤직비디오 조회수
             </h2>
-            <span className="text-xs md:text-sm text-gray-500">
-              {currentTime ? formatKoreanDateTime(currentTime) : ""}
-            </span>
+            <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
+              <span className="text-xs md:text-sm text-gray-500">
+                {currentTime ? formatKoreanDate(currentTime) : ""}
+              </span>
+              <Clock className="h-3 w-3" />
+              <span>{getLastUpdateTime()} 기준</span>
+            </div>
           </div>
           <MVStatsCard />
         </div>

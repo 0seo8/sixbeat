@@ -5,6 +5,7 @@ YouTube 데이터 크롤러 - YouTube Data API v3 사용
 import os
 import requests
 import json
+from datetime import datetime
 from typing import Dict, Optional
 from utils import get_current_kst_iso
 
@@ -112,19 +113,58 @@ class YouTubeCrawler:
             print(f"❌ YouTube 통계 저장 실패: {e}")
 
 
+def is_exact_hour():
+    """
+    현재 시간이 정각(분이 00)인지 확인
+    
+    Returns:
+        bool: 정각이면 True, 아니면 False
+    """
+    now = datetime.now()
+    return now.minute == 0
+
+def load_previous_youtube_data():
+    """
+    이전 YouTube 통계 데이터 로드
+    
+    Returns:
+        List[Dict]: 이전 데이터 또는 빈 리스트
+    """
+    try:
+        output_file = "../frontend/public/data/youtube_stats.json"
+        if os.path.exists(output_file):
+            with open(output_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except Exception as e:
+        print(f"⚠️ 이전 YouTube 데이터 로드 실패: {e}")
+    
+    return []
+
 def get_youtube_stats_for_dashboard():
     """
-    대시보드용 YouTube 통계 가져오기 (DAY6 뮤직비디오들)
+    대시보드용 YouTube 통계 가져오기 (정각에만 실제 API 호출)
     
     Returns:
         List[Dict]: YouTube 통계 정보 리스트
     """
+    current_time = datetime.now()
+    
+    # 정각이 아니면 이전 데이터 사용
+    if not is_exact_hour():
+        print(f"⏰ 현재 시간 {current_time.strftime('%H:%M')} - 정각이 아니므로 이전 YouTube 데이터 사용")
+        previous_data = load_previous_youtube_data()
+        if previous_data:
+            print(f"📊 이전 YouTube 데이터 사용 ({len(previous_data)}개 비디오)")
+            return previous_data
+        else:
+            print("⚠️ 이전 데이터가 없어 기본값으로 대체")
+    
+    print(f"🕒 정각 {current_time.strftime('%H:00')} - YouTube API 호출 시작")
+    
     # TODO: DAY6 신앨범 발표 후 다시 DAY6 뮤직비디오 ID로 교체
     # 현재는 데모용으로 실제 존재하는 BLACKPINK 뮤직비디오 사용 중
     VIDEOS = [
-        {"id": "CgCVZdcKcqY", "title": "뛰어(JUMP)"},     # BLACKPINK - JUMP Official MV (2025)
-        {"id": "IHNzOHi8sJs", "title": "DDU-DU DDU-DU"},  # BLACKPINK - DDU-DU DDU-DU Official MV
-        {"id": "32si5cfrCNc", "title": "Pink Venom"}       # BLACKPINK - Pink Venom Official MV
+        {"id": "0fyZqS0N19o", "title": "Maybe Tomorrow"},  # DAY6 
     ]
     
     crawler = YouTubeCrawler()

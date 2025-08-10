@@ -118,3 +118,14 @@ export function getRankingBadgeStyle(rank: number): string {
   if (rank <= 100) return "bg-orange-100 text-orange-800 border-orange-300";
   return "bg-gray-100 text-gray-800 border-gray-300";
 }
+
+export function getLastUpdateTime(): string {
+  const now = new Date();
+  const lastHour = new Date(now);
+  lastHour.setMinutes(0, 0, 0);
+  return lastHour.toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}

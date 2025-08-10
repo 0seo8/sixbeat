@@ -3,6 +3,7 @@
 import { useState, createContext, useContext } from "react";
 import { MobileHeader } from "./mobile-header";
 import { DesktopHeader } from "./desktop-header";
+import { OverlayHeader } from "./overlay-header";
 import { Sidebar } from "./sidebar";
 import { MobileNav } from "../mobile-nav";
 import { usePathname } from "next/navigation";
@@ -41,12 +42,12 @@ export function MobileAppLayout({ children }: MobileAppLayoutProps) {
       <div className="md:hidden min-h-screen bg-gray-50 flex justify-center">
         <div className="w-full max-w-[375px] bg-white shadow-2xl min-h-screen relative">
           {!isHomePage && (
-            <MobileHeader onMenuClick={() => setSidebarOpen(true)} />
+            <OverlayHeader onMenuClick={() => setSidebarOpen(true)} />
           )}
 
           <main
             className={`overflow-y-auto ${
-              isHomePage ? "px-0 py-0 pb-20" : "px-4 py-4 pb-20"
+              isHomePage ? "px-0 py-0 pb-20" : "px-4 pt-16 pb-20"
             }`}
           >
             {children}
