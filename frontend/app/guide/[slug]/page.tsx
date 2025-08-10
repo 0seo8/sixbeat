@@ -9,7 +9,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 // 카테고리별 탭 그룹핑
 function getCategoryItems(category: string | undefined) {
-  return GUIDE_CATEGORIES.filter(item => item.category === category);
+  return GUIDE_CATEGORIES.filter((item) => item.category === category);
 }
 
 export default async function GuideDetailPage({ params }: Props) {
@@ -58,26 +58,24 @@ export default async function GuideDetailPage({ params }: Props) {
         <CategoryTabs categoryItems={categoryItems} activeSlug={slug} />
       </header>
 
-      {/* 큰 이미지(히어로) + 상세 이미지 리스트 */}
-      <section className="mt-4 space-y-4">
-        {(c.images?.length ? c.images : [c.heroImage]).map((src, i) =>
-          src ? (
-            <div
-              key={i}
-              className="overflow-hidden rounded-lg border bg-gray-50"
-            >
-              <div className="w-full">
+      {/* 가이드 이미지 - 연속으로 이어붙임 */}
+      <section className="mt-4">
+        <div className="overflow-hidden rounded-lg bg-gray-50">
+          <div className="w-full">
+            {(c.images?.length ? c.images : [c.heroImage]).map((src, i) =>
+              src ? (
                 <Image
+                  key={i}
                   src={src}
                   alt={`${c.label} 가이드 ${i + 1}`}
                   width={400}
                   height={600}
-                  className="object-contain w-full h-auto"
+                  className="w-full h-auto block"
                 />
-              </div>
-            </div>
-          ) : null
-        )}
+              ) : null
+            )}
+          </div>
+        </div>
       </section>
 
       {/* 간단한 설명 텍스트 */}
