@@ -3,10 +3,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Play,
-  Smartphone,
-  Globe,
-  ExternalLink,
-  Heart,
   AlertTriangle,
   CheckCircle,
   Star,
@@ -15,6 +11,8 @@ import {
 } from "lucide-react";
 import { StreamingPlatform } from "@/lib/types";
 import { PageHeader } from "@/components/common/page-header";
+import { SmartPlatformLink } from "@/components/streaming/smart-platform-link";
+import Image from "next/image";
 
 interface ExtendedStreamingPlatform extends StreamingPlatform {
   isActive?: boolean;
@@ -77,6 +75,17 @@ const youtubeVideos = [
   },
 ];
 
+const getPlatformLogo = (platform: string) => {
+  const logos: Record<string, string> = {
+    melon: "/ico_melon.png",
+    genie: "/Geenie.png", 
+    bugs: "/bucks.png",
+    vibe: "/vibe.jpeg",
+    flo: "/fillo.png",
+  };
+  return logos[platform] || "/file.svg";
+};
+
 function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
   const getPlatformColor = (id: string) => {
     const colors: Record<string, string> = {
@@ -101,11 +110,21 @@ function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg ${
+              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg overflow-hidden ${
                 isActive ? getPlatformColor(platform.id) : "bg-gray-300"
               }`}
             >
-              {platform.icon}
+              {getPlatformLogo(platform.id) !== "/file.svg" ? (
+                <Image
+                  src={getPlatformLogo(platform.id)}
+                  alt={platform.name}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 object-contain"
+                />
+              ) : (
+                platform.icon
+              )}
             </div>
             <div>
               <h3
@@ -127,59 +146,12 @@ function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
         </div>
 
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-2">
-            {isActive ? (
-              <>
-                <a
-                  href={platform.appLink}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm"
-                >
-                  <Smartphone className="h-4 w-4" />
-                  앱으로 열기
-                </a>
-                <a
-                  href={platform.webLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
-                >
-                  <Globe className="h-4 w-4" />
-                  웹으로 열기
-                </a>
-              </>
-            ) : (
-              <>
-                <div className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
-                  <Smartphone className="h-4 w-4" />
-                  앱으로 열기
-                </div>
-                <div className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
-                  <Globe className="h-4 w-4" />
-                  웹으로 열기
-                </div>
-              </>
-            )}
-          </div>
-
-          {platform.playlist &&
-            (isActive ? (
-              <a
-                href={platform.playlist}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
-              >
-                <Heart className="h-4 w-4" />
-                사이트 바로가기
-                <ExternalLink className="h-4 w-4 ml-auto" />
-              </a>
-            ) : (
-              <div className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-50 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
-                <Heart className="h-4 w-4" />
-                서비스 준비중
-                <ExternalLink className="h-4 w-4 ml-auto opacity-50" />
-              </div>
-            ))}
+          <SmartPlatformLink
+            appLink={platform.appLink}
+            webLink={platform.webLink}
+            platformName={platform.name}
+            isActive={isActive}
+          />
         </div>
       </CardContent>
     </Card>

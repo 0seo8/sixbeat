@@ -7,7 +7,7 @@ export interface Track {
 
 // Chart entry with ranking information
 export interface ChartSong {
-  rank: number;
+  rank: number | null; // null일 경우 차트아웃
   title: string;
   artist: string;
   change: number; // 순위 변화 (delta)

@@ -32,10 +32,27 @@ export function CompactChart() {
   const platforms = ["melon", "genie", "bugs", "vibe", "flo"];
   const platformData: { platform: string; song: ChartSong | null }[] = [];
 
+  // DAY6 타겟 곡 정보
+  const targetSongs = chartData?.tracks || [];
+  const primaryTargetSong = targetSongs[0]; // "Maybe Tomorrow" 등
+
   platforms.forEach((platform) => {
     const songs =
       (chartData?.[platform as keyof typeof chartData] as ChartSong[]) || [];
-    const topSong = songs.length > 0 ? songs[0] : null; // 첫 번째 곡이 가장 높은 순위
+    let topSong = songs.length > 0 ? songs[0] : null;
+
+    // 차트에 곡이 없으면 타겟 곡 정보를 사용 (차트아웃 상태)
+    if (!topSong && primaryTargetSong) {
+      topSong = {
+        title: primaryTargetSong.title,
+        artist: chartData?.artist || "DAY6",
+        album: primaryTargetSong.album,
+        rank: null, // 차트아웃
+        change: 0,
+        timestamp: "",
+      } as ChartSong;
+    }
+
     platformData.push({ platform, song: topSong });
   });
 
@@ -85,18 +102,35 @@ export function CompactChart() {
 
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
-                  <div className="text-xl font-bold text-gray-900">
+                  <div
+                    className={`text-xl font-bold ${
+                      song?.rank ? "text-gray-900" : "text-orange-500"
+                    }`}
+                  >
                     {song?.rank || "-"}
                   </div>
                   <div className="text-xs text-gray-400">위</div>
                 </div>
                 <div className="flex-1 min-w-0 text-center">
-                  <p className="font-medium text-sm truncate text-gray-900">
-                    {song?.title || "노래"}
-                  </p>
-                  <p className="text-xs text-gray-500 truncate">
-                    {song?.artist || "가수"}
-                  </p>
+                  {song?.rank ? (
+                    <>
+                      <p className="font-medium text-sm truncate text-gray-900">
+                        {song.title}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {song.artist}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-medium text-sm text-orange-600">
+                        우리가 올려줘💪
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {song?.title || "DAY6"}
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

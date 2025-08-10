@@ -43,7 +43,15 @@ function EmptyState({ platform }: { platform: string }) {
   );
 }
 
-function SongRow({ song, platform, index }: { song: ChartSong; platform: string; index: number }) {
+function SongRow({
+  song,
+  platform,
+  index,
+}: {
+  song: ChartSong;
+  platform: string;
+  index: number;
+}) {
   return (
     <div
       key={`${song.title}-${song.artist}-${index}`}
@@ -54,7 +62,7 @@ function SongRow({ song, platform, index }: { song: ChartSong; platform: string;
         <span
           className={`text-lg sm:text-2xl font-bold ${
             song.rank === null
-              ? "text-gray-400"
+              ? "text-orange-500"
               : song.rank <= 10
               ? "text-blue-600"
               : song.rank <= 50
@@ -65,11 +73,13 @@ function SongRow({ song, platform, index }: { song: ChartSong; platform: string;
           {song.rank || "—"}
         </span>
         <div
-          className={`text-xs font-medium ${getRankChangeColor(
-            song.change || 0
-          )}`}
+          className={`text-xs font-medium ${
+            song.rank === null
+              ? "text-orange-600"
+              : getRankChangeColor(song.change || 0)
+          }`}
         >
-          {getRankChangeIcon(song.change || 0)}
+          {song.rank === null ? "올려줘" : getRankChangeIcon(song.change || 0)}
         </div>
       </div>
 
@@ -109,9 +119,11 @@ function SongRow({ song, platform, index }: { song: ChartSong; platform: string;
       {/* 상태 배지 */}
       <div className="flex flex-col items-end gap-1">
         {song.rank === null && (
-          <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-medium">
-            차트아웃
-          </span>
+          <div className="text-right">
+            <span className="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-medium block">
+              우리가 올려줘💪
+            </span>
+          </div>
         )}
         {song.rank && song.rank <= 100 && (
           <span
@@ -142,7 +154,12 @@ export function ChartTable({ songs, platform, isLoading }: ChartTableProps) {
   return (
     <div className="space-y-2">
       {songs.map((song, index) => (
-        <SongRow key={`${song.title}-${song.artist}-${index}`} song={song} platform={platform} index={index} />
+        <SongRow
+          key={`${song.title}-${song.artist}-${index}`}
+          song={song}
+          platform={platform}
+          index={index}
+        />
       ))}
     </div>
   );
