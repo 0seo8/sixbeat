@@ -219,9 +219,9 @@ export default function VotesPage() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
-        <PageHeader 
-          title="투표 센터" 
+      <div className="mx-auto w-full max-w-screen-sm pb-20">
+        <PageHeader
+          title="투표 센터"
           description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
         />
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -237,64 +237,63 @@ export default function VotesPage() {
 
   return (
     <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
-      <PageHeader 
-        title="투표 센터" 
+      <PageHeader
+        title="투표 센터"
         description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
         externalLink="https://mwave.me/en/vote"
       />
-      
-      <div className="mt-4 space-y-6">
 
-      {/* 긴급 알림 */}
-      {urgentVotes.length > 0 && (
-        <Card className="p-4 bg-red-50 border-red-200">
+      <div className="space-y-6">
+        {/* 긴급 알림 */}
+        {urgentVotes.length > 0 && (
+          <Card className="p-4 bg-red-50 border-red-200">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg md:text-xl font-bold text-red-800 flex items-center gap-2">
+                  <AlertCircle className="h-5 w-5" />
+                  마감 임박! ({urgentVotes.length}개)
+                </h2>
+              </div>
+              <p className="text-red-700 mb-4">
+                24시간 이내 마감되는 투표들입니다. 지금 바로 참여하세요!
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {urgentVotes.map((vote) => (
+                  <VoteCard key={vote.id} vote={vote} />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* 전체 투표 목록 */}
+        <Card className="">
           <CardContent className="p-0">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-red-800 flex items-center gap-2">
-                <AlertCircle className="h-5 w-5" />
-                마감 임박! ({urgentVotes.length}개)
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">
+                전체 투표
               </h2>
             </div>
-            <p className="text-red-700 mb-4">
-              24시간 이내 마감되는 투표들입니다. 지금 바로 참여하세요!
-            </p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {urgentVotes.map((vote) => (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {votes?.map((vote) => (
                 <VoteCard key={vote.id} vote={vote} />
               ))}
+              {!votes?.length && (
+                <div className="col-span-2 text-center py-12">
+                  <Vote className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    진행 중인 투표가 없습니다
+                  </h3>
+                  <p className="text-gray-600">
+                    새로운 투표가 시작되면 여기에 표시됩니다.
+                  </p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* 전체 투표 목록 */}
-      <Card className="p-4">
-        <CardContent className="p-0">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-bold text-gray-900">
-              전체 투표
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {votes?.map((vote) => (
-              <VoteCard key={vote.id} vote={vote} />
-            ))}
-            {!votes?.length && (
-              <div className="col-span-2 text-center py-12">
-                <Vote className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  진행 중인 투표가 없습니다
-                </h3>
-                <p className="text-gray-600">
-                  새로운 투표가 시작되면 여기에 표시됩니다.
-                </p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      <VotingGuide />
+        <VotingGuide />
       </div>
     </div>
   );

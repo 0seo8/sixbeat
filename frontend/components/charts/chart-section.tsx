@@ -29,7 +29,11 @@ function EmptyPlatformState() {
   );
 }
 
-function PlatformChart({ platform, chartData, isLoading }: {
+function PlatformChart({
+  platform,
+  chartData,
+  isLoading,
+}: {
   platform: PlatformType;
   chartData: ChartData | undefined;
   isLoading: boolean;
@@ -46,7 +50,7 @@ function PlatformChart({ platform, chartData, isLoading }: {
   };
 
   return (
-    <Card key={platform} className="p-4">
+    <Card key={platform} className="">
       <CardContent className="p-0">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -77,7 +81,11 @@ function PlatformChart({ platform, chartData, isLoading }: {
   );
 }
 
-export function ChartSection({ selectedPlatforms, chartData, isLoading }: ChartSectionProps) {
+export function ChartSection({
+  selectedPlatforms,
+  chartData,
+  isLoading,
+}: ChartSectionProps) {
   if (selectedPlatforms.length === 0) {
     return <EmptyPlatformState />;
   }

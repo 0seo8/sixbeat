@@ -21,16 +21,20 @@ export default function GuidePage() {
   return (
     <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
       {/* 헤더 */}
-      <header className="sticky top-0 z-30 bg-white pb-3 pt-4 border-b">
+      <header className="sticky top-0 z-30 bg-white pb-3 pt-4">
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-lg font-bold">DAY6 응원 가이드</h1>
             <p className="text-xs text-gray-500">
-              {active?.date ?? new Intl.DateTimeFormat("ko-KR", {
-                year: "numeric",
-                month: "2-digit", 
-                day: "2-digit"
-              }).format(new Date()).replace(/\. /g, '.').replace(/\.$/, '')}
+              {active?.date ??
+                new Intl.DateTimeFormat("ko-KR", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                  .format(new Date())
+                  .replace(/\. /g, ".")
+                  .replace(/\.$/, "")}
             </p>
           </div>
           {active?.link ? (
@@ -50,7 +54,10 @@ export default function GuidePage() {
 
         {/* 상단 탭 */}
         <Tabs value={value} onValueChange={setValue} className="mt-3">
-          <div className="-mx-4 px-4 overflow-x-auto guide-tabs-container" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div
+            className="-mx-4 px-4 overflow-x-auto guide-tabs-container"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             <TabsList className="flex w-full justify-start bg-transparent p-0 h-auto gap-0 min-w-max border-b border-gray-200">
               {GUIDE_CATEGORIES.map((c) => (
                 <TabsTrigger
@@ -78,13 +85,18 @@ export default function GuidePage() {
                     {/* 이미지 박스 (피그마의 큰 썸네일 영역) */}
                     <div className="overflow-hidden rounded-lg">
                       {c.heroImage ? (
-                        c.heroImage.includes("placeholder") || c.heroImage.includes("hero") ? (
+                        c.heroImage.includes("placeholder") ||
+                        c.heroImage.includes("hero") ? (
                           // 가이드 이미지 플레이스홀더
                           <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
                             <div className="text-center">
                               <div className="text-4xl mb-2">📖</div>
-                              <p className="text-sm font-medium text-gray-700">{c.label}</p>
-                              <p className="text-xs text-gray-500 mt-1">가이드 이미지</p>
+                              <p className="text-sm font-medium text-gray-700">
+                                {c.label}
+                              </p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                가이드 이미지
+                              </p>
                             </div>
                           </div>
                         ) : (

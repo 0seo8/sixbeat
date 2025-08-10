@@ -18,20 +18,22 @@ export function PageHeader({
   externalLink,
   children,
 }: PageHeaderProps) {
-  const currentDate = date || new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric",
-    month: "2-digit", 
-    day: "2-digit"
-  }).format(new Date()).replace(/\. /g, '.').replace(/\.$/, '');
+  const currentDate =
+    date ||
+    new Intl.DateTimeFormat("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+      .format(new Date())
+      .replace(/\. /g, ".")
+      .replace(/\.$/, "");
 
   return (
-    <header className="sticky top-0 z-30 bg-white pb-3 pt-4 border-b">
+    <header className="sticky top-0 z-30 bg-white pb-3 pt-4">
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-lg font-bold">{title}</h1>
-          <p className="text-xs text-gray-500">
-            {description || currentDate}
-          </p>
         </div>
         {externalLink ? (
           <Link
@@ -47,6 +49,7 @@ export function PageHeader({
           <span aria-hidden className="p-2" />
         )}
       </div>
+      <p className="text-xs text-gray-500">{description || currentDate}</p>
       {children}
     </header>
   );

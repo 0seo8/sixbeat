@@ -396,35 +396,34 @@ function StreamingGuide() {
 export default function StreamingPage() {
   return (
     <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
-      <PageHeader 
-        title="스트리밍 허브" 
+      <PageHeader
+        title="스트리밍 허브"
         description="음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!"
         externalLink="https://www.melon.com"
       />
-      
-      <div className="mt-4 space-y-6">
 
-      {/* 음원 플랫폼 */}
-      <Card className="p-4 ">
-        <CardContent className="p-0">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-bold text-gray-900">
-              음원 플랫폼
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {streamingPlatforms.map((platform) => (
-              <PlatformCard key={platform.id} platform={platform} />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="space-y-6">
+        {/* 음원 플랫폼 */}
+        <Card className="">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">
+                음원 플랫폼
+              </h2>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {streamingPlatforms.map((platform) => (
+                <PlatformCard key={platform.id} platform={platform} />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* YouTube 섹션 */}
-      <YouTubeSection />
+        {/* YouTube 섹션 */}
+        <YouTubeSection />
 
-      {/* 스트리밍 가이드 */}
-      <StreamingGuide />
+        {/* 스트리밍 가이드 */}
+        <StreamingGuide />
       </div>
     </div>
   );
