@@ -48,7 +48,7 @@ export default function QuickAccessCard() {
               className="flex flex-col items-center p-3 h-auto border border-gray-100 hover:border-gray-200"
             >
               <a href={platform.url} target="_blank" rel="noopener noreferrer">
-                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 bg-white border border-gray-200 overflow-hidden">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 bg-white overflow-hidden">
                   <Image
                     src={platform.logo}
                     alt={platform.name}

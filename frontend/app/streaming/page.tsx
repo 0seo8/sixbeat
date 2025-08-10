@@ -14,6 +14,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { StreamingPlatform } from "@/lib/types";
+import { PageHeader } from "@/components/common/page-header";
 
 interface ExtendedStreamingPlatform extends StreamingPlatform {
   isActive?: boolean;
@@ -394,16 +395,14 @@ function StreamingGuide() {
 
 export default function StreamingPage() {
   return (
-    <div className="space-y-6">
-      {/* 헤더 */}
-      <div>
-        <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
-          스트리밍 허브
-        </h1>
-        <p className="text-xs md:text-sm text-gray-500">
-          음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!
-        </p>
-      </div>
+    <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
+      <PageHeader 
+        title="스트리밍 허브" 
+        description="음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!"
+        externalLink="https://www.melon.com"
+      />
+      
+      <div className="mt-4 space-y-6">
 
       {/* 음원 플랫폼 */}
       <Card className="p-4 ">
@@ -426,6 +425,7 @@ export default function StreamingPage() {
 
       {/* 스트리밍 가이드 */}
       <StreamingGuide />
+      </div>
     </div>
   );
 }

@@ -40,9 +40,12 @@ export function MobileAppLayout({ children }: MobileAppLayoutProps) {
     <SidebarContext.Provider value={sidebarContextValue}>
       {/* Mobile Layout (sm and below) */}
       <div className="md:hidden min-h-screen bg-gray-50 flex justify-center">
-        <div className="w-full max-w-[375px] bg-white shadow-2xl min-h-screen relative">
+        <div className="w-full max-w-[375px] bg-white shadow-xl min-h-screen relative">
           {!isHomePage && (
-            <OverlayHeader onMenuClick={() => setSidebarOpen(true)} />
+            <OverlayHeader
+              onMenuClick={() => setSidebarOpen(true)}
+              variant="solid"
+            />
           )}
 
           <main

@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchVotes } from "@/lib/api";
 import { VoteItem } from "@/lib/types";
 import { getDaysUntil } from "@/lib/utils";
+import { PageHeader } from "@/components/common/page-header";
 
 function VoteCard({ vote }: { vote: VoteItem }) {
   const daysLeft = getDaysUntil(vote.deadline);
@@ -218,13 +219,12 @@ export default function VotesPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
-            투표 센터
-          </h1>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+      <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
+        <PageHeader 
+          title="투표 센터" 
+          description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
+        />
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="animate-pulse">
               <div className="h-48 bg-gray-100 rounded-lg" />
@@ -236,16 +236,14 @@ export default function VotesPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* 헤더 */}
-      <div>
-        <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
-          투표 센터
-        </h1>
-        <p className="text-xs md:text-sm text-gray-500">
-          진행 중인 투표를 확인하고 DAY6를 응원해주세요!
-        </p>
-      </div>
+    <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
+      <PageHeader 
+        title="투표 센터" 
+        description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
+        externalLink="https://mwave.me/en/vote"
+      />
+      
+      <div className="mt-4 space-y-6">
 
       {/* 긴급 알림 */}
       {urgentVotes.length > 0 && (
@@ -297,6 +295,7 @@ export default function VotesPage() {
       </Card>
 
       <VotingGuide />
+      </div>
     </div>
   );
 }

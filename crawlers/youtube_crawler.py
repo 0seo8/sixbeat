@@ -161,8 +161,6 @@ def get_youtube_stats_for_dashboard():
     
     print(f"🕒 정각 {current_time.strftime('%H:00')} - YouTube API 호출 시작")
     
-    # TODO: DAY6 신앨범 발표 후 다시 DAY6 뮤직비디오 ID로 교체
-    # 현재는 데모용으로 실제 존재하는 BLACKPINK 뮤직비디오 사용 중
     VIDEOS = [
         {"id": "0fyZqS0N19o", "title": "Maybe Tomorrow"},  # DAY6 
     ]

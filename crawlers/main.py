@@ -468,20 +468,20 @@ def save_frontend_data(filtered_data, youtube_stats, timestamp, rank_changes=Non
     
     # latest.json 생성 (차트 데이터)
     latest_data = {
-        "collectedAtKST": timestamp,
-        "artist": "BLACKPINK",  # TODO: DAY6로 교체
-        "tracks": [
-            {
-                "title": "뛰어(JUMP)",
-                "album": "뛰어(JUMP)",
-                "releaseDate": "2025-07-11"
-            }
-        ],
-        "melon": [],
-        "genie": [],
-        "bugs": [],
-        "vibe": [],
-        "flo": []
+    "collectedAtKST": timestamp,
+    "artist": "DAY6",
+    "tracks": [
+        {
+            "title": "Maybe Tomorrow",
+            "album": "Maybe Tomorrow - Single",
+            "releaseDate": "2025-05-07"
+        }
+    ],
+    "melon": [],
+    "genie": [],
+    "bugs": [],
+    "vibe": [],
+    "flo": []
     }
     
     # 필터링된 데이터를 latest.json 형태로 변환
