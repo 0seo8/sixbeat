@@ -7,7 +7,8 @@ export type GuideCategory = {
   heroImage?: string; // 1뎁스 큰 이미지
   images?: string[]; // 2뎁스 상세 이미지들
   cta?: { label: string; href: string; external?: boolean }; // 하단 버튼
-  category?: "streaming" | "voting" | "support" | "donation"; // 카테고리 분류
+  category?: "streaming" | "voting" | "support" | "donation" | "comeback"; // 카테고리 분류
+  subcategory?: "streaming-list" | "music-streaming" | "mv-streaming" | "music-download" | "mv-download" | "music-show" | "awards"; // 서브카테고리
   subcategories?: GuideCategory[]; // 서브 카테고리 (투표 하위 항목들)
 };
 

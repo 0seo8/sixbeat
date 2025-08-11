@@ -1,79 +1,90 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Play,
-  AlertTriangle,
-  CheckCircle,
-  Star,
-  Zap,
-  Volume2,
-} from "lucide-react";
-import { StreamingPlatform } from "@/lib/types";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Play, Volume2, ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/common/page-header";
-import { SmartPlatformLink } from "@/components/streaming/smart-platform-link";
+import { GUIDE_CATEGORIES } from "@/content/guide.config";
+import Link from "next/link";
 import Image from "next/image";
 
-interface ExtendedStreamingPlatform extends StreamingPlatform {
-  isActive?: boolean;
-}
+// 스트리밍 관련 가이드 카테고리들 필터링
+const streamingGuides = {
+  "streaming-list": GUIDE_CATEGORIES.filter((c) => c.subcategory === "streaming-list"),
+  "music-streaming": GUIDE_CATEGORIES.filter((c) => c.subcategory === "music-streaming"),
+  "mv-streaming": GUIDE_CATEGORIES.filter((c) => c.subcategory === "mv-streaming"),
+};
 
-const streamingPlatforms: ExtendedStreamingPlatform[] = [
-  {
-    id: "melon",
-    name: "멜론",
-    appLink: "melonapp://chart",
-    webLink: "https://www.melon.com/chart/index.htm",
-    playlist: "https://www.melon.com",
-    icon: "🎵",
-    isActive: true,
-  },
-  {
-    id: "genie",
-    name: "지니뮤직",
-    appLink: "genie://chart",
-    webLink: "https://www.genie.co.kr/chart/top200",
-    playlist: "https://www.genie.co.kr",
-    icon: "🎶",
-    isActive: true,
-  },
-  {
-    id: "bugs",
-    name: "벅스뮤직",
-    appLink: "bugs://chart",
-    webLink: "https://music.bugs.co.kr/chart",
-    playlist: "https://music.bugs.co.kr",
-    icon: "🐛",
-    isActive: false,
-  },
-  {
-    id: "vibe",
-    name: "바이브",
-    appLink: "vibeapp://chart",
-    webLink: "https://vibe.naver.com/chart",
-    playlist: "https://vibe.naver.com",
-    icon: "📻",
-    isActive: false,
-  },
-  {
-    id: "flo",
-    name: "FLO",
-    appLink: "flo://chart",
-    webLink: "https://www.music-flo.com/chart",
-    playlist: "https://www.music-flo.com",
-    icon: "🌊",
-    isActive: false,
-  },
-];
-
-const youtubeVideos = [
-  {
-    id: "1",
-    title: "Maybe Tomorrow",
-    type: "MV",
-    url: "https://youtu.be/0fyZqS0N19o",
-  },
-];
+// 플랫폼 데이터 정의
+const STREAMING_PLATFORMS = {
+  music: [
+    { 
+      id: "melon", 
+      name: "멜론", 
+      logo: "/ico_melon.png", 
+      url: "https://www.melon.com/artist/timeline.htm?artistId=261143",
+      color: "bg-green-500"
+    },
+    { 
+      id: "genie", 
+      name: "지니", 
+      logo: "/Geenie.png", 
+      url: "https://www.genie.co.kr/detail/artistInfo?xxartistId=80240",
+      color: "bg-blue-500"
+    },
+    { 
+      id: "bugs", 
+      name: "벅스", 
+      logo: "/bucks.png", 
+      url: "https://music.bugs.co.kr/artist/80086",
+      color: "bg-red-500"
+    },
+    { 
+      id: "vibe", 
+      name: "바이브", 
+      logo: "/vibe.jpeg", 
+      url: "https://vibe.naver.com/artist/12055",
+      color: "bg-purple-500"
+    },
+    { 
+      id: "flo", 
+      name: "플로", 
+      logo: "/fillo.png", 
+      url: "https://www.music-flo.com/detail/artist/eyunnqoyqx",
+      color: "bg-orange-500"
+    },
+    { 
+      id: "youtube-music", 
+      name: "유튜브뮤직", 
+      logo: "/file.svg", 
+      url: "https://music.youtube.com/channel/UCp-pqXsizklX3ZHvLxXyhxw",
+      color: "bg-red-600"
+    },
+    { 
+      id: "apple-music", 
+      name: "애플뮤직", 
+      logo: "/file.svg", 
+      url: "https://music.apple.com/kr/artist/day6/1039275369",
+      color: "bg-gray-800"
+    },
+    { 
+      id: "spotify", 
+      name: "스포티파이", 
+      logo: "/file.svg", 
+      url: "https://open.spotify.com/artist/5TnQc2N1iKlFjYD7CPGvFc",
+      color: "bg-green-600"
+    },
+  ],
+  mv: [
+    { 
+      id: "youtube", 
+      name: "유튜브", 
+      logo: "/file.svg", 
+      url: "https://www.youtube.com/@day6official",
+      color: "bg-red-600"
+    },
+  ]
+};
 
 const getPlatformLogo = (platform: string) => {
   const logos: Record<string, string> = {
@@ -82,255 +93,207 @@ const getPlatformLogo = (platform: string) => {
     bugs: "/bucks.png",
     vibe: "/vibe.jpeg",
     flo: "/fillo.png",
+    "apple-music": "/file.svg",
+    spotify: "/file.svg",
+    "youtube-music": "/file.svg",
+    youtube: "/file.svg",
   };
   return logos[platform] || "/file.svg";
 };
 
-function PlatformCard({ platform }: { platform: ExtendedStreamingPlatform }) {
-  const getPlatformColor = (id: string) => {
-    const colors: Record<string, string> = {
-      melon: "bg-green-500",
-      genie: "bg-blue-500",
-      bugs: "bg-orange-500",
-      vibe: "bg-purple-500",
-      flo: "bg-pink-500",
-    };
-    return colors[id] || "bg-gray-500";
-  };
-
-  const isActive = platform.isActive !== false;
-
+// 플랫폼 카드 컴포넌트
+function PlatformCard({ platform }: { platform: typeof STREAMING_PLATFORMS.music[0] }) {
   return (
-    <Card
-      className={`transition-all ${
-        isActive ? "" : "opacity-60"
-      } shadow-md rounded-lg`}
+    <a
+      href={platform.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-full"
     >
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg overflow-hidden ${
-                isActive ? getPlatformColor(platform.id) : "bg-gray-300"
-              }`}
-            >
-              {getPlatformLogo(platform.id) !== "/file.svg" ? (
+      <Card className="hover:shadow-md transition-all duration-200 hover:scale-[1.02] cursor-pointer">
+        <CardContent className="p-4">
+          <div className="space-y-3">
+            {/* 플랫폼 로고/아이콘 영역 */}
+            <div className={`w-full h-16 ${platform.color} rounded-lg flex items-center justify-center`}>
+              {platform.logo !== "/file.svg" ? (
                 <Image
-                  src={getPlatformLogo(platform.id)}
+                  src={platform.logo}
                   alt={platform.name}
                   width={32}
                   height={32}
-                  className="w-8 h-8 object-contain"
+                  className="w-8 h-8 object-contain filter brightness-0 invert"
                 />
               ) : (
-                platform.icon
+                <div className="text-2xl text-white">
+                  {platform.id.includes('youtube') ? '📺' : '🎵'}
+                </div>
               )}
             </div>
-            <div>
-              <h3
-                className={`text-lg font-bold ${
-                  isActive ? "text-gray-900" : "text-gray-500"
-                }`}
-              >
+
+            {/* 플랫폼 정보 */}
+            <div className="text-center">
+              <h3 className="font-semibold text-gray-900 text-sm">
                 {platform.name}
               </h3>
-              <p
-                className={`text-sm ${
-                  isActive ? "text-gray-600" : "text-gray-400"
-                }`}
-              >
-                {isActive ? "음원 스트리밍 플랫폼" : "서비스 준비 중"}
-              </p>
+              <div className="flex items-center justify-center mt-2 text-xs text-gray-500">
+                <ExternalLink className="w-3 h-3 mr-1" />
+                <span>바로 스트리밍</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="space-y-4">
-          <SmartPlatformLink
-            appLink={platform.appLink}
-            webLink={platform.webLink}
-            platformName={platform.name}
-            isActive={isActive}
-          />
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </a>
   );
 }
 
-function YouTubeSection() {
+// 카테고리별 섹션 컴포넌트
+function StreamingCategorySection({
+  categoryKey,
+  items,
+  title,
+  description,
+  icon,
+}: {
+  categoryKey: string;
+  items: typeof GUIDE_CATEGORIES;
+  title: string;
+  description: string;
+  icon: string;
+}) {
+  if (!items || items.length === 0) return null;
+
   return (
-    <Card className="p-4">
-      <CardContent className="p-0">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
-            <Play className="h-5 w-5 text-red-500" />
-            YouTube 스트리밍
-          </h2>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-          {youtubeVideos.map((video) => (
-            <div key={video.id} className="group">
-              <a
-                href={video.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-              >
-                <div className="w-full aspect-video bg-gray-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-200 transition-colors">
-                  <Play className="h-8 w-8 text-gray-400" />
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium text-sm line-clamp-2 text-gray-900">
-                    {video.title}
-                  </h4>
-                  <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
-                      {video.type}
-                    </span>
-                    <span>DAY6 공식</span>
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <span>{icon}</span>
+          {title}
+        </h2>
+        <p className="text-sm text-gray-600 mt-1">{description}</p>
+      </div>
+
+      {/* 가로 스크롤 카드 컨테이너 */}
+      <div className="overflow-x-auto pb-2">
+        <div className="flex gap-3 min-w-max">
+          {items.map((item) => (
+            <Link key={item.slug} href={`/guide/${item.slug}`}>
+              <Card className="w-40 flex-shrink-0 hover:shadow-md transition-shadow cursor-pointer">
+                <CardContent className="p-4">
+                  <div className="space-y-3">
+                    {/* 플랫폼 로고/아이콘 영역 */}
+                    <div className="w-full h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                      {getPlatformLogo(item.slug) !== "/file.svg" ? (
+                        <Image
+                          src={getPlatformLogo(item.slug)}
+                          alt={item.label}
+                          width={32}
+                          height={32}
+                          className="w-8 h-8 object-contain"
+                        />
+                      ) : (
+                        <div className="text-2xl">
+                          {categoryKey === "music-streaming" ? "🎵" : "📺"}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 제목 및 설명 */}
+                    <div>
+                      <h3 className="font-medium text-gray-900 text-sm leading-tight">
+                        {item.label}
+                      </h3>
+                      <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                        {categoryKey === "streaming-list"
+                          ? "전체 스트리밍 플랫폼"
+                          : categoryKey === "music-streaming"
+                          ? `${item.label}에서 스트리밍`
+                          : `${item.label} 뮤직비디오`}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
-
-        <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-          <div className="flex items-start gap-3">
-            <Volume2 className="h-5 w-5 text-blue-600 mt-0.5" />
-            <div className="space-y-1">
-              <h4 className="font-medium text-gray-900">
-                효과적인 YouTube 스트리밍 팁
-              </h4>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• 음소거하지 말고 최소 음량으로 재생하세요</li>
-                <li>• 영상을 끝까지 시청하면 더 큰 효과가 있습니다</li>
-                <li>• 좋아요와 댓글도 함께 남겨주세요</li>
-                <li>• 공유하기를 통해 추가 조회수를 만들어보세요</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
-function StreamingGuide() {
+function StreamingTipsSection() {
   return (
-    <div className="space-y-6">
-      <Card className="p-4">
-        <CardContent className="p-0">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
-              <Star className="h-5 w-5 text-blue-600" />
-              스트리밍 가이드
-            </h2>
-          </div>
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-gray-900">올바른 스트리밍</h4>
-                  <p className="text-sm text-gray-600">
-                    30초 이상 재생, 음소거 금지, 자연스러운 재생
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-gray-900">
-                    다양한 곡 섞어 듣기
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    타겟곡만 반복하지 말고 다른 곡들과 함께 재생하세요
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-gray-900">
-                    적절한 간격 유지
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    같은 곡을 너무 연속으로 듣지 마세요
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <span>💡</span>
+          스트리밍 가이드
+        </h2>
+        <p className="text-sm text-gray-600 mt-1">효과적인 스트리밍을 위한 팁들</p>
+      </div>
 
-      <Card className="p-4 bg-red-50 border-red-200">
-        <CardContent className="p-0">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 text-red-800">
-              <AlertTriangle className="h-5 w-5" />
-              주의사항
-            </h2>
-          </div>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-start gap-2">
-              <span className="text-red-600">•</span>
-              <span className="text-red-700">
-                로봇 재생으로 인식될 수 있는 패턴은 피해주세요
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-600">•</span>
-              <span className="text-red-700">
-                여러 계정으로 동시 재생하지 마세요
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-600">•</span>
-              <span className="text-red-700">
-                스트리밍 프로그램 사용은 금지되어 있습니다
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-600">•</span>
-              <span className="text-red-700">
-                VPN 사용 시 차트 반영이 안 될 수 있습니다
-              </span>
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
+      {/* 가로 스크롤 팁 카드 */}
+      <div className="overflow-x-auto pb-2">
+        <div className="flex gap-3 min-w-max">
+          {/* YouTube 팁 카드 */}
+          <Card className="w-64 flex-shrink-0">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="w-full h-16 bg-red-50 rounded-lg flex items-center justify-center">
+                  <Play className="h-6 w-6 text-red-500" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-gray-900 text-sm">YouTube 스트리밍</h3>
+                  <div className="mt-2 text-xs text-gray-600 space-y-1">
+                    <div>• 음소거 금지, 최소 음량으로</div>
+                    <div>• 끝까지 시청하기</div>
+                    <div>• 좋아요 & 댓글 남기기</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-      <Card className="p-4">
-        <CardContent className="p-0">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
-              <Zap className="h-5 w-5 text-yellow-500" />
-              최적 스트리밍 시간
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <h4 className="font-medium text-gray-900 mb-2">실시간 차트</h4>
-              <ul className="space-y-1 text-gray-600">
-                <li>• 매시간 정각 업데이트</li>
-                <li>• 1시간 단위로 집계</li>
-                <li>• 실시간 반영</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900 mb-2">일간 차트</h4>
-              <ul className="space-y-1 text-gray-600">
-                <li>• 자정(00:00) 업데이트</li>
-                <li>• 전날 00:00 ~ 23:59 집계</li>
-                <li>• 꾸준한 스트리밍이 중요</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          {/* 음원 스트리밍 팁 카드 */}
+          <Card className="w-64 flex-shrink-0">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="w-full h-16 bg-green-50 rounded-lg flex items-center justify-center">
+                  <Volume2 className="h-6 w-6 text-green-500" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-gray-900 text-sm">음원 플랫폼</h3>
+                  <div className="mt-2 text-xs text-gray-600 space-y-1">
+                    <div>• 30초 이상 재생</div>
+                    <div>• 다양한 곡 섞어 듣기</div>
+                    <div>• 적절한 간격 유지</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* 주의사항 카드 */}
+          <Card className="w-64 flex-shrink-0 border-red-200">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="w-full h-16 bg-red-50 rounded-lg flex items-center justify-center">
+                  <span className="text-2xl">⚠️</span>
+                </div>
+                <div>
+                  <h3 className="font-medium text-red-700 text-sm">주의사항</h3>
+                  <div className="mt-2 text-xs text-red-600 space-y-1">
+                    <div>• 로봇 재생 패턴 금지</div>
+                    <div>• 다중 계정 동시 재생 금지</div>
+                    <div>• 스트리밍 프로그램 금지</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }
@@ -345,28 +308,66 @@ export default function StreamingPage() {
         shareSlug=""
       />
 
-      <div className="space-y-6">
-        {/* 음원 플랫폼 */}
-        <Card className="">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900">
-                음원 플랫폼
-              </h2>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {streamingPlatforms.map((platform) => (
-                <PlatformCard key={platform.id} platform={platform} />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="mt-6">
+        <Tabs defaultValue="streaming-list" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="streaming-list" className="text-xs">스트리밍리스트</TabsTrigger>
+            <TabsTrigger value="music-streaming" className="text-xs">음원 스트리밍</TabsTrigger>
+            <TabsTrigger value="mv-streaming" className="text-xs">MV 스트리밍</TabsTrigger>
+          </TabsList>
 
-        {/* YouTube 섹션 */}
-        <YouTubeSection />
+          {/* 스트리밍리스트 탭 */}
+          <TabsContent value="streaming-list" className="mt-6">
+            <div className="space-y-6">
+              <StreamingCategorySection
+                categoryKey="streaming-list"
+                items={streamingGuides["streaming-list"]}
+                title="전체 플랫폼"
+                description="모든 스트리밍 플랫폼을 한번에 확인하세요"
+                icon="📱"
+              />
+              <StreamingTipsSection />
+            </div>
+          </TabsContent>
 
-        {/* 스트리밍 가이드 */}
-        <StreamingGuide />
+          {/* 음원 스트리밍 탭 */}
+          <TabsContent value="music-streaming" className="mt-6">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 mb-2">🎵 음원 플랫폼</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  각 플랫폼을 클릭하여 DAY6 아티스트 페이지로 바로 이동하세요
+                </p>
+                
+                <div className="grid grid-cols-2 gap-3">
+                  {STREAMING_PLATFORMS.music.map((platform) => (
+                    <PlatformCard key={platform.id} platform={platform} />
+                  ))}
+                </div>
+              </div>
+              <StreamingTipsSection />
+            </div>
+          </TabsContent>
+
+          {/* MV 스트리밍 탭 */}
+          <TabsContent value="mv-streaming" className="mt-6">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 mb-2">📺 뮤직비디오 스트리밍</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  유튜브에서 DAY6 뮤직비디오를 스트리밍해주세요
+                </p>
+                
+                <div className="grid grid-cols-1 gap-3 max-w-xs">
+                  {STREAMING_PLATFORMS.mv.map((platform) => (
+                    <PlatformCard key={platform.id} platform={platform} />
+                  ))}
+                </div>
+              </div>
+              <StreamingTipsSection />
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
