@@ -6,6 +6,8 @@ import DAY6ImageSwiper from "@/components/home/day6-image-swiper";
 import MVStatsCard from "@/components/home/mv-stats-card";
 import QuickAccessCard from "@/components/home/quick-access-card";
 import AlertBanner from "@/components/home/alert-banner";
+import { MelonMusicwaveBanner } from "@/components/home/melon-musicwave-banner";
+import { QuickLinksBanner } from "@/components/home/quick-links-banner";
 
 import { formatKoreanDate, formatKoreanDateTime } from "@/lib/date-utils";
 import { useSidebar } from "@/components/layout/mobile-app-layout";
@@ -54,6 +56,20 @@ export default function HomePage() {
           <CompactChart />
         </div>
 
+        {/* Quick Access Streaming Platforms */}
+        <div>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
+            원클릭 스트리밍 리스트
+          </h2>
+          <QuickAccessCard />
+        </div>
+
+        {/* Melon Musicwave Banner */}
+        <MelonMusicwaveBanner />
+
+        {/* Radio & SMS Vote Links */}
+        <QuickLinksBanner />
+
         {/* YouTube Stats Section */}
         <div>
           <div className="flex items-center justify-between">
@@ -69,14 +85,6 @@ export default function HomePage() {
             </div>
           </div>
           <MVStatsCard />
-        </div>
-
-        {/* Quick Access Streaming Platforms */}
-        <div>
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
-            원클릭 스트리밍 리스트
-          </h2>
-          <QuickAccessCard />
         </div>
       </div>
     </div>

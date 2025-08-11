@@ -8,7 +8,7 @@ interface OverlayHeaderProps {
   variant?: "overlay" | "solid";
 }
 
-export function OverlayHeader({ onMenuClick, title = "DAY6 STRM", variant = "overlay" }: OverlayHeaderProps) {
+export function OverlayHeader({ onMenuClick, title = "데이식스 음원총공팀", variant = "overlay" }: OverlayHeaderProps) {
   const isOverlay = variant === "overlay";
   
   return (
@@ -30,7 +30,7 @@ export function OverlayHeader({ onMenuClick, title = "DAY6 STRM", variant = "ove
       </button>
 
       {/* Title */}
-      <h1 className={`text-lg md:text-xl font-bold ${
+      <h1 className={`text-xl md:text-2xl font-bold ${
         isOverlay 
           ? "text-white drop-shadow-lg" 
           : "text-[#333]"
