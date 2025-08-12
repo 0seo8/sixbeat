@@ -74,6 +74,13 @@ const STREAMING_PLATFORMS = {
       url: "https://open.spotify.com/artist/5TnQc2N1iKlFjYD7CPGvFc",
       color: "bg-green-600"
     },
+    { 
+      id: "stationhead", 
+      name: "스테이션헤드", 
+      logo: "/file.svg", 
+      url: "https://www.stationhead.com",
+      color: "bg-indigo-600"
+    },
   ],
   mv: [
     { 

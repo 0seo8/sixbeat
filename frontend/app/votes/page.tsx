@@ -1,135 +1,214 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Vote,
   ExternalLink,
   Clock,
   Trophy,
   Tv,
-  Globe,
   AlertCircle,
   Calendar,
-  Star,
-  Zap,
+  MessageSquare,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchVotes } from "@/lib/api";
-import { VoteItem } from "@/lib/types";
-import { getDaysUntil } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
+import Image from "next/image";
 
-function VoteCard({ vote }: { vote: VoteItem }) {
-  const daysLeft = getDaysUntil(vote.deadline);
-  const isUrgent = daysLeft <= 1;
-  const isExpired = daysLeft < 0;
+// 음악방송 투표 데이터
+const MUSIC_SHOWS = [
+  {
+    id: "the-show",
+    name: "더쇼",
+    day: "화요일",
+    time: "18:00",
+    platform: "SBS M",
+    voteUrl: "https://www.sbs.co.kr/sbsmtv/theshow",
+    logo: "/file.svg",
+    color: "bg-pink-500",
+    description: "더쇼 초이스 투표"
+  },
+  {
+    id: "show-champion",
+    name: "쇼챔피언",
+    day: "수요일",
+    time: "18:00",
+    platform: "MBC M",
+    voteUrl: "https://www.mbcplus.com/showchampion",
+    logo: "/file.svg",
+    color: "bg-blue-500",
+    description: "쇼챔피언 투표"
+  },
+  {
+    id: "mcountdown",
+    name: "엠카운트다운",
+    day: "목요일",
+    time: "18:00",
+    platform: "Mnet",
+    voteUrl: "https://www.mnet.com/tv/program/387",
+    logo: "/file.svg",
+    color: "bg-red-500",
+    description: "M카운트다운 사전투표"
+  },
+  {
+    id: "music-bank",
+    name: "뮤직뱅크",
+    day: "금요일",
+    time: "17:00",
+    platform: "KBS 2TV",
+    voteUrl: "https://www.kbs.co.kr/2tv/enter/musicbank",
+    logo: "/file.svg",
+    color: "bg-green-500",
+    description: "K-차트 투표"
+  },
+  {
+    id: "music-core",
+    name: "음악중심",
+    day: "토요일",
+    time: "15:25",
+    platform: "MBC",
+    voteUrl: "https://www.imbc.com/broad/tv/ent/musiccore",
+    logo: "/file.svg",
+    color: "bg-purple-500",
+    description: "음악중심 투표",
+    hasSMS: true,
+    smsInfo: "#0011(유료)"
+  },
+  {
+    id: "inkigayo",
+    name: "인기가요",
+    day: "일요일",
+    time: "15:40",
+    platform: "SBS",
+    voteUrl: "https://programs.sbs.co.kr/enter/gayo",
+    logo: "/file.svg",
+    color: "bg-orange-500",
+    description: "인기가요 투표"
+  },
+];
 
-  const categoryIcons = {
-    award: Trophy,
-    music_show: Tv,
-    global: Globe,
-  };
+// 시상식 투표 데이터
+const AWARD_SHOWS = [
+  {
+    id: "mama",
+    name: "MAMA Awards",
+    date: "2024.11.21-22",
+    voteUrl: "https://mama.mwave.me",
+    logo: "/file.svg",
+    color: "bg-black",
+    status: "upcoming"
+  },
+  {
+    id: "aaa",
+    name: "Asia Artist Awards",
+    date: "2024.12.27",
+    voteUrl: "https://www.asiaartistawards.com",
+    logo: "/file.svg",
+    color: "bg-gold-500",
+    status: "upcoming"
+  },
+  {
+    id: "gda",
+    name: "Golden Disc Awards",
+    date: "2025.01.04-05",
+    voteUrl: "https://www.goldendisc.co.kr",
+    logo: "/file.svg",
+    color: "bg-yellow-500",
+    status: "upcoming"
+  },
+  {
+    id: "sma",
+    name: "Seoul Music Awards",
+    date: "2025.01.02",
+    voteUrl: "https://www.seoulmusicawards.com",
+    logo: "/file.svg",
+    color: "bg-blue-600",
+    status: "upcoming"
+  },
+];
 
-  const categoryNames = {
-    award: "시상식",
-    music_show: "음악방송",
-    global: "글로벌",
-  };
-
-  const difficultyColors = {
-    easy: "bg-green-500 text-white",
-    medium: "bg-yellow-500 text-white",
-    hard: "bg-red-500 text-white",
-  };
-
-  const difficultyNames = {
-    easy: "쉬움",
-    medium: "보통",
-    hard: "어려움",
-  };
-
-  const CategoryIcon = categoryIcons[vote.category];
-
+// 음악방송 카드 컴포넌트
+function MusicShowCard({ show }: { show: typeof MUSIC_SHOWS[0] }) {
   return (
-    <Card
-      className={`${isUrgent && !isExpired ? "border-red-200 bg-red-50" : ""} ${
-        isExpired ? "opacity-60" : ""
-      }`}
-    >
-      <CardContent className="p-4 shadow-md rounded-lg">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-start gap-3 flex-1">
-            <CategoryIcon className="h-5 w-5 text-blue-600 mt-1" />
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-900 leading-tight">
-                {vote.title}
-              </h3>
-              <p className="text-sm text-gray-600 mt-1">
-                {vote.platform} • {categoryNames[vote.category]}
-              </p>
-            </div>
+    <Card className="hover:shadow-md transition-all duration-200">
+      <CardContent className="p-4">
+        <div className="space-y-3">
+          {/* 방송사 로고/색상 영역 */}
+          <div className={`w-full h-12 ${show.color} rounded-lg flex items-center justify-center`}>
+            <span className="text-white font-bold text-sm">{show.platform}</span>
           </div>
-          {isUrgent && !isExpired && (
-            <AlertCircle className="h-5 w-5 text-red-600" />
-          )}
+
+          {/* 방송 정보 */}
+          <div>
+            <h3 className="font-bold text-gray-900">{show.name}</h3>
+            <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
+              <Calendar className="w-3 h-3" />
+              <span>{show.day} {show.time}</span>
+            </div>
+            <p className="text-xs text-gray-500 mt-1">{show.description}</p>
+          </div>
+
+          {/* 버튼들 */}
+          <div className="space-y-2">
+            <a
+              href={show.voteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            >
+              <Vote className="w-4 h-4" />
+              투표하기
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            
+            {show.hasSMS && (
+              <div className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">
+                <MessageSquare className="w-4 h-4" />
+                <span>문자투표: {show.smsInfo}</span>
+              </div>
+            )}
+          </div>
         </div>
+      </CardContent>
+    </Card>
+  );
+}
 
-        <div className="space-y-4">
-          {/* 마감 정보 */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-gray-500" />
-              <span className="text-sm text-gray-700">
-                {isExpired
-                  ? "마감됨"
-                  : daysLeft === 0
-                  ? "오늘 마감"
-                  : daysLeft === 1
-                  ? "내일 마감"
-                  : `D-${daysLeft}`}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span
-                className={`px-2 py-1 rounded text-xs font-medium ${
-                  difficultyColors[vote.difficulty]
-                }`}
-              >
-                {difficultyNames[vote.difficulty]}
-              </span>
-            </div>
+// 시상식 카드 컴포넌트
+function AwardCard({ award }: { award: typeof AWARD_SHOWS[0] }) {
+  return (
+    <Card className="hover:shadow-md transition-all duration-200">
+      <CardContent className="p-4">
+        <div className="space-y-3">
+          {/* 시상식 로고/색상 영역 */}
+          <div className={`w-full h-16 ${award.color === 'bg-black' ? 'bg-gray-900' : award.color} rounded-lg flex items-center justify-center`}>
+            <Trophy className="w-8 h-8 text-white" />
           </div>
 
-          {/* 마감 날짜 */}
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Calendar className="h-4 w-4" />
-            <span>
-              마감:{" "}
-              {vote.deadline.toLocaleDateString("ko-KR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                weekday: "short",
-              })}
-            </span>
+          {/* 시상식 정보 */}
+          <div>
+            <h3 className="font-bold text-gray-900">{award.name}</h3>
+            <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
+              <Calendar className="w-3 h-3" />
+              <span>{award.date}</span>
+            </div>
+            {award.status === 'upcoming' && (
+              <span className="inline-block mt-2 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
+                예정
+              </span>
+            )}
           </div>
 
-          {/* 액션 버튼 */}
+          {/* 투표 버튼 */}
           <a
-            href={vote.link}
+            href={award.voteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg font-medium transition-colors ${
-              isExpired
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : isUrgent
-                ? "bg-red-600 text-white hover:bg-red-700"
-                : "bg-gray-900 text-white hover:bg-gray-800"
-            }`}
-            onClick={isExpired ? (e) => e.preventDefault() : undefined}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all text-sm font-medium"
           >
-            {isExpired ? "마감됨" : "투표하러 가기"}
-            {!isExpired && <ExternalLink className="h-4 w-4" />}
+            <Trophy className="w-4 h-4" />
+            투표하기
+            <ExternalLink className="w-3 h-3" />
           </a>
         </div>
       </CardContent>
@@ -137,164 +216,116 @@ function VoteCard({ vote }: { vote: VoteItem }) {
   );
 }
 
-function VotingGuide() {
+// 투표 가이드 섹션
+function VotingTipsSection() {
   return (
-    <Card className="p-4">
-      <CardContent className="p-0">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
-            <Star className="h-5 w-5 text-blue-600" />
-            투표 가이드
-          </h2>
-        </div>
-        <div className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-blue-600 text-white text-sm flex items-center justify-center flex-shrink-0 mt-0.5">
-                1
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-900">계정 준비</h4>
-                <p className="text-sm text-gray-600">
-                  각 플랫폼별 계정을 미리 생성해 두세요.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-blue-600 text-white text-sm flex items-center justify-center flex-shrink-0 mt-0.5">
-                2
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-900">정시 투표</h4>
-                <p className="text-sm text-gray-600">
-                  매일 정해진 시간에 투표하여 효과를 극대화하세요.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-blue-600 text-white text-sm flex items-center justify-center flex-shrink-0 mt-0.5">
-                3
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-900">마감 확인</h4>
-                <p className="text-sm text-gray-600">
-                  투표 마감 시간을 꼼꼼히 확인하세요. (한국 시간 기준)
-                </p>
-              </div>
-            </div>
-          </div>
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <span>💡</span>
+          투표 가이드
+        </h2>
+        <p className="text-sm text-gray-600 mt-1">효과적인 투표를 위한 팁</p>
+      </div>
 
-          <div className="border-t border-gray-100 pt-4">
-            <h4 className="font-medium text-gray-900 mb-2 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-yellow-500" />
-              투표 팁
-            </h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• 여러 기기로 투표할 수 있는 경우 활용하세요</li>
-              <li>• SNS 공유로 추가 투표권을 받을 수 있습니다</li>
-              <li>• 매일 꾸준히 투표하여 순위를 올려보세요</li>
-              <li>• 마감 임박 시 집중 투표로 순위를 올려보세요</li>
+      <div className="grid gap-3">
+        <Card className="bg-blue-50 border-blue-200">
+          <CardContent className="p-4">
+            <h3 className="font-medium text-blue-900 mb-2">음악방송 투표</h3>
+            <ul className="text-sm text-blue-800 space-y-1">
+              <li>• 사전투표는 방송 전날까지</li>
+              <li>• 생방송 문자투표 준비 필수</li>
+              <li>• 매주 정기적으로 참여</li>
             </ul>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-purple-50 border-purple-200">
+          <CardContent className="p-4">
+            <h3 className="font-medium text-purple-900 mb-2">시상식 투표</h3>
+            <ul className="text-sm text-purple-800 space-y-1">
+              <li>• 투표 기간이 길어 꾸준함이 중요</li>
+              <li>• 여러 계정 활용 가능</li>
+              <li>• SNS 공유로 추가 투표권 획득</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-red-50 border-red-200">
+          <CardContent className="p-4">
+            <h3 className="font-medium text-red-900 mb-2 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4" />
+              주의사항
+            </h3>
+            <ul className="text-sm text-red-800 space-y-1">
+              <li>• 부정투표 금지 (계정 정지 위험)</li>
+              <li>• 투표 마감시간 확인 필수</li>
+              <li>• 공식 사이트에서만 투표</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
 
 export default function VotesPage() {
-  const { data: votes, isLoading } = useQuery({
-    queryKey: ["votes"],
-    queryFn: fetchVotes,
-  });
-
-  // 긴급 투표 (24시간 이내 마감)
-  const urgentVotes =
-    votes
-      ?.filter((v) => {
-        const daysLeft = getDaysUntil(v.deadline);
-        return daysLeft <= 1 && daysLeft >= 0;
-      })
-      .sort((a, b) => a.deadline.getTime() - b.deadline.getTime()) || [];
-
-  if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-screen-sm pb-20">
-        <PageHeader
-          title="투표 센터"
-          description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
-          enableShare={true}
-        />
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="animate-pulse">
-              <div className="h-48 bg-gray-100 rounded-lg" />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
       <PageHeader
         title="투표 센터"
-        description="진행 중인 투표를 확인하고 DAY6를 응원해주세요!"
+        description="음악방송과 시상식에서 DAY6를 1위로 만들어주세요!"
         enableShare={true}
+        shareSlug=""
       />
 
-      <div className="space-y-6">
-        {/* 긴급 알림 */}
-        {urgentVotes.length > 0 && (
-          <Card className="p-4 bg-red-50 border-red-200">
-            <CardContent className="p-0">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg md:text-xl font-bold text-red-800 flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5" />
-                  마감 임박! ({urgentVotes.length}개)
-                </h2>
-              </div>
-              <p className="text-red-700 mb-4">
-                24시간 이내 마감되는 투표들입니다. 지금 바로 참여하세요!
-              </p>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {urgentVotes.map((vote) => (
-                  <VoteCard key={vote.id} vote={vote} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+      <div className="mt-6">
+        <Tabs defaultValue="music-shows" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="music-shows">음악방송</TabsTrigger>
+            <TabsTrigger value="awards">시상식</TabsTrigger>
+          </TabsList>
 
-        {/* 전체 투표 목록 */}
-        <Card className="">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900">
-                전체 투표
-              </h2>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {votes?.map((vote) => (
-                <VoteCard key={vote.id} vote={vote} />
-              ))}
-              {!votes?.length && (
-                <div className="col-span-2 text-center py-12">
-                  <Vote className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    진행 중인 투표가 없습니다
-                  </h3>
-                  <p className="text-gray-600">
-                    새로운 투표가 시작되면 여기에 표시됩니다.
-                  </p>
+          {/* 음악방송 탭 */}
+          <TabsContent value="music-shows" className="mt-6">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 mb-2">📺 음악방송 투표</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  매주 진행되는 음악방송 1위를 위한 투표에 참여하세요
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {MUSIC_SHOWS.map((show) => (
+                    <MusicShowCard key={show.id} show={show} />
+                  ))}
                 </div>
-              )}
+              </div>
+              
+              <VotingTipsSection />
             </div>
-          </CardContent>
-        </Card>
+          </TabsContent>
 
-        <VotingGuide />
+          {/* 시상식 탭 */}
+          <TabsContent value="awards" className="mt-6">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 mb-2">🏆 시상식 투표</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  연말 시상식 대상을 위한 투표에 참여하세요
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {AWARD_SHOWS.map((award) => (
+                    <AwardCard key={award.id} award={award} />
+                  ))}
+                </div>
+              </div>
+              
+              <VotingTipsSection />
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

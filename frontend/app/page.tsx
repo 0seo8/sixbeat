@@ -9,7 +9,7 @@ import AlertBanner from "@/components/home/alert-banner";
 import { MelonMusicwaveBanner } from "@/components/home/melon-musicwave-banner";
 import { QuickLinksBanner } from "@/components/home/quick-links-banner";
 
-import { formatKoreanDate, formatKoreanDateTime } from "@/lib/date-utils";
+import { formatKoreanDate } from "@/lib/date-utils";
 import { useSidebar } from "@/components/layout/mobile-app-layout";
 import { useEffect, useState } from "react";
 import { getLastUpdateTime } from "@/lib/utils/index";
@@ -30,15 +30,6 @@ export default function HomePage() {
       {/* Content with padding */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6  pt-6">
         <AlertBanner />
-
-        {/* Today's Tasks Section */}
-        {/* <div>
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
-            오늘의 스트리밍 미션
-          </h2>
-          <TodoCard />
-        </div> */}
-
         <div>
           <div className="flex items-center justify-between mb-4">
             <div>

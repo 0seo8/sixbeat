@@ -3,10 +3,19 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X, Home, BarChart3, Vote, Play, BookOpen, Music, Download, Mic, ChevronDown, ChevronRight, Radio, MessageSquare, ShoppingBag, Users, Heart, DollarSign } from "lucide-react";
+import { X, Home, BarChart3, Vote, Play, BookOpen, Music, Download, Mic, ChevronDown, ChevronRight, Radio, ShoppingBag, Users, Heart, DollarSign } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { SocialLinks } from "@/components/social-links";
+
+interface NavigationItem {
+  name: string;
+  href?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  hasChildren?: boolean;
+  children?: NavigationItem[];
+  external?: boolean;
+}
 
 interface SidebarProps {
   open: boolean;
@@ -34,6 +43,7 @@ const navigation = [
           { name: "유튜브", href: "/streaming/music/youtube", external: true },
           { name: "애플", href: "/streaming/music/apple", external: true },
           { name: "스포티파이", href: "/streaming/music/spotify", external: true },
+          { name: "스테이션헤드", href: "/streaming/music/stationhead", external: true },
         ]
       },
       {
@@ -99,15 +109,31 @@ const navigation = [
     ]
   },
   {
-    name: "컴백",
-    icon: Mic,
+    name: "라디오 신청",
+    icon: Radio,
     hasChildren: true,
     children: [
-      { name: "앨범 공구", href: "/comeback/group-order", icon: ShoppingBag },
-      { name: "다운 헬퍼 지원", href: "/comeback/download-helper", icon: Users },
-      { name: "아이디 기부", href: "/comeback/id-donation", icon: Heart },
-      { name: "라디오 신청", href: "/comeback/radio-request", icon: Radio },
-      { name: "모금 안내", href: "/comeback/fundraising", icon: DollarSign },
+      { name: "KBS", href: "/radio/kbs", external: true },
+      { name: "MBC", href: "/radio/mbc", external: true },
+      { name: "SBS", href: "/radio/sbs", external: true },
+    ]
+  },
+  {
+    name: "서포트",
+    icon: Heart,
+    hasChildren: true,
+    children: [
+      { name: "앨범 공구", href: "/support/group-order" },
+      { name: "아이디 기부", href: "/support/id-donation" },
+      { name: "헬퍼 지원", href: "/support/helper-support" },
+      { 
+        name: "모금",
+        hasChildren: true,
+        children: [
+          { name: "총공 모금", href: "/support/fundraising/streaming" },
+          { name: "투표 모금", href: "/support/fundraising/voting" },
+        ]
+      },
     ]
   },
   { name: "가이드", href: "/guide", icon: BookOpen },
@@ -124,7 +150,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     }));
   };
 
-  const renderNavigationItem = (item: any, level = 0, parentKey = "") => {
+  const renderNavigationItem = (item: NavigationItem, level = 0, parentKey = "") => {
     const key = parentKey ? `${parentKey}-${item.name}` : item.name;
     const isExpanded = expandedItems[key];
     const hasChildren = item.hasChildren && item.children;
@@ -155,7 +181,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           
           {isExpanded && (
             <div className="space-y-1 mt-1">
-              {item.children.map((child: any) => renderNavigationItem(child, level + 1, key))}
+              {item.children.map((child: NavigationItem) => renderNavigationItem(child, level + 1, key))}
             </div>
           )}
         </div>
