@@ -8,26 +8,18 @@ import QuickAccessCard from "@/components/home/quick-access-card";
 import AlertBanner from "@/components/home/alert-banner";
 import { MelonMusicwaveBanner } from "@/components/home/melon-musicwave-banner";
 import { QuickLinksBanner } from "@/components/home/quick-links-banner";
-
 import { formatKoreanDate } from "@/lib/date-utils";
 import { useSidebar } from "@/components/layout/mobile-app-layout";
-import { useEffect, useState } from "react";
 import { getLastUpdateTime } from "@/lib/utils/index";
 
 export default function HomePage() {
-  const [currentTime, setCurrentTime] = useState<Date | null>(null);
+  const currentTime = new Date();
   const { openSidebar } = useSidebar();
-
-  useEffect(() => {
-    setCurrentTime(new Date());
-  }, []);
 
   return (
     <div>
-      {/* Hero Section - DAY6 Image Swiper (Full Width) */}
       <DAY6ImageSwiper onMenuClick={openSidebar} />
 
-      {/* Content with padding */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6  pt-6">
         <AlertBanner />
         <div>
@@ -37,7 +29,7 @@ export default function HomePage() {
                 실시간 차트 순위
               </h2>
               <p className="text-xs md:text-sm text-gray-500">
-                {currentTime ? formatKoreanDate(currentTime) : ""}
+                {formatKoreanDate(currentTime)}
               </p>
             </div>
             <div className="text-gray-300">
@@ -55,13 +47,10 @@ export default function HomePage() {
           <QuickAccessCard />
         </div>
 
-        {/* Melon Musicwave Banner */}
         <MelonMusicwaveBanner />
 
-        {/* Radio & SMS Vote Links */}
         <QuickLinksBanner />
 
-        {/* YouTube Stats Section */}
         <div>
           <div className="flex items-center justify-between">
             <h2 className="text-lg md:text-xl font-bold text-gray-900">
@@ -69,7 +58,7 @@ export default function HomePage() {
             </h2>
             <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
               <span className="text-xs md:text-sm text-gray-500">
-                {currentTime ? formatKoreanDate(currentTime) : ""}
+                {formatKoreanDate(currentTime)}
               </span>
               <Clock className="h-3 w-3" />
               <span>{getLastUpdateTime()} 기준</span>

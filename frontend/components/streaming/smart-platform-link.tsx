@@ -1,7 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ExternalLink, Heart } from "lucide-react";
+
+// 컴포넌트 외부로 이동
+function checkMobile(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const userAgent = navigator.userAgent.toLowerCase();
+  const mobileKeywords = ["android", "iphone", "ipad", "mobile"];
+  return mobileKeywords.some((keyword) => userAgent.includes(keyword));
+}
 
 interface SmartPlatformLinkProps {
   appLink: string;
@@ -19,17 +27,10 @@ export function SmartPlatformLink({
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // 모바일 디바이스 감지
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const mobileKeywords = ["android", "iphone", "ipad", "mobile"];
-      return mobileKeywords.some((keyword) => userAgent.includes(keyword));
-    };
-
     setIsMobile(checkMobile());
   }, []);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
     if (!isActive) {
       e.preventDefault();
       return;
@@ -52,7 +53,7 @@ export function SmartPlatformLink({
       e.preventDefault();
     }
     // 데스크톱은 기본적으로 webLink로 이동 (target="_blank")
-  };
+  }, [isActive, isMobile, appLink, webLink]);
 
   if (!isActive) {
     return (

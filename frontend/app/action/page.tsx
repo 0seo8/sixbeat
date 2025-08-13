@@ -53,7 +53,7 @@ const itemVariants = {
     opacity: 1,
     scale: 1,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 100,
       damping: 10,
     },
@@ -63,7 +63,7 @@ const itemVariants = {
 export default function ActionPage() {
   return (
     <div className="space-y-6">
-      <PageHeader title="Action" subtitle="원하는 활동을 선택하세요" />
+      <PageHeader title="Action" description="원하는 활동을 선택하세요" />
 
       <motion.div
         className="grid grid-cols-2 gap-4 px-4"

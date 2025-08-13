@@ -231,7 +231,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
           {isExpanded && (
             <div className="space-y-1 mt-1">
-              {item.children.map((child: NavigationItem) =>
+              {item.children?.map((child: NavigationItem) =>
                 renderNavigationItem(child, level + 1, key)
               )}
             </div>
@@ -244,7 +244,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
       <div key={key} className={`${level > 0 ? "ml-4" : ""}`}>
         {item.external ? (
           <a
-            href={item.href}
+            href={item.href || "#"}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -263,7 +263,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           </a>
         ) : (
           <Link
-            href={item.href}
+            href={item.href || "#"}
             onClick={onClose}
             className={cn(
               "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",

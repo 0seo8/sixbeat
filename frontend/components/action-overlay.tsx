@@ -48,7 +48,7 @@ const containerVariants = {
     scale: 1,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 300,
       damping: 25,
       staggerChildren: 0.1,
@@ -70,7 +70,7 @@ const itemVariants = {
     scale: 1,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 400,
       damping: 20,
     },

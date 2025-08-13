@@ -17,7 +17,6 @@ from flo_crawler import FloCrawler
 from utils import get_current_timestamp, get_current_kst_timestamp_short, get_current_kst_iso
 from target_songs import is_target_song, get_target_info
 from rank_tracker import RankTracker
-from twitter_bot import TwitterBot
 from youtube_crawler import get_youtube_stats_for_dashboard
 
 
@@ -386,12 +385,15 @@ def generate_html_page(chart_data, output_dir="docs", is_filtered=True):
 </html>
     """
     
-    # 타겟 곡 전용 HTML 페이지만 생성
-    output_file = os.path.join(output_dir, "target_index.html")
-    print(f"Target HTML page generated at {output_file}")
+    # 타겟 곡 전용 HTML 페이지 생성 (루트 진입용 index.html 포함)
+    target_file = os.path.join(output_dir, "target_index.html")
+    index_file = os.path.join(output_dir, "index.html")
+    print(f"Target HTML page generated at {target_file}")
+    print(f"Root index generated at {index_file}")
     
-    with open(output_file, "w", encoding="utf-8") as f:
-        f.write(html_content)
+    for path in [target_file, index_file]:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(html_content)
 
 
 def generate_service_sections(chart_data, is_filtered=True):
@@ -554,9 +556,6 @@ def main():
     # 순위 변화 추적기 초기화
     rank_tracker = RankTracker()
     
-    # 트위터 봇 초기화
-    twitter_bot = TwitterBot()
-    
     # 크롤러 초기화
     crawlers = init_crawlers()
     
@@ -570,16 +569,7 @@ def main():
     rank_changes = rank_tracker.get_rank_changes(filtered_data, target_songs_only=False)
     print(f"🔄 계산된 순위 변화: {rank_changes}")
     
-    # 트위터로 현재 순위 알림 (변화 유무 상관없이, KST 기준)
-    # current_time을 None으로 전달해서 트위터 봇이 자동으로 정각 시간을 계산하도록 함
-    try:
-        if twitter_bot.is_available():
-            print("\n🐦 트위터 봇 알림 전송 중...")
-            twitter_bot.tweet_rank_changes(rank_changes, None)
-        else:
-            print("\n⚠️ 트위터 API가 설정되지 않아 트윗을 보내지 않습니다.")
-    except Exception as e:
-        print(f"\n❌ 트위터 봇 오류: {e}")
+    # 트위터 연동 제거됨
     
     # 현재 데이터를 히스토리에 저장 (타겟 곡만)
     current_timestamp = get_current_timestamp() # 정각 타임스탬프 가져오기
