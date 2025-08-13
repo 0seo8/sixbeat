@@ -46,25 +46,25 @@ const navigation = [
       {
         name: "음원 스트리밍",
         hasChildren: true,
-        children: [
-          { name: "멜론", href: "/streaming/music/melon", external: true },
-          { name: "지니", href: "/streaming/music/genie", external: true },
-          { name: "벅스", href: "/streaming/music/bugs", external: true },
-          { name: "바이브", href: "/streaming/music/vibe", external: true },
-          { name: "플로", href: "/streaming/music/flo", external: true },
-          { name: "유튜브", href: "/streaming/music/youtube", external: true },
-          { name: "애플", href: "/streaming/music/apple", external: true },
-          {
-            name: "스포티파이",
-            href: "/streaming/music/spotify",
-            external: true,
-          },
-          {
-            name: "스테이션헤드",
-            href: "/streaming/music/stationhead",
-            external: true,
-          },
-        ],
+        // children: [
+        //   { name: "멜론", href: "/streaming/music/melon", external: true },
+        //   { name: "지니", href: "/streaming/music/genie", external: true },
+        //   { name: "벅스", href: "/streaming/music/bugs", external: true },
+        //   { name: "바이브", href: "/streaming/music/vibe", external: true },
+        //   { name: "플로", href: "/streaming/music/flo", external: true },
+        //   { name: "유튜브", href: "/streaming/music/youtube", external: true },
+        //   { name: "애플", href: "/streaming/music/apple", external: true },
+        //   {
+        //     name: "스포티파이",
+        //     href: "/streaming/music/spotify",
+        //     external: true,
+        //   },
+        //   {
+        //     name: "스테이션헤드",
+        //     href: "/streaming/music/stationhead",
+        //     external: true,
+        //   },
+        // ],
       },
       {
         name: "MV 스트리밍",
@@ -79,32 +79,32 @@ const navigation = [
     name: "다운로드",
     icon: Download,
     hasChildren: true,
-    children: [
-      {
-        name: "음원 다운로드",
-        hasChildren: true,
-        children: [
-          { name: "멜론", href: "/download/music/melon", external: true },
-          { name: "지니", href: "/download/music/genie", external: true },
-          { name: "벅스", href: "/download/music/bugs", external: true },
-          { name: "바이브", href: "/download/music/vibe", external: true },
-          { name: "카카오뮤직", href: "/download/music/kakao", external: true },
-          {
-            name: "V컬러링",
-            href: "/download/music/vcoloring",
-            external: true,
-          },
-        ],
-      },
-      {
-        name: "MV 다운로드",
-        hasChildren: true,
-        children: [
-          { name: "멜론", href: "/download/mv/melon", external: true },
-          { name: "벅스", href: "/download/mv/bugs", external: true },
-        ],
-      },
-    ],
+    // children: [
+    //   {
+    //     name: "음원 다운로드",
+    //     hasChildren: true,
+    //     children: [
+    //       { name: "멜론", href: "/download/music/melon", external: true },
+    //       { name: "지니", href: "/download/music/genie", external: true },
+    //       { name: "벅스", href: "/download/music/bugs", external: true },
+    //       { name: "바이브", href: "/download/music/vibe", external: true },
+    //       { name: "카카오뮤직", href: "/download/music/kakao", external: true },
+    //       {
+    //         name: "V컬러링",
+    //         href: "/download/music/vcoloring",
+    //         external: true,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     name: "MV 다운로드",
+    //     hasChildren: true,
+    //     children: [
+    //       { name: "멜론", href: "/download/mv/melon", external: true },
+    //       { name: "벅스", href: "/download/mv/bugs", external: true },
+    //     ],
+    //   },
+    // ],
   },
   {
     name: "투표",
@@ -325,7 +325,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-100">
-              <div className="flex items-center gap-2">
+              <Link
+                href="/"
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              >
                 <Image
                   src="/streaming/day-6-logo.jpg"
                   alt="DAY6 STRM"
@@ -334,7 +337,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                   className="rounded-md"
                 />
                 <span className="font-bold text-lg">DAY6 STRM</span>
-              </div>
+              </Link>
               <button
                 onClick={onClose}
                 className="p-2 h-8 w-8 rounded-lg hover:bg-gray-100 transition-colors flex items-center justify-center"
