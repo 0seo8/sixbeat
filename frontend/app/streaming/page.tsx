@@ -46,17 +46,17 @@ export default function StreamingPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-green-50 border-green-200">
+              <Card className="bg-gradient-to-r from-[var(--mint-primary)]/10 to-[var(--mint-light)]/5 border-[var(--mint-primary)]/30">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-[var(--mint-primary)] rounded-full flex items-center justify-center flex-shrink-0">
                       <Volume2 className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-green-900 mb-2">
+                      <h3 className="font-bold text-[var(--mint-dark)] mb-2">
                         음원 스트리밍 팁
                       </h3>
-                      <ul className="text-sm text-green-700 space-y-1">
+                      <ul className="text-sm text-[var(--mint-dark)] space-y-1">
                         <li>• 30초 이상 재생하기</li>
                         <li>• 다양한 곡 섞어 듣기</li>
                         <li>• 적절한 간격 유지하기</li>
@@ -85,17 +85,17 @@ export default function StreamingPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-red-50 border-red-200">
+              <Card className="bg-gradient-to-br from-[var(--mint-light)]/10 to-[var(--navy-dark)]/5 border-[var(--navy-dark)]/30">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[var(--mint-primary)] to-[var(--navy-dark)] rounded-full flex items-center justify-center flex-shrink-0">
                       <Play className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-red-900 mb-2">
+                      <h3 className="font-bold text-[var(--navy-dark)] mb-2">
                         YouTube 스트리밍 팁
                       </h3>
-                      <ul className="text-sm text-red-700 space-y-1">
+                      <ul className="text-sm text-[var(--navy-dark)] space-y-1">
                         <li>• 음소거 금지, 최소 음량으로 설정</li>
                         <li>• 영상 끝까지 시청하기</li>
                         <li>• 좋아요 & 댓글 남기기</li>

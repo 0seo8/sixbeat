@@ -26,7 +26,7 @@ export function PlatformCard({
       >
         <a href={platform.url} target="_blank" rel="noopener noreferrer">
           <div
-            className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}
+            className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 bg-white border border-gray-100 overflow-hidden"
           >
             {platform.logo !== "/file.svg" ? (
               <Image
@@ -34,7 +34,7 @@ export function PlatformCard({
                 alt={platform.name}
                 width={28}
                 height={28}
-                className="rounded object-cover filter brightness-0 invert"
+                className="rounded object-cover"
               />
             ) : (
               <TrendingUp className="w-6 h-6 text-white" />
@@ -105,7 +105,7 @@ export function PlatformCard({
         <CardContent className="p-4">
           <div className="space-y-3">
             <div
-              className={`w-full h-16 ${platform.color} rounded-lg flex items-center justify-center`}
+              className="w-full h-16 bg-white border border-gray-100 rounded-lg flex items-center justify-center"
             >
               {platform.logo !== "/file.svg" ? (
                 <Image
@@ -113,7 +113,7 @@ export function PlatformCard({
                   alt={platform.name}
                   width={32}
                   height={32}
-                  className="w-8 h-8 object-contain filter brightness-0 invert"
+                  className="w-8 h-8 object-contain"
                 />
               ) : (
                 <div className="text-2xl text-white">
