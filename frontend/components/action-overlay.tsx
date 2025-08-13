@@ -25,7 +25,7 @@ const actionItems = [
   {
     title: "라디오신청",
     icon: Radio,
-    href: "/guide/radio",
+    href: "/radio",
     gradient: "from-green-500 to-emerald-400",
   },
   {

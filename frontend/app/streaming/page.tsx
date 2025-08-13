@@ -1,19 +1,12 @@
 "use client";
 
+import { ExternalLink, Play, Volume2, Music } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Play, Volume2, ExternalLink } from "lucide-react";
-import { PageHeader } from "@/components/common/page-header";
-import { GUIDE_CATEGORIES } from "@/content/guide.config";
-import Link from "next/link";
 import Image from "next/image";
 
-// 스트리밍 관련 가이드 카테고리들 필터링
-const streamingGuides = {
-  "streaming-list": GUIDE_CATEGORIES.filter((c) => c.subcategory === "streaming-list"),
-  "music-streaming": GUIDE_CATEGORIES.filter((c) => c.subcategory === "music-streaming"),
-  "mv-streaming": GUIDE_CATEGORIES.filter((c) => c.subcategory === "mv-streaming"),
-};
+// 스트리밍 플랫폼 데이터
 
 // 플랫폼 데이터 정의
 const STREAMING_PLATFORMS = {
@@ -307,75 +300,150 @@ function StreamingTipsSection() {
 
 export default function StreamingPage() {
   return (
-    <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
-      <PageHeader
-        title="스트리밍 허브"
-        description="음원 플랫폼에서 DAY6 곡들을 스트리밍하여 차트 순위를 올려주세요!"
-        enableShare={true}
-        shareSlug=""
-      />
+    <div>
+      {/* Content with same padding as homepage */}
+      <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
+        
+        {/* Section Header - same style as homepage */}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg md:text-xl font-bold text-gray-900">
+              스트리밍
+            </h2>
+            <p className="text-xs md:text-sm text-gray-500">
+              DAY6 음원 및 뮤직비디오 스트리밍
+            </p>
+          </div>
+          <div className="text-gray-300">
+            <ExternalLink className="h-5 w-5" />
+          </div>
+        </div>
 
-      <div className="mt-6">
-        <Tabs defaultValue="streaming-list" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="streaming-list" className="text-xs">스트리밍리스트</TabsTrigger>
-            <TabsTrigger value="music-streaming" className="text-xs">음원 스트리밍</TabsTrigger>
-            <TabsTrigger value="mv-streaming" className="text-xs">MV 스트리밍</TabsTrigger>
+        {/* Tabs */}
+        <Tabs defaultValue="music" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="music">음원 스트리밍</TabsTrigger>
+            <TabsTrigger value="mv">MV 스트리밍</TabsTrigger>
           </TabsList>
 
-          {/* 스트리밍리스트 탭 */}
-          <TabsContent value="streaming-list" className="mt-6">
-            <div className="space-y-6">
-              <StreamingCategorySection
-                categoryKey="streaming-list"
-                items={streamingGuides["streaming-list"]}
-                title="전체 플랫폼"
-                description="모든 스트리밍 플랫폼을 한번에 확인하세요"
-                icon="📱"
-              />
-              <StreamingTipsSection />
-            </div>
-          </TabsContent>
-
           {/* 음원 스트리밍 탭 */}
-          <TabsContent value="music-streaming" className="mt-6">
+          <TabsContent value="music" className="mt-6">
             <div className="space-y-6">
-              <div>
-                <h2 className="text-lg font-bold text-gray-900 mb-2">🎵 음원 플랫폼</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  각 플랫폼을 클릭하여 DAY6 아티스트 페이지로 바로 이동하세요
-                </p>
-                
-                <div className="grid grid-cols-2 gap-3">
-                  {STREAMING_PLATFORMS.music.map((platform) => (
-                    <PlatformCard key={platform.id} platform={platform} />
-                  ))}
-                </div>
-              </div>
-              <StreamingTipsSection />
+              {/* Music Platforms Grid - similar to QuickAccessCard */}
+              <Card>
+                <CardContent className="p-0">
+                  <div className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                    {STREAMING_PLATFORMS.music.map((platform) => (
+                      <Button
+                        key={platform.id}
+                        asChild
+                        variant="ghost"
+                        className="flex flex-col items-center p-3 h-auto border border-gray-100 hover:border-gray-200"
+                      >
+                        <a href={platform.url} target="_blank" rel="noopener noreferrer">
+                          <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}>
+                            {platform.logo !== "/file.svg" ? (
+                              <Image
+                                src={platform.logo}
+                                alt={platform.name}
+                                width={28}
+                                height={28}
+                                className="rounded object-cover filter brightness-0 invert"
+                              />
+                            ) : (
+                              <Music className="w-6 h-6 text-white" />
+                            )}
+                          </div>
+                          <span className="text-xs lg:text-sm font-medium text-gray-700 text-center">
+                            {platform.name}
+                          </span>
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Streaming Tips */}
+              <Card className="bg-green-50 border-green-200">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Volume2 className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-green-900 mb-2">음원 스트리밍 팁</h3>
+                      <ul className="text-sm text-green-700 space-y-1">
+                        <li>• 30초 이상 재생하기</li>
+                        <li>• 다양한 곡 섞어 듣기</li>
+                        <li>• 적절한 간격 유지하기</li>
+                        <li>• 로봇 재생 패턴 피하기</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
 
           {/* MV 스트리밍 탭 */}
-          <TabsContent value="mv-streaming" className="mt-6">
+          <TabsContent value="mv" className="mt-6">
             <div className="space-y-6">
-              <div>
-                <h2 className="text-lg font-bold text-gray-900 mb-2">📺 뮤직비디오 스트리밍</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  유튜브에서 DAY6 뮤직비디오를 스트리밍해주세요
-                </p>
-                
-                <div className="grid grid-cols-1 gap-3 max-w-xs">
-                  {STREAMING_PLATFORMS.mv.map((platform) => (
-                    <PlatformCard key={platform.id} platform={platform} />
-                  ))}
-                </div>
-              </div>
-              <StreamingTipsSection />
+              {/* YouTube Platform */}
+              <Card>
+                <CardContent className="p-0">
+                  <div className="grid grid-cols-1 gap-3 max-w-sm mx-auto">
+                    {STREAMING_PLATFORMS.mv.map((platform) => (
+                      <Button
+                        key={platform.id}
+                        asChild
+                        variant="ghost"
+                        className="flex flex-col items-center p-6 h-auto border border-gray-100 hover:border-gray-200"
+                      >
+                        <a href={platform.url} target="_blank" rel="noopener noreferrer">
+                          <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${platform.color}`}>
+                            <Play className="w-8 h-8 text-white" />
+                          </div>
+                          <span className="text-base font-medium text-gray-700 text-center">
+                            {platform.name}
+                          </span>
+                          <span className="text-sm text-gray-500 mt-1">
+                            뮤직비디오 스트리밍
+                          </span>
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* YouTube Tips */}
+              <Card className="bg-red-50 border-red-200">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Play className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-red-900 mb-2">YouTube 스트리밍 팁</h3>
+                      <ul className="text-sm text-red-700 space-y-1">
+                        <li>• 음소거 금지, 최소 음량으로 설정</li>
+                        <li>• 영상 끝까지 시청하기</li>
+                        <li>• 좋아요 & 댓글 남기기</li>
+                        <li>• 다른 영상들도 함께 시청</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
         </Tabs>
+
       </div>
+      
+      {/* Bottom spacing for mobile nav */}
+      <div className="h-20 md:h-8"></div>
     </div>
   );
 }

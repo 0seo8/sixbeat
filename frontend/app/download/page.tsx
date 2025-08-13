@@ -193,60 +193,154 @@ function DownloadTipsSection() {
 
 export default function DownloadPage() {
   return (
-    <div className="mx-auto w-full max-w-screen-sm px-4 pb-20">
-      <PageHeader
-        title="다운로드 센터"
-        description="DAY6 음원과 뮤직비디오를 다운로드하여 소장해주세요!"
-        enableShare={true}
-        shareSlug=""
-      />
+    <div>
+      {/* Content with same padding as homepage */}
+      <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
+        
+        {/* Section Header - same style as homepage */}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg md:text-xl font-bold text-gray-900">
+              다운로드
+            </h2>
+            <p className="text-xs md:text-sm text-gray-500">
+              DAY6 음원 및 뮤직비디오 다운로드
+            </p>
+          </div>
+          <div className="text-gray-300">
+            <ExternalLink className="h-5 w-5" />
+          </div>
+        </div>
 
-      <div className="mt-6">
-        <Tabs defaultValue="music-download" className="w-full">
+        {/* Tabs */}
+        <Tabs defaultValue="music" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="music-download">음원 다운로드</TabsTrigger>
-            <TabsTrigger value="mv-download">MV 다운로드</TabsTrigger>
+            <TabsTrigger value="music">음원 다운로드</TabsTrigger>
+            <TabsTrigger value="mv">MV 다운로드</TabsTrigger>
           </TabsList>
 
           {/* 음원 다운로드 탭 */}
-          <TabsContent value="music-download" className="mt-6">
+          <TabsContent value="music" className="mt-6">
             <div className="space-y-6">
-              <div>
-                <h2 className="text-lg font-bold text-gray-900 mb-2">🎵 음원 다운로드</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  각 플랫폼에서 DAY6 음원을 다운로드하세요
-                </p>
-                
-                <div className="grid grid-cols-2 gap-3">
-                  {DOWNLOAD_PLATFORMS.music.map((platform) => (
-                    <PlatformCard key={platform.id} platform={platform} />
-                  ))}
-                </div>
-              </div>
-              <DownloadTipsSection />
+              {/* Music Download Platforms Grid */}
+              <Card>
+                <CardContent className="p-0">
+                  <div className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                    {DOWNLOAD_PLATFORMS.music.map((platform) => (
+                      <a
+                        key={platform.id}
+                        href={platform.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center p-3 hover:bg-gray-50 transition-colors border border-gray-100 hover:border-gray-200 rounded-lg"
+                      >
+                        <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}>
+                          {platform.logo !== "/file.svg" ? (
+                            <Image
+                              src={platform.logo}
+                              alt={platform.name}
+                              width={28}
+                              height={28}
+                              className="rounded object-cover filter brightness-0 invert"
+                            />
+                          ) : (
+                            <Download className="w-6 h-6 text-white" />
+                          )}
+                        </div>
+                        <span className="text-xs lg:text-sm font-medium text-gray-700 text-center">
+                          {platform.name}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Download Tips */}
+              <Card className="bg-blue-50 border-blue-200">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Music className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-blue-900 mb-2">음원 다운로드 팁</h3>
+                      <ul className="text-sm text-blue-700 space-y-1">
+                        <li>• 이용권 구매 후 다운로드</li>
+                        <li>• 고음질 설정 권장</li>
+                        <li>• 전곡 다운로드로 차트 지원</li>
+                        <li>• 정식 구매만 차트 반영됨</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
 
           {/* MV 다운로드 탭 */}
-          <TabsContent value="mv-download" className="mt-6">
+          <TabsContent value="mv" className="mt-6">
             <div className="space-y-6">
-              <div>
-                <h2 className="text-lg font-bold text-gray-900 mb-2">📺 MV 다운로드</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  뮤직비디오를 다운로드하여 소장하세요
-                </p>
-                
-                <div className="grid grid-cols-2 gap-3">
-                  {DOWNLOAD_PLATFORMS.mv.map((platform) => (
-                    <PlatformCard key={platform.id} platform={platform} />
-                  ))}
-                </div>
-              </div>
-              <DownloadTipsSection />
+              {/* MV Download Platforms */}
+              <Card>
+                <CardContent className="p-0">
+                  <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                    {DOWNLOAD_PLATFORMS.mv.map((platform) => (
+                      <a
+                        key={platform.id}
+                        href={platform.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center p-6 hover:bg-gray-50 transition-colors border border-gray-100 hover:border-gray-200 rounded-lg"
+                      >
+                        <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${platform.color} overflow-hidden`}>
+                          <Image
+                            src={platform.logo}
+                            alt={platform.name}
+                            width={32}
+                            height={32}
+                            className="rounded object-cover filter brightness-0 invert"
+                          />
+                        </div>
+                        <span className="text-base font-medium text-gray-700 text-center">
+                          {platform.name}
+                        </span>
+                        <span className="text-sm text-gray-500 mt-1">
+                          MV 다운로드
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* MV Download Tips */}
+              <Card className="bg-purple-50 border-purple-200">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Video className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-purple-900 mb-2">MV 다운로드 팁</h3>
+                      <ul className="text-sm text-purple-700 space-y-1">
+                        <li>• HD 화질로 다운로드</li>
+                        <li>• 공식 MV 우선 다운로드</li>
+                        <li>• 스페셜 클립도 함께 수집</li>
+                        <li>• 불법 다운로드 절대 금지</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
         </Tabs>
+
       </div>
+      
+      {/* Bottom spacing for mobile nav */}
+      <div className="h-20 md:h-8"></div>
     </div>
   );
 }

@@ -3,14 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Home, BarChart3, Vote, Zap, Headphones } from 'lucide-react';
+import { Home, BarChart3, Calendar, Zap, Headphones } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ActionOverlay } from './action-overlay';
 
 const navigation = [
   { name: '홈', href: '/', icon: Home, type: 'link' },
   { name: '차트', href: '/charts', icon: BarChart3, type: 'link' },
-  { name: '투표', href: '/votes', icon: Vote, type: 'link' },
+  { name: '컴백', href: '/comeback', icon: Calendar, type: 'link' },
   { name: 'Action', href: '/action', icon: Zap, type: 'action' },
   { name: 'Support', href: '/support', icon: Headphones, type: 'link' },
 ];
