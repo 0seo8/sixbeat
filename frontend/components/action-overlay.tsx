@@ -39,7 +39,7 @@ const actionItems = [
 const overlayVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
-  exit: { opacity: 0 }
+  exit: { opacity: 0 },
 };
 
 const containerVariants = {
@@ -135,10 +135,12 @@ export function ActionOverlay({ isOpen, onClose }: ActionOverlayProps) {
                       className="flex flex-col items-center p-4 rounded-2xl hover:bg-gray-50 transition-colors"
                     >
                       {/* 원형 아이콘 */}
-                      <div className={`w-16 h-16 mb-3 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}>
+                      <div
+                        className={`w-16 h-16 mb-3 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}
+                      >
                         <Icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       {/* 제목 */}
                       <span className="text-sm font-medium text-gray-700">
                         {item.title}

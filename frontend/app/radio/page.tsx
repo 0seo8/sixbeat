@@ -16,9 +16,9 @@ const radioStations = [
       },
       {
         name: "옥상달빛의 밤편지",
-        time: "평일 24:00-02:00", 
+        time: "평일 24:00-02:00",
         url: "https://www.kbs.co.kr/radio/coolfm/letter",
-      }
+      },
     ],
     color: "bg-blue-500",
   },
@@ -35,7 +35,7 @@ const radioStations = [
         name: "배철수의 음악캠프",
         time: "평일 20:00-22:00",
         url: "https://www.imbc.com/broad/radio/fm/camp",
-      }
+      },
     ],
     color: "bg-green-500",
   },
@@ -52,7 +52,7 @@ const radioStations = [
         name: "이국주의 영스트리트",
         time: "평일 18:00-20:00",
         url: "https://www.sbs.co.kr/radio/youngstreet",
-      }
+      },
     ],
     color: "bg-red-500",
   },
@@ -60,9 +60,9 @@ const radioStations = [
 
 const radioTips = [
   "사연과 함께 신청하면 선곡 확률이 높아져요",
-  "여러 프로그램에 동시 신청 가능해요", 
+  "여러 프로그램에 동시 신청 가능해요",
   "매일 꾸준히 신청하는 것이 중요해요",
-  "최신곡과 인기곡을 골고루 신청해주세요"
+  "최신곡과 인기곡을 골고루 신청해주세요",
 ];
 
 export default function RadioPage() {
@@ -70,7 +70,6 @@ export default function RadioPage() {
     <div>
       {/* Content with same padding as homepage */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
-        
         {/* Section Header - same style as homepage */}
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -108,17 +107,26 @@ export default function RadioPage() {
         {/* Radio Stations Grid */}
         <div className="grid grid-cols-1 gap-4">
           {radioStations.map((station) => (
-            <Card key={station.id} className="hover:shadow-md transition-shadow duration-200">
+            <Card
+              key={station.id}
+              className="hover:shadow-md transition-shadow duration-200"
+            >
               <CardContent className="p-0">
                 <div className="p-3 md:p-6 space-y-4">
                   {/* Station Header */}
                   <div className="flex items-center gap-3">
-                    <div className={`w-12 h-12 ${station.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <div
+                      className={`w-12 h-12 ${station.color} rounded-lg flex items-center justify-center flex-shrink-0`}
+                    >
                       <Radio className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-gray-900">{station.name}</h3>
-                      <p className="text-sm text-gray-600">{station.programs.length}개 프로그램</p>
+                      <h3 className="font-bold text-gray-900">
+                        {station.name}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {station.programs.length}개 프로그램
+                      </p>
                     </div>
                   </div>
 
@@ -131,9 +139,15 @@ export default function RadioPage() {
                         variant="ghost"
                         className="justify-between p-3 h-auto border border-gray-100 hover:border-gray-200"
                       >
-                        <a href={program.url} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={program.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <div className="text-left">
-                            <div className="text-sm font-medium text-gray-700">{program.name}</div>
+                            <div className="text-sm font-medium text-gray-700">
+                              {program.name}
+                            </div>
                             <div className="text-xs text-gray-500 flex items-center gap-1 mt-1">
                               <Clock className="w-3 h-3" />
                               {program.time}
@@ -158,7 +172,9 @@ export default function RadioPage() {
                 <MessageCircle className="w-4 h-4 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-green-900 mb-2">라디오 신청 팁</h3>
+                <h3 className="font-bold text-green-900 mb-2">
+                  라디오 신청 팁
+                </h3>
                 <ul className="text-sm text-green-700 space-y-1">
                   {radioTips.map((tip, index) => (
                     <li key={index}>• {tip}</li>
@@ -190,9 +206,8 @@ export default function RadioPage() {
             </div>
           </CardContent>
         </Card>
-
       </div>
-      
+
       {/* Bottom spacing for mobile nav */}
       <div className="h-20 md:h-8"></div>
     </div>

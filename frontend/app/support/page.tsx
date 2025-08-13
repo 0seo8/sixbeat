@@ -1,9 +1,14 @@
 "use client";
 
-import { ExternalLink, ShoppingBag, Heart, Users, DollarSign } from "lucide-react";
+import {
+  ExternalLink,
+  ShoppingBag,
+  Heart,
+  Users,
+  DollarSign,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 const supportItems = [
   {
@@ -12,9 +17,12 @@ const supportItems = [
     icon: ShoppingBag,
     color: "bg-purple-500",
     links: [
-      { name: "트위터 공구방", url: "https://twitter.com/search?q=DAY6%20공구" },
+      {
+        name: "트위터 공구방",
+        url: "https://twitter.com/search?q=DAY6%20공구",
+      },
       { name: "카페 공구", url: "https://cafe.daum.net/DAY6" },
-    ]
+    ],
   },
   {
     title: "아이디 기부",
@@ -24,7 +32,7 @@ const supportItems = [
     links: [
       { name: "아이디 기부 양식", url: "#" },
       { name: "기부 현황", url: "#" },
-    ]
+    ],
   },
   {
     title: "헬퍼 지원",
@@ -34,7 +42,7 @@ const supportItems = [
     links: [
       { name: "헬퍼 신청", url: "#" },
       { name: "헬퍼 모집", url: "#" },
-    ]
+    ],
   },
   {
     title: "모금",
@@ -44,7 +52,7 @@ const supportItems = [
     subItems: [
       { name: "총공 모금", url: "#" },
       { name: "투표 모금", url: "#" },
-    ]
+    ],
   },
 ];
 
@@ -53,7 +61,6 @@ export default function SupportPage() {
     <div>
       {/* Content with same padding as homepage */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
-
         {/* Section Header - same style as homepage */}
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -74,17 +81,26 @@ export default function SupportPage() {
           {supportItems.map((item, index) => {
             const Icon = item.icon;
             return (
-              <Card key={index} className="hover:shadow-md transition-shadow duration-200">
+              <Card
+                key={index}
+                className="hover:shadow-md transition-shadow duration-200"
+              >
                 <CardContent className="p-0">
                   <div className="p-3 md:p-6 space-y-4">
                     {/* Icon and Title */}
                     <div className="flex items-start gap-3">
-                      <div className={`w-12 h-12 ${item.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                      <div
+                        className={`w-12 h-12 ${item.color} rounded-lg flex items-center justify-center flex-shrink-0`}
+                      >
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-bold text-gray-900">{item.title}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                        <h3 className="font-bold text-gray-900">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {item.description}
+                        </p>
                       </div>
                     </div>
 
@@ -98,8 +114,14 @@ export default function SupportPage() {
                             variant="ghost"
                             className="justify-between p-3 h-auto border border-gray-100 hover:border-gray-200"
                           >
-                            <a href={link.url} target="_blank" rel="noopener noreferrer">
-                              <span className="text-sm font-medium text-gray-700">{link.name}</span>
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <span className="text-sm font-medium text-gray-700">
+                                {link.name}
+                              </span>
                               <ExternalLink className="w-4 h-4 text-gray-400" />
                             </a>
                           </Button>
@@ -115,7 +137,9 @@ export default function SupportPage() {
                             className="justify-between p-3 h-auto border border-gray-100 hover:border-gray-200"
                           >
                             <a href={subItem.url}>
-                              <span className="text-sm font-medium text-gray-700">{subItem.name}</span>
+                              <span className="text-sm font-medium text-gray-700">
+                                {subItem.name}
+                              </span>
                               <ExternalLink className="w-4 h-4 text-gray-400" />
                             </a>
                           </Button>
@@ -137,7 +161,9 @@ export default function SupportPage() {
                 <Heart className="w-4 h-4 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-blue-900 mb-2">서포트 참여 안내</h3>
+                <h3 className="font-bold text-blue-900 mb-2">
+                  서포트 참여 안내
+                </h3>
                 <ul className="text-sm text-blue-700 space-y-1">
                   <li>• 공식 채널을 통해서만 참여해주세요</li>
                   <li>• 개인정보 보호에 주의하며 기부해주세요</li>
@@ -147,7 +173,6 @@ export default function SupportPage() {
             </div>
           </CardContent>
         </Card>
-
       </div>
 
       {/* Bottom spacing for mobile nav */}

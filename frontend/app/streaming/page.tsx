@@ -1,6 +1,7 @@
 "use client";
 
-import { ExternalLink, Play, Volume2, Music } from "lucide-react";
+import Link from "next/link";
+import { Play, Volume2, ExternalLink, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,85 +12,85 @@ import Image from "next/image";
 // 플랫폼 데이터 정의
 const STREAMING_PLATFORMS = {
   music: [
-    { 
-      id: "melon", 
-      name: "멜론", 
-      logo: "/ico_melon.png", 
+    {
+      id: "melon",
+      name: "멜론",
+      logo: "/ico_melon.png",
       url: "https://www.melon.com/artist/timeline.htm?artistId=261143",
-      color: "bg-green-500"
+      color: "bg-green-500",
     },
-    { 
-      id: "genie", 
-      name: "지니", 
-      logo: "/Geenie.png", 
+    {
+      id: "genie",
+      name: "지니",
+      logo: "/Geenie.png",
       url: "https://www.genie.co.kr/detail/artistInfo?xxartistId=80240",
-      color: "bg-blue-500"
+      color: "bg-blue-500",
     },
-    { 
-      id: "bugs", 
-      name: "벅스", 
-      logo: "/bucks.png", 
+    {
+      id: "bugs",
+      name: "벅스",
+      logo: "/bucks.png",
       url: "https://music.bugs.co.kr/artist/80086",
-      color: "bg-red-500"
+      color: "bg-red-500",
     },
-    { 
-      id: "vibe", 
-      name: "바이브", 
-      logo: "/vibe.jpeg", 
+    {
+      id: "vibe",
+      name: "바이브",
+      logo: "/vibe.jpeg",
       url: "https://vibe.naver.com/artist/12055",
-      color: "bg-purple-500"
+      color: "bg-purple-500",
     },
-    { 
-      id: "flo", 
-      name: "플로", 
-      logo: "/fillo.png", 
+    {
+      id: "flo",
+      name: "플로",
+      logo: "/fillo.png",
       url: "https://www.music-flo.com/detail/artist/eyunnqoyqx",
-      color: "bg-orange-500"
+      color: "bg-orange-500",
     },
-    { 
-      id: "youtube-music", 
-      name: "유튜브뮤직", 
-      logo: "/file.svg", 
+    {
+      id: "youtube-music",
+      name: "유튜브뮤직",
+      logo: "/file.svg",
       url: "https://music.youtube.com/channel/UCp-pqXsizklX3ZHvLxXyhxw",
-      color: "bg-red-600"
+      color: "bg-red-600",
     },
-    { 
-      id: "apple-music", 
-      name: "애플뮤직", 
-      logo: "/file.svg", 
+    {
+      id: "apple-music",
+      name: "애플뮤직",
+      logo: "/file.svg",
       url: "https://music.apple.com/kr/artist/day6/1039275369",
-      color: "bg-gray-800"
+      color: "bg-gray-800",
     },
-    { 
-      id: "spotify", 
-      name: "스포티파이", 
-      logo: "/file.svg", 
+    {
+      id: "spotify",
+      name: "스포티파이",
+      logo: "/file.svg",
       url: "https://open.spotify.com/artist/5TnQc2N1iKlFjYD7CPGvFc",
-      color: "bg-green-600"
+      color: "bg-green-600",
     },
-    { 
-      id: "stationhead", 
-      name: "스테이션헤드", 
-      logo: "/file.svg", 
+    {
+      id: "stationhead",
+      name: "스테이션헤드",
+      logo: "/file.svg",
       url: "https://www.stationhead.com",
-      color: "bg-indigo-600"
+      color: "bg-indigo-600",
     },
   ],
   mv: [
-    { 
-      id: "youtube", 
-      name: "유튜브", 
-      logo: "/file.svg", 
+    {
+      id: "youtube",
+      name: "유튜브",
+      logo: "/file.svg",
       url: "https://www.youtube.com/@day6official",
-      color: "bg-red-600"
+      color: "bg-red-600",
     },
-  ]
+  ],
 };
 
 const getPlatformLogo = (platform: string) => {
   const logos: Record<string, string> = {
     melon: "/ico_melon.png",
-    genie: "/Geenie.png", 
+    genie: "/Geenie.png",
     bugs: "/bucks.png",
     vibe: "/vibe.jpeg",
     flo: "/fillo.png",
@@ -102,7 +103,11 @@ const getPlatformLogo = (platform: string) => {
 };
 
 // 플랫폼 카드 컴포넌트
-function PlatformCard({ platform }: { platform: typeof STREAMING_PLATFORMS.music[0] }) {
+function PlatformCard({
+  platform,
+}: {
+  platform: (typeof STREAMING_PLATFORMS.music)[0];
+}) {
   return (
     <a
       href={platform.url}
@@ -114,7 +119,9 @@ function PlatformCard({ platform }: { platform: typeof STREAMING_PLATFORMS.music
         <CardContent className="p-4">
           <div className="space-y-3">
             {/* 플랫폼 로고/아이콘 영역 */}
-            <div className={`w-full h-16 ${platform.color} rounded-lg flex items-center justify-center`}>
+            <div
+              className={`w-full h-16 ${platform.color} rounded-lg flex items-center justify-center`}
+            >
               {platform.logo !== "/file.svg" ? (
                 <Image
                   src={platform.logo}
@@ -125,7 +132,7 @@ function PlatformCard({ platform }: { platform: typeof STREAMING_PLATFORMS.music
                 />
               ) : (
                 <div className="text-2xl text-white">
-                  {platform.id.includes('youtube') ? '📺' : '🎵'}
+                  {platform.id.includes("youtube") ? "📺" : "🎵"}
                 </div>
               )}
             </div>
@@ -156,7 +163,7 @@ function StreamingCategorySection({
   icon,
 }: {
   categoryKey: string;
-  items: typeof GUIDE_CATEGORIES;
+  items: { slug: string; label: string }[];
   title: string;
   description: string;
   icon: string;
@@ -207,8 +214,8 @@ function StreamingCategorySection({
                         {categoryKey === "streaming-list"
                           ? "전체 스트리밍 플랫폼"
                           : categoryKey === "music-streaming"
-                          ? `${item.label}에서 스트리밍`
-                          : `${item.label} 뮤직비디오`}
+                            ? `${item.label}에서 스트리밍`
+                            : `${item.label} 뮤직비디오`}
                       </p>
                     </div>
                   </div>
@@ -230,7 +237,9 @@ function StreamingTipsSection() {
           <span>💡</span>
           스트리밍 가이드
         </h2>
-        <p className="text-sm text-gray-600 mt-1">효과적인 스트리밍을 위한 팁들</p>
+        <p className="text-sm text-gray-600 mt-1">
+          효과적인 스트리밍을 위한 팁들
+        </p>
       </div>
 
       {/* 가로 스크롤 팁 카드 */}
@@ -244,7 +253,9 @@ function StreamingTipsSection() {
                   <Play className="h-6 w-6 text-red-500" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900 text-sm">YouTube 스트리밍</h3>
+                  <h3 className="font-medium text-gray-900 text-sm">
+                    YouTube 스트리밍
+                  </h3>
                   <div className="mt-2 text-xs text-gray-600 space-y-1">
                     <div>• 음소거 금지, 최소 음량으로</div>
                     <div>• 끝까지 시청하기</div>
@@ -263,7 +274,9 @@ function StreamingTipsSection() {
                   <Volume2 className="h-6 w-6 text-green-500" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900 text-sm">음원 플랫폼</h3>
+                  <h3 className="font-medium text-gray-900 text-sm">
+                    음원 플랫폼
+                  </h3>
                   <div className="mt-2 text-xs text-gray-600 space-y-1">
                     <div>• 30초 이상 재생</div>
                     <div>• 다양한 곡 섞어 듣기</div>
@@ -303,7 +316,6 @@ export default function StreamingPage() {
     <div>
       {/* Content with same padding as homepage */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
-        
         {/* Section Header - same style as homepage */}
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -340,8 +352,14 @@ export default function StreamingPage() {
                         variant="ghost"
                         className="flex flex-col items-center p-3 h-auto border border-gray-100 hover:border-gray-200"
                       >
-                        <a href={platform.url} target="_blank" rel="noopener noreferrer">
-                          <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}>
+                        <a
+                          href={platform.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div
+                            className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}
+                          >
                             {platform.logo !== "/file.svg" ? (
                               <Image
                                 src={platform.logo}
@@ -351,7 +369,7 @@ export default function StreamingPage() {
                                 className="rounded object-cover filter brightness-0 invert"
                               />
                             ) : (
-                              <Music className="w-6 h-6 text-white" />
+                              <TrendingUp className="w-6 h-6 text-white" />
                             )}
                           </div>
                           <span className="text-xs lg:text-sm font-medium text-gray-700 text-center">
@@ -372,7 +390,9 @@ export default function StreamingPage() {
                       <Volume2 className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-green-900 mb-2">음원 스트리밍 팁</h3>
+                      <h3 className="font-bold text-green-900 mb-2">
+                        음원 스트리밍 팁
+                      </h3>
                       <ul className="text-sm text-green-700 space-y-1">
                         <li>• 30초 이상 재생하기</li>
                         <li>• 다양한 곡 섞어 듣기</li>
@@ -400,8 +420,14 @@ export default function StreamingPage() {
                         variant="ghost"
                         className="flex flex-col items-center p-6 h-auto border border-gray-100 hover:border-gray-200"
                       >
-                        <a href={platform.url} target="_blank" rel="noopener noreferrer">
-                          <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${platform.color}`}>
+                        <a
+                          href={platform.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div
+                            className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${platform.color}`}
+                          >
                             <Play className="w-8 h-8 text-white" />
                           </div>
                           <span className="text-base font-medium text-gray-700 text-center">
@@ -425,7 +451,9 @@ export default function StreamingPage() {
                       <Play className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-red-900 mb-2">YouTube 스트리밍 팁</h3>
+                      <h3 className="font-bold text-red-900 mb-2">
+                        YouTube 스트리밍 팁
+                      </h3>
                       <ul className="text-sm text-red-700 space-y-1">
                         <li>• 음소거 금지, 최소 음량으로 설정</li>
                         <li>• 영상 끝까지 시청하기</li>
@@ -439,9 +467,8 @@ export default function StreamingPage() {
             </div>
           </TabsContent>
         </Tabs>
-
       </div>
-      
+
       {/* Bottom spacing for mobile nav */}
       <div className="h-20 md:h-8"></div>
     </div>

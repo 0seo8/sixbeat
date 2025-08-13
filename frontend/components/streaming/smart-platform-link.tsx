@@ -10,11 +10,11 @@ interface SmartPlatformLinkProps {
   isActive?: boolean;
 }
 
-export function SmartPlatformLink({ 
-  appLink, 
-  webLink, 
-  platformName, 
-  isActive = true 
+export function SmartPlatformLink({
+  appLink,
+  webLink,
+  platformName,
+  isActive = true,
 }: SmartPlatformLinkProps) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -22,8 +22,8 @@ export function SmartPlatformLink({
     // 모바일 디바이스 감지
     const checkMobile = () => {
       const userAgent = navigator.userAgent.toLowerCase();
-      const mobileKeywords = ['android', 'iphone', 'ipad', 'mobile'];
-      return mobileKeywords.some(keyword => userAgent.includes(keyword));
+      const mobileKeywords = ["android", "iphone", "ipad", "mobile"];
+      return mobileKeywords.some((keyword) => userAgent.includes(keyword));
     };
 
     setIsMobile(checkMobile());
@@ -39,15 +39,15 @@ export function SmartPlatformLink({
       // 모바일에서는 앱 링크 시도 → 실패 시 웹으로 fallback
       try {
         window.location.href = appLink;
-        
+
         // 일정 시간 후 앱이 열리지 않으면 웹 링크로 이동
         setTimeout(() => {
           if (!document.hidden) {
-            window.open(webLink, '_blank', 'noopener,noreferrer');
+            window.open(webLink, "_blank", "noopener,noreferrer");
           }
         }, 500);
       } catch {
-        window.open(webLink, '_blank', 'noopener,noreferrer');
+        window.open(webLink, "_blank", "noopener,noreferrer");
       }
       e.preventDefault();
     }

@@ -119,7 +119,7 @@ export async function fetchMVStats(): Promise<MVStats[]> {
 
     if (response.ok) {
       const youtubeStats = await response.json();
-      
+
       if (Array.isArray(youtubeStats) && youtubeStats.length > 0) {
         return youtubeStats.map((stat) => ({
           title: stat.title || "Unknown",
@@ -147,7 +147,7 @@ export async function fetchMVStats(): Promise<MVStats[]> {
       return [
         {
           title: "Melt Down",
-          views: Math.floor(youtubeStats.views * 0.4), 
+          views: Math.floor(youtubeStats.views * 0.4),
           likes: Math.floor(youtubeStats.likes * 0.4),
           viewsDelta24h: Math.floor(youtubeStats.dailyViews * 0.4),
           likesDelta24h: Math.floor(youtubeStats.dailyLikes * 0.4),

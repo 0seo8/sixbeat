@@ -1,77 +1,80 @@
 "use client";
 
+import { Download, Music, Video } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, ExternalLink, Music, Video } from "lucide-react";
-import { PageHeader } from "@/components/common/page-header";
 import Image from "next/image";
 
 // 다운로드 플랫폼 데이터
 const DOWNLOAD_PLATFORMS = {
   music: [
-    { 
-      id: "melon", 
-      name: "멜론", 
-      logo: "/ico_melon.png", 
+    {
+      id: "melon",
+      name: "멜론",
+      logo: "/ico_melon.png",
       url: "https://www.melon.com/artist/timeline.htm?artistId=261143",
-      color: "bg-green-500"
+      color: "bg-green-500",
     },
-    { 
-      id: "genie", 
-      name: "지니", 
-      logo: "/Geenie.png", 
+    {
+      id: "genie",
+      name: "지니",
+      logo: "/Geenie.png",
       url: "https://www.genie.co.kr/detail/artistInfo?xxartistId=80240",
-      color: "bg-blue-500"
+      color: "bg-blue-500",
     },
-    { 
-      id: "bugs", 
-      name: "벅스", 
-      logo: "/bucks.png", 
+    {
+      id: "bugs",
+      name: "벅스",
+      logo: "/bucks.png",
       url: "https://music.bugs.co.kr/artist/80086",
-      color: "bg-red-500"
+      color: "bg-red-500",
     },
-    { 
-      id: "vibe", 
-      name: "바이브", 
-      logo: "/vibe.jpeg", 
+    {
+      id: "vibe",
+      name: "바이브",
+      logo: "/vibe.jpeg",
       url: "https://vibe.naver.com/artist/12055",
-      color: "bg-purple-500"
+      color: "bg-purple-500",
     },
-    { 
-      id: "kakao-music", 
-      name: "카카오뮤직", 
-      logo: "/file.svg", 
+    {
+      id: "kakao-music",
+      name: "카카오뮤직",
+      logo: "/file.svg",
       url: "https://www.melon.com",
-      color: "bg-yellow-500"
+      color: "bg-yellow-500",
     },
-    { 
-      id: "v-coloring", 
-      name: "V컬러링", 
-      logo: "/file.svg", 
+    {
+      id: "v-coloring",
+      name: "V컬러링",
+      logo: "/file.svg",
       url: "https://www.vcoloring.com",
-      color: "bg-pink-500"
+      color: "bg-pink-500",
     },
   ],
   mv: [
-    { 
-      id: "melon", 
-      name: "멜론", 
-      logo: "/ico_melon.png", 
+    {
+      id: "melon",
+      name: "멜론",
+      logo: "/ico_melon.png",
       url: "https://www.melon.com/artist/timeline.htm?artistId=261143",
-      color: "bg-green-500"
+      color: "bg-green-500",
     },
-    { 
-      id: "bugs", 
-      name: "벅스", 
-      logo: "/bucks.png", 
+    {
+      id: "bugs",
+      name: "벅스",
+      logo: "/bucks.png",
       url: "https://music.bugs.co.kr/artist/80086",
-      color: "bg-red-500"
+      color: "bg-red-500",
     },
-  ]
+  ],
 };
 
 // 플랫폼 카드 컴포넌트
-function PlatformCard({ platform }: { platform: typeof DOWNLOAD_PLATFORMS.music[0] }) {
+function PlatformCard({
+  platform,
+}: {
+  platform: (typeof DOWNLOAD_PLATFORMS.music)[0];
+}) {
   return (
     <a
       href={platform.url}
@@ -83,7 +86,9 @@ function PlatformCard({ platform }: { platform: typeof DOWNLOAD_PLATFORMS.music[
         <CardContent className="p-4">
           <div className="space-y-3">
             {/* 플랫폼 로고/아이콘 영역 */}
-            <div className={`w-full h-16 ${platform.color} rounded-lg flex items-center justify-center`}>
+            <div
+              className={`w-full h-16 ${platform.color} rounded-lg flex items-center justify-center`}
+            >
               {platform.logo !== "/file.svg" ? (
                 <Image
                   src={platform.logo}
@@ -103,7 +108,7 @@ function PlatformCard({ platform }: { platform: typeof DOWNLOAD_PLATFORMS.music[
                 {platform.name}
               </h3>
               <div className="flex items-center justify-center mt-2 text-xs text-gray-500">
-                <ExternalLink className="w-3 h-3 mr-1" />
+                {/* <ExternalLink className="w-3 h-3 mr-1" /> */}
                 <span>다운로드</span>
               </div>
             </div>
@@ -137,7 +142,9 @@ function DownloadTipsSection() {
                   <Music className="h-6 w-6 text-blue-500" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900 text-sm">음원 다운로드</h3>
+                  <h3 className="font-medium text-gray-900 text-sm">
+                    음원 다운로드
+                  </h3>
                   <div className="mt-2 text-xs text-gray-600 space-y-1">
                     <div>• 이용권 구매 후 다운로드</div>
                     <div>• 고음질 설정 권장</div>
@@ -156,7 +163,9 @@ function DownloadTipsSection() {
                   <Video className="h-6 w-6 text-purple-500" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900 text-sm">MV 다운로드</h3>
+                  <h3 className="font-medium text-gray-900 text-sm">
+                    MV 다운로드
+                  </h3>
                   <div className="mt-2 text-xs text-gray-600 space-y-1">
                     <div>• HD 화질로 다운로드</div>
                     <div>• 공식 MV 우선</div>
@@ -175,7 +184,9 @@ function DownloadTipsSection() {
                   <span className="text-2xl">⚠️</span>
                 </div>
                 <div>
-                  <h3 className="font-medium text-orange-700 text-sm">주의사항</h3>
+                  <h3 className="font-medium text-orange-700 text-sm">
+                    주의사항
+                  </h3>
                   <div className="mt-2 text-xs text-orange-600 space-y-1">
                     <div>• 정식 구매만 차트 반영</div>
                     <div>• 불법 다운로드 금지</div>
@@ -196,7 +207,6 @@ export default function DownloadPage() {
     <div>
       {/* Content with same padding as homepage */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
-        
         {/* Section Header - same style as homepage */}
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -207,9 +217,9 @@ export default function DownloadPage() {
               DAY6 음원 및 뮤직비디오 다운로드
             </p>
           </div>
-          <div className="text-gray-300">
+          {/* <div className="text-gray-300">
             <ExternalLink className="h-5 w-5" />
-          </div>
+          </div> */}
         </div>
 
         {/* Tabs */}
@@ -234,7 +244,9 @@ export default function DownloadPage() {
                         rel="noopener noreferrer"
                         className="flex flex-col items-center p-3 hover:bg-gray-50 transition-colors border border-gray-100 hover:border-gray-200 rounded-lg"
                       >
-                        <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}>
+                        <div
+                          className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 ${platform.color} overflow-hidden`}
+                        >
                           {platform.logo !== "/file.svg" ? (
                             <Image
                               src={platform.logo}
@@ -264,7 +276,9 @@ export default function DownloadPage() {
                       <Music className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-blue-900 mb-2">음원 다운로드 팁</h3>
+                      <h3 className="font-bold text-blue-900 mb-2">
+                        음원 다운로드 팁
+                      </h3>
                       <ul className="text-sm text-blue-700 space-y-1">
                         <li>• 이용권 구매 후 다운로드</li>
                         <li>• 고음질 설정 권장</li>
@@ -293,7 +307,9 @@ export default function DownloadPage() {
                         rel="noopener noreferrer"
                         className="flex flex-col items-center p-6 hover:bg-gray-50 transition-colors border border-gray-100 hover:border-gray-200 rounded-lg"
                       >
-                        <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${platform.color} overflow-hidden`}>
+                        <div
+                          className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${platform.color} overflow-hidden`}
+                        >
                           <Image
                             src={platform.logo}
                             alt={platform.name}
@@ -322,7 +338,9 @@ export default function DownloadPage() {
                       <Video className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-purple-900 mb-2">MV 다운로드 팁</h3>
+                      <h3 className="font-bold text-purple-900 mb-2">
+                        MV 다운로드 팁
+                      </h3>
                       <ul className="text-sm text-purple-700 space-y-1">
                         <li>• HD 화질로 다운로드</li>
                         <li>• 공식 MV 우선 다운로드</li>
@@ -336,9 +354,8 @@ export default function DownloadPage() {
             </div>
           </TabsContent>
         </Tabs>
-
       </div>
-      
+
       {/* Bottom spacing for mobile nav */}
       <div className="h-20 md:h-8"></div>
     </div>

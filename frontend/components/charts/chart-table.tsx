@@ -64,10 +64,10 @@ function SongRow({
             song.rank === null
               ? "text-orange-500"
               : song.rank <= 10
-              ? "text-blue-600"
-              : song.rank <= 50
-              ? "text-gray-900"
-              : "text-gray-400"
+                ? "text-blue-600"
+                : song.rank <= 50
+                  ? "text-gray-900"
+                  : "text-gray-400"
           }`}
         >
           {song.rank || "—"}

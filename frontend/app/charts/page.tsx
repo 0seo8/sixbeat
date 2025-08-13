@@ -23,7 +23,6 @@ export default function ChartsPage() {
     <div>
       {/* Content with same padding as homepage */}
       <div className="px-5 md:px-6 lg:px-8 xl:px-12 space-y-6 pt-6">
-        
         {/* Section Header - same style as homepage */}
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -60,7 +59,9 @@ export default function ChartsPage() {
 
         {/* Platform Filters */}
         <div>
-          <h3 className="text-base font-bold text-gray-900 mb-4">플랫폼 필터</h3>
+          <h3 className="text-base font-bold text-gray-900 mb-4">
+            플랫폼 필터
+          </h3>
           <Card>
             <CardContent className="p-0">
               <div className="p-4">
@@ -93,15 +94,14 @@ export default function ChartsPage() {
                   <li>• 실시간 차트는 매시간 업데이트됩니다</li>
                   <li>• 순위 변동은 전 시간 대비 변화량입니다</li>
                   <li>• 여러 플랫폼을 선택하여 비교 가능합니다</li>
-                  <li>• 차트 밖으로 벗어난 곡은 '-' 표시됩니다</li>
+                  <li>• 차트 밖으로 벗어난 곡은 &apos;-&apos; 표시됩니다</li>
                 </ul>
               </div>
             </div>
           </CardContent>
         </Card>
-
       </div>
-      
+
       {/* Bottom spacing for mobile nav */}
       <div className="h-20 md:h-8"></div>
     </div>

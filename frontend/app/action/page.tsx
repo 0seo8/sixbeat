@@ -14,7 +14,7 @@ const actionItems = [
   },
   {
     title: "다운로드",
-    description: "음원 다운로드하기", 
+    description: "음원 다운로드하기",
     icon: Download,
     href: "/download",
     gradient: "from-blue-500 to-cyan-400",
@@ -63,10 +63,7 @@ const itemVariants = {
 export default function ActionPage() {
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Action"
-        subtitle="원하는 활동을 선택하세요"
-      />
+      <PageHeader title="Action" subtitle="원하는 활동을 선택하세요" />
 
       <motion.div
         className="grid grid-cols-2 gap-4 px-4"
@@ -87,20 +84,22 @@ export default function ActionPage() {
             >
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
                 {/* 원형 아이콘 */}
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}>
+                <div
+                  className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}
+                >
                   <Icon className="w-8 h-8 text-white" />
                 </div>
-                
+
                 {/* 제목 */}
                 <h3 className="text-lg font-bold text-gray-900 text-center mb-1">
                   {item.title}
                 </h3>
-                
+
                 {/* 설명 */}
                 <p className="text-sm text-gray-500 text-center mb-3">
                   {item.description}
                 </p>
-                
+
                 {/* 화살표 */}
                 <div className="flex justify-center">
                   <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -110,7 +109,7 @@ export default function ActionPage() {
           );
         })}
       </motion.div>
-      
+
       {/* 하단 여백 */}
       <div className="h-8"></div>
     </div>

@@ -21,11 +21,12 @@ export function DesktopHeader() {
 
         <div className="flex items-center gap-3">
           <Music className="h-6 w-6 lg:h-7 lg:w-7 text-blue-600" />
-            <h1 className="text-2xl lg:text-2xl xl:text-3xl font-bold text-gray-900">
-                DAY6 STRM
-            </h1>
-            <span className="text-base3 lg:text-lg text-gray-500 ml-2">DAY6 음원정보팀
-        </span>
+          <h1 className="text-2xl lg:text-2xl xl:text-3xl font-bold text-gray-900">
+            DAY6 STRM
+          </h1>
+          <span className="text-base3 lg:text-lg text-gray-500 ml-2">
+            DAY6 음원정보팀
+          </span>
         </div>
       </div>
 
