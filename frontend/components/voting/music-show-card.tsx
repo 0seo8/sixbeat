@@ -42,7 +42,9 @@ export function MusicShowCard({ show }: MusicShowCardProps) {
               <Vote className="w-3 h-3 text-gray-600" />
               <Badge
                 variant={
-                  show.votingMethod === "사전투표 없음" ? "secondary" : "default"
+                  show.votingMethod === "사전투표 없음"
+                    ? "secondary"
+                    : "default"
                 }
                 className="text-xs"
               >

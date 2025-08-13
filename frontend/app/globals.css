@@ -104,7 +104,13 @@
   }
   body {
     @apply text-foreground;
-    background: linear-gradient(135deg, rgba(73, 196, 176, 0.08) 0%, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(30, 58, 138, 0.08) 100%) !important;
+    background: linear-gradient(
+      135deg,
+      rgba(73, 196, 176, 0.08) 0%,
+      rgba(255, 255, 255, 1) 30%,
+      rgba(255, 255, 255, 1) 70%,
+      rgba(30, 58, 138, 0.08) 100%
+    ) !important;
     min-height: 100vh;
   }
 }
@@ -184,7 +190,13 @@
   }
   body {
     @apply text-foreground;
-    background: linear-gradient(135deg, rgba(73, 196, 176, 0.08) 0%, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(30, 58, 138, 0.08) 100%) !important;
+    background: linear-gradient(
+      135deg,
+      rgba(73, 196, 176, 0.08) 0%,
+      rgba(255, 255, 255, 1) 30%,
+      rgba(255, 255, 255, 1) 70%,
+      rgba(30, 58, 138, 0.08) 100%
+    ) !important;
     min-height: 100vh;
   }
 }
@@ -268,8 +280,12 @@ body.modal-open {
 
 /* 강제 배경 그라데이션 적용 */
 html {
-  background: linear-gradient(135deg, rgba(73, 196, 176, 0.3) 0%, rgba(73, 196, 176, 0.15) 40%, rgba(255, 255, 255, 1) 100%) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(73, 196, 176, 0.3) 0%,
+    rgba(73, 196, 176, 0.15) 40%,
+    rgba(255, 255, 255, 1) 100%
+  ) !important;
   background-attachment: fixed !important;
   min-height: 100vh !important;
 }
-

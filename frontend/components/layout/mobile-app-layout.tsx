@@ -39,7 +39,7 @@ export function MobileAppLayout({ children }: MobileAppLayoutProps) {
     <SidebarContext.Provider value={sidebarContextValue}>
       {/* Mobile Layout (sm and below) */}
       <div className="md:hidden min-h-screen flex justify-center">
-        <div className="w-full max-w-[375px] bg-transparent shadow-xl min-h-screen relative">
+        <div className="w-full bg-transparent shadow-xl min-h-screen relative">
           {!isHomePage && (
             <OverlayHeader
               onMenuClick={() => setSidebarOpen(true)}
@@ -65,8 +65,10 @@ export function MobileAppLayout({ children }: MobileAppLayoutProps) {
         <div className="w-full bg-transparent min-h-screen">
           <DesktopHeader />
 
-          <main className="px-6 lg:px-8 xl:px-12 py-6 overflow-y-auto">
-            <div className="max-w-7xl mx-auto">{children}</div>
+          <main className="py-6 overflow-y-auto">
+            <div className="w-full max-w-6xl mx-auto px-6 lg:px-8 xl:px-16 2xl:px-24">
+              {children}
+            </div>
           </main>
 
           <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />

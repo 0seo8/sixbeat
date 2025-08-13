@@ -30,30 +30,33 @@ export function SmartPlatformLink({
     setIsMobile(checkMobile());
   }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (!isActive) {
-      e.preventDefault();
-      return;
-    }
-
-    if (isMobile) {
-      // 모바일에서는 앱 링크 시도 → 실패 시 웹으로 fallback
-      try {
-        window.location.href = appLink;
-
-        // 일정 시간 후 앱이 열리지 않으면 웹 링크로 이동
-        setTimeout(() => {
-          if (!document.hidden) {
-            window.open(webLink, "_blank", "noopener,noreferrer");
-          }
-        }, 500);
-      } catch {
-        window.open(webLink, "_blank", "noopener,noreferrer");
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isActive) {
+        e.preventDefault();
+        return;
       }
-      e.preventDefault();
-    }
-    // 데스크톱은 기본적으로 webLink로 이동 (target="_blank")
-  }, [isActive, isMobile, appLink, webLink]);
+
+      if (isMobile) {
+        // 모바일에서는 앱 링크 시도 → 실패 시 웹으로 fallback
+        try {
+          window.location.href = appLink;
+
+          // 일정 시간 후 앱이 열리지 않으면 웹 링크로 이동
+          setTimeout(() => {
+            if (!document.hidden) {
+              window.open(webLink, "_blank", "noopener,noreferrer");
+            }
+          }, 500);
+        } catch {
+          window.open(webLink, "_blank", "noopener,noreferrer");
+        }
+        e.preventDefault();
+      }
+      // 데스크톱은 기본적으로 webLink로 이동 (target="_blank")
+    },
+    [isActive, isMobile, appLink, webLink]
+  );
 
   if (!isActive) {
     return (

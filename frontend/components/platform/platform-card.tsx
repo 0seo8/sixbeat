@@ -25,9 +25,7 @@ export function PlatformCard({
         className="flex flex-col items-center p-3 h-auto border border-gray-100 hover:border-gray-200"
       >
         <a href={platform.url} target="_blank" rel="noopener noreferrer">
-          <div
-            className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 bg-white border border-gray-100 overflow-hidden"
-          >
+          <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center mb-2 bg-white border border-gray-100 overflow-hidden">
             {platform.logo !== "/file.svg" ? (
               <Image
                 src={platform.logo}
@@ -68,8 +66,8 @@ export function PlatformCard({
                     {platform.category === "music"
                       ? "🎵"
                       : platform.category === "mv"
-                      ? "📺"
-                      : "📁"}
+                        ? "📺"
+                        : "📁"}
                   </div>
                 )}
               </div>
@@ -82,8 +80,8 @@ export function PlatformCard({
                     {platform.category === "music"
                       ? `${platform.name}에서 스트리밍`
                       : platform.category === "download"
-                      ? `${platform.name} 다운로드`
-                      : `${platform.name} 뮤직비디오`}
+                        ? `${platform.name} 다운로드`
+                        : `${platform.name} 뮤직비디오`}
                   </p>
                 )}
               </div>
@@ -104,9 +102,7 @@ export function PlatformCard({
       <Card className="hover:shadow-md transition-all duration-200 hover:scale-[1.02] cursor-pointer">
         <CardContent className="p-4">
           <div className="space-y-3">
-            <div
-              className="w-full h-16 bg-white border border-gray-100 rounded-lg flex items-center justify-center"
-            >
+            <div className="w-full h-16 bg-white border border-gray-100 rounded-lg flex items-center justify-center">
               {platform.logo !== "/file.svg" ? (
                 <Image
                   src={platform.logo}
@@ -120,8 +116,8 @@ export function PlatformCard({
                   {platform.category === "music"
                     ? "🎵"
                     : platform.category === "mv"
-                    ? "📺"
-                    : "📁"}
+                      ? "📺"
+                      : "📁"}
                 </div>
               )}
             </div>
@@ -135,8 +131,8 @@ export function PlatformCard({
                   {platform.category === "music"
                     ? "바로 스트리밍"
                     : platform.category === "download"
-                    ? "바로 다운로드"
-                    : "바로 시청"}
+                      ? "바로 다운로드"
+                      : "바로 시청"}
                 </span>
               </div>
             </div>

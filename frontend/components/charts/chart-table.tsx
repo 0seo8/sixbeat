@@ -34,10 +34,10 @@ function EmptyState({ platform }: { platform: string }) {
     <div className="text-center py-12">
       <Music className="h-12 w-12 text-gray-400 mx-auto mb-4" />
       <h3 className="text-lg font-semibold text-gray-900 mb-2">
-        데이터를 불러오는 중
+        차트 진입 대기 중
       </h3>
       <p className="text-gray-500">
-        {getPlatformName(platform)} 차트 데이터를 가져오고 있습니다.
+        곡이 아직 {getPlatformName(platform)} 차트에 진입하지 못했습니다.
       </p>
     </div>
   );

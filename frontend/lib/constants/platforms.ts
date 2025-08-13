@@ -57,27 +57,11 @@ export const MUSIC_PLATFORMS: Platform[] = [
     category: "music",
   },
   {
-    id: "apple-music",
-    name: "애플뮤직",
-    logo: "/streaming/apple-music-logo.png",
-    url: "https://music.apple.com/kr/artist/day6/1039275369",
-    color: "bg-gradient-to-r from-[var(--navy-dark)] to-[var(--mint-primary)]",
-    category: "music",
-  },
-  {
     id: "spotify",
     name: "스포티파이",
     logo: "/streaming/spotify-logo.png",
     url: "https://open.spotify.com/artist/5TnQc2N1iKlFjYD7CPGvFc",
     color: "bg-[var(--mint-primary)]",
-    category: "music",
-  },
-  {
-    id: "stationhead",
-    name: "스테이션헤드",
-    logo: "/streaming/station-head-logo.webp",
-    url: "https://www.stationhead.com",
-    color: "bg-gradient-to-r from-[var(--mint-light)] to-[var(--navy-dark)]",
     category: "music",
   },
 ];
@@ -136,12 +120,18 @@ export const DOWNLOAD_PLATFORMS: Platform[] = [
   },
 ];
 
-export const ALL_PLATFORMS = [...MUSIC_PLATFORMS, ...MV_PLATFORMS, ...DOWNLOAD_PLATFORMS];
+export const ALL_PLATFORMS = [
+  ...MUSIC_PLATFORMS,
+  ...MV_PLATFORMS,
+  ...DOWNLOAD_PLATFORMS,
+];
 
 export function getPlatformById(id: string): Platform | undefined {
   return ALL_PLATFORMS.find((platform) => platform.id === id);
 }
 
-export function getPlatformsByCategory(category: Platform["category"]): Platform[] {
+export function getPlatformsByCategory(
+  category: Platform["category"]
+): Platform[] {
   return ALL_PLATFORMS.filter((platform) => platform.category === category);
 }

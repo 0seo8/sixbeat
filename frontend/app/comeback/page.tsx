@@ -12,19 +12,32 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { fetchComebackData } from "@/lib/api";
 
+// TODO: 실제 날짜 계산 로직으로 변경 필요
 const comebackInfo = {
-  title: "Band Aid",
-  date: "2024년 9월 2일",
-  daysLeft: 25,
-  status: "진행중",
+  title: "Maybe Tomorrow",
+  date: "2025년 5월 7일",
+  daysLeft: Math.floor(
+    (new Date().getTime() - new Date("2025-05-07").getTime()) /
+      (1000 * 60 * 60 * 24)
+  ), // 실제 날짜 계산
+  status: "완료",
 };
 
-const comebackGoals = [
+// 동적 데이터 사용 - React Query로 가져오기
+interface ComebackData {
+  chartRank?: Array<{ platform: string; rank: number | null; target: number }>;
+  youtubeStats?: { views: number; target: number };
+  streamingScore?: { current: number; target: number };
+}
+
+const getComebackGoals = (comebackData: ComebackData | undefined) => [
   {
-    title: "멜론 TOP 10 진입",
-    current: 47,
-    target: 10,
+    title: "멜론 실시간 차트",
+    current: comebackData?.chartRank?.[0]?.rank,
+    target: comebackData?.chartRank?.[0]?.target || 10,
     unit: "위",
     color: "text-green-600",
     bgColor: "bg-green-50",
@@ -32,20 +45,20 @@ const comebackGoals = [
     icon: TrendingUp,
   },
   {
-    title: "유튜브 조회수",
-    current: 2840000,
-    target: 5000000,
-    unit: "회",
+    title: "YouTube 조회수",
+    current: comebackData?.youtubeStats?.views,
+    target: comebackData?.youtubeStats?.target || 3000000,
+    unit: "뷰",
     color: "text-red-600",
     bgColor: "bg-red-50",
     borderColor: "border-red-200",
     icon: Target,
   },
   {
-    title: "음악방송 1위",
-    current: 0,
-    target: 1,
-    unit: "회",
+    title: "스트리밍 참여도",
+    current: comebackData?.streamingScore?.current,
+    target: comebackData?.streamingScore?.target || 100,
+    unit: "점",
     color: "text-purple-600",
     bgColor: "bg-purple-50",
     borderColor: "border-purple-200",
@@ -55,66 +68,64 @@ const comebackGoals = [
 
 const comebackSchedule = [
   {
-    date: "2024.09.02",
-    event: "음원 발매",
+    date: "2025.05.07",
+    event: "디지털 싱글 발매",
     status: "completed",
-    description: "전 음원사이트 동시 공개",
+    description: "Maybe Tomorrow + 끝났지 공개",
   },
   {
-    date: "2024.09.03",
-    event: "뮤직비디오 공개",
+    date: "2025.05.09",
+    event: "KSPO 돔 콘서트",
     status: "completed",
-    description: "YouTube 공식 채널",
+    description: "첫 K-밴드 돔 공연 성공",
   },
   {
-    date: "2024.09.09",
-    event: "음악방송 첫 무대",
-    status: "active",
-    description: "더쇼 1차 무대",
-  },
-  {
-    date: "2024.09.15",
-    event: "팬미팅",
+    date: "2025.09.05",
+    event: "정규 4집 발매",
     status: "upcoming",
-    description: "팬들과의 만남",
+    description: "데뷔 10주년 기념 앨범 'The DECADE'",
+  },
+  {
+    date: "2025.09.20",
+    event: "정규 4집 활동 시작",
+    status: "upcoming",
+    description: "음악방송 및 프로모션 활동",
   },
 ];
 
 const comebackMissions = [
   {
     priority: 1,
-    title: "24시간 스트리밍",
-    description: "발매 후 24시간이 가장 중요한 시기입니다",
+    title: "정규 4집 대비 스트리밍",
+    description: "9월 정규 4집 발매 전까지 꾸준한 스트리밍이 필요해요",
     href: "/streaming",
     action: "지금 스트리밍하기",
   },
   {
     priority: 2,
-    title: "뮤직비디오 조회수",
-    description: "첫 24시간 내 100만뷰 달성이 목표입니다",
+    title: "Maybe Tomorrow 조회수",
+    description: "현재 185만뷰, 300만뷰 목표까지 함께해주세요",
     href: "/streaming?tab=mv",
     action: "MV 보러가기",
   },
   {
     priority: 3,
-    title: "음악방송 투표",
-    description: "사전투표와 생방송 문자투표 참여해주세요",
-    href: "/votes",
-    action: "투표하러가기",
+    title: "10주년 응원 준비",
+    description: "데뷔 10주년 기념 정규 4집을 함께 응원해요",
+    href: "/guide",
+    action: "응원 가이드 보기",
   },
 ];
 
-const formatNumber = (num: number) => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + "M";
-  }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K";
-  }
-  return num.toString();
-};
-
 export default function ComebackPage() {
+  // React Query로 실시간 데이터 가져오기
+  const { data: comebackData, isLoading } = useQuery({
+    queryKey: ["comebackData"],
+    queryFn: fetchComebackData,
+    refetchInterval: 5 * 60 * 1000, // 5분마다 새로고침
+  });
+
+  const comebackGoals = getComebackGoals(comebackData);
   return (
     <div>
       {/* Content with same padding as homepage */}
@@ -126,7 +137,7 @@ export default function ComebackPage() {
               컴백 지원 센터
             </h2>
             <p className="text-xs md:text-sm text-gray-500">
-              DAY6 &apos;Band Aid&apos; 컴백 활동 현황 및 지원
+              DAY6 &apos;Maybe Tomorrow&apos; 현재 활동 및 정규 4집 대비
             </p>
           </div>
           <div className="text-gray-300">
@@ -135,7 +146,7 @@ export default function ComebackPage() {
         </div>
 
         {/* Comeback Status Banner */}
-        <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+        <Card className="bg-gradient-to-r from-[#49c4b0] to-[#6dd5c0] text-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -148,7 +159,7 @@ export default function ComebackPage() {
                 <h3 className="text-2xl font-bold mb-1">
                   {comebackInfo.title}
                 </h3>
-                <p className="text-purple-100 text-sm">
+                <p className="text-white/80 text-sm">
                   {comebackInfo.date} 발매
                 </p>
               </div>
@@ -156,7 +167,7 @@ export default function ComebackPage() {
                 <div className="text-3xl font-bold">
                   {comebackInfo.daysLeft}
                 </div>
-                <div className="text-sm text-purple-100">일 경과</div>
+                <div className="text-sm text-white/80">일 경과</div>
               </div>
             </div>
           </CardContent>
@@ -168,56 +179,84 @@ export default function ComebackPage() {
             현재 목표 달성률
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {comebackGoals.map((goal, index) => {
-              const progress =
-                goal.current <= goal.target
-                  ? (goal.current / goal.target) * 100
-                  : 100;
-              const IconComponent = goal.icon;
+            {isLoading
+              ? // 로딩 상태
+                Array.from({ length: 3 }, (_, index) => (
+                  <Card key={index} className="bg-gray-50 border-gray-200">
+                    <CardContent className="p-4">
+                      <div className="animate-pulse space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 bg-gray-200 rounded" />
+                          <div className="h-4 bg-gray-200 rounded w-24" />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="h-8 bg-gray-200 rounded w-16" />
+                          <div className="w-full bg-gray-200 rounded-full h-2" />
+                          <div className="h-3 bg-gray-200 rounded w-20" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              : comebackGoals.map((goal, index) => {
+                  const IconComponent = goal.icon;
+                  const hasData =
+                    goal.current !== null && goal.current !== undefined;
+                  const progress = hasData
+                    ? Math.min((goal.current! / goal.target) * 100, 100)
+                    : 0;
 
-              return (
-                <Card
-                  key={index}
-                  className={`${goal.borderColor} ${goal.bgColor}`}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <IconComponent className={`w-5 h-5 ${goal.color}`} />
-                        <h4 className="font-medium text-gray-900 text-sm">
-                          {goal.title}
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-baseline gap-1">
-                        <span className={`text-2xl font-bold ${goal.color}`}>
-                          {goal.unit === "회"
-                            ? formatNumber(goal.current)
-                            : goal.current}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          /{" "}
-                          {goal.unit === "회"
-                            ? formatNumber(goal.target)
-                            : goal.target}
-                          {goal.unit}
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full transition-all duration-500 ${goal.color.replace("text-", "bg-")}`}
-                          style={{ width: `${Math.min(progress, 100)}%` }}
-                        />
-                      </div>
-                      <div className="text-xs text-gray-600">
-                        {Math.round(progress)}% 달성
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                  return (
+                    <Card
+                      key={index}
+                      className={`${goal.borderColor} ${goal.bgColor}`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <IconComponent
+                              className={`w-5 h-5 ${goal.color}`}
+                            />
+                            <h4 className="font-medium text-gray-900 text-sm">
+                              {goal.title}
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex items-baseline gap-1">
+                            <span
+                              className={`text-2xl font-bold ${goal.color}`}
+                            >
+                              {hasData
+                                ? goal.unit === "뷰"
+                                  ? goal.current!.toLocaleString()
+                                  : goal.current!
+                                : "-"}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              /{" "}
+                              {goal.unit === "뷰"
+                                ? (goal.target / 1000000).toFixed(1) + "M"
+                                : goal.target}
+                              {goal.unit}
+                            </span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div
+                              className={`h-2 rounded-full transition-all duration-500 ${goal.color.replace("text-", "bg-")}`}
+                              style={{ width: `${progress}%` }}
+                            />
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            {hasData
+                              ? `${Math.round(progress)}% 달성`
+                              : "데이터 수집 중..."}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
           </div>
         </div>
 
@@ -286,7 +325,7 @@ export default function ComebackPage() {
                 <CardContent className="p-0">
                   <div className="p-4">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-bold">
+                      <div className="w-8 h-8 bg-[#49c4b0] rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-bold">
                         {mission.priority}
                       </div>
                       <div className="flex-1">
@@ -299,7 +338,8 @@ export default function ComebackPage() {
                         <Button
                           asChild
                           size="sm"
-                          className="w-full bg-purple-600 hover:bg-purple-700"
+                          variant="outline"
+                          className="w-full border-[#49c4b0] text-[#49c4b0] hover:bg-[#49c4b0] hover:text-white transition-all duration-200"
                         >
                           <a href={mission.href}>{mission.action}</a>
                         </Button>

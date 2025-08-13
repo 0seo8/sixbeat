@@ -65,9 +65,7 @@ export function StreamingTips() {
                   <span className="text-2xl">⚠️</span>
                 </div>
                 <div>
-                  <h3 className="font-medium text-red-700 text-sm">
-                    주의사항
-                  </h3>
+                  <h3 className="font-medium text-red-700 text-sm">주의사항</h3>
                   <div className="mt-2 text-xs text-red-600 space-y-1">
                     <div>• 로봇 재생 패턴 금지</div>
                     <div>• 다중 계정 동시 재생 금지</div>

@@ -13,10 +13,7 @@ import { VotingTips } from "@/components/voting/voting-tips";
 export default function VotesPage() {
   return (
     <div className="min-h-screen pb-24">
-      <PageHeader
-        title="투표"
-        description="DAY6의 1위를 위해 투표해주세요"
-      />
+      <PageHeader title="투표" description="DAY6의 1위를 위해 투표해주세요" />
 
       <div className="px-4 md:px-6 lg:px-8 space-y-6">
         <Tabs defaultValue="music-shows" className="w-full">

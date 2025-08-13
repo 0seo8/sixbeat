@@ -4,7 +4,7 @@ import { ExternalLink, Play, Volume2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MUSIC_PLATFORMS, MV_PLATFORMS } from "@/lib/constants/platforms";
-import { PlatformCard } from "@/components/platform/platform-card"
+import { PlatformCard } from "@/components/platform/platform-card";
 
 export default function StreamingPage() {
   return (

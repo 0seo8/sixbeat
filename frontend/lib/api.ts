@@ -203,3 +203,84 @@ export async function fetchMVStats(): Promise<MVStats[]> {
     },
   ];
 }
+
+// Fetch comeback data for the comeback page
+export async function fetchComebackData(): Promise<{
+  chartRank: { platform: string; rank: number | null; target: number }[];
+  youtubeStats: { views: number; target: number };
+  streamingScore: { current: number; target: number };
+}> {
+  try {
+    // Try to get real data from crawlers
+    const [chartResponse, youtubeResponse] = await Promise.all([
+      fetch(`${DATA_BASE_URL}/latest.json`, { cache: "no-cache" }).catch(
+        () => null
+      ),
+      fetch(`${DATA_BASE_URL}/youtube_stats.json`, { cache: "no-cache" }).catch(
+        () => null
+      ),
+    ]);
+
+    // Process chart data
+    let chartRanks = [
+      { platform: "melon", rank: null as number | null, target: 10 },
+      { platform: "genie", rank: null as number | null, target: 10 },
+      { platform: "bugs", rank: null as number | null, target: 10 },
+    ];
+
+    if (chartResponse?.ok) {
+      const chartData = await chartResponse.json();
+      // Find DAY6 "Maybe Tomorrow" in each platform
+      chartRanks = chartRanks.map((item) => {
+        const platformSongs = chartData[item.platform] || [];
+        const day6Song = platformSongs.find(
+          (song: { artist?: string; title?: string; rank?: number }) =>
+            song.artist?.includes("DAY6") &&
+            song.title?.includes("Maybe Tomorrow")
+        );
+        return {
+          ...item,
+          rank: day6Song?.rank || null,
+        };
+      });
+    }
+
+    // Process YouTube data
+    const youtubeStats = { views: 0, target: 3000000 };
+    if (youtubeResponse?.ok) {
+      const youtubeData = await youtubeResponse.json();
+      const maybeTomorrowStats = Array.isArray(youtubeData)
+        ? youtubeData.find((video) => video.title?.includes("Maybe Tomorrow"))
+        : null;
+
+      if (maybeTomorrowStats) {
+        youtubeStats.views = maybeTomorrowStats.views || 0;
+      }
+    }
+
+    // Calculate streaming participation score based on available data
+    const streamingScore = {
+      current: Math.floor(Math.random() * 85) + 60, // Mock calculation for now
+      target: 100,
+    };
+
+    return {
+      chartRank: chartRanks,
+      youtubeStats,
+      streamingScore,
+    };
+  } catch (error) {
+    console.error("Error fetching comeback data:", error);
+
+    // Return mock data on error
+    return {
+      chartRank: [
+        { platform: "melon", rank: null, target: 10 },
+        { platform: "genie", rank: null, target: 10 },
+        { platform: "bugs", rank: null, target: 10 },
+      ],
+      youtubeStats: { views: 0, target: 3000000 },
+      streamingScore: { current: 75, target: 100 },
+    };
+  }
+}

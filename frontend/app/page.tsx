@@ -39,9 +39,12 @@ export default function HomePage() {
             </div>
           </div>
           <CompactChart />
-          <div className="mt-6 -mx-5 md:-mx-6 lg:-mx-8 xl:-mx-12" style={{borderBottom: '0.6rem solid #f7f8f9'}}></div>
+          <div
+            className="mt-6 -mx-5"
+            style={{ borderBottom: "0.6rem solid #f7f8f9" }}
+          ></div>
         </div>
-        
+
         {/* Desktop Layout */}
         <Card className="hidden md:block bg-white/60 backdrop-blur-sm border-mint-primary/20 shadow-sm">
           <CardHeader>
@@ -71,7 +74,7 @@ export default function HomePage() {
           </h2>
           <QuickAccessCard />
         </div>
-        
+
         {/* Desktop Layout */}
         <Card className="hidden md:block bg-white/60 backdrop-blur-sm border-mint-dark/20 shadow-sm">
           <CardHeader>
@@ -87,9 +90,12 @@ export default function HomePage() {
         <MelonMusicwaveBanner />
 
         <QuickLinksBanner />
-        
+
         {/* Mobile Divider */}
-        <div className="md:hidden mt-6 -mx-5 md:-mx-6 lg:-mx-8 xl:-mx-12" style={{borderBottom: '0.6rem solid #f7f8f9'}}></div>
+        <div
+          className="md:hidden mt-6 -mx-5"
+          style={{ borderBottom: "0.6rem solid #f7f8f9" }}
+        ></div>
 
         {/* Mobile Layout */}
         <div className="md:hidden">
@@ -107,7 +113,7 @@ export default function HomePage() {
           </div>
           <MVStatsCard />
         </div>
-        
+
         {/* Desktop Layout */}
         <Card className="hidden md:block bg-white/60 backdrop-blur-sm border-navy-dark/20 shadow-sm">
           <CardHeader>
