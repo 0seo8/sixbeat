@@ -335,7 +335,8 @@ export default function SupportPage() {
                             className="justify-between p-3 h-auto border border-gray-100 hover:border-gray-200"
                             onClick={
                               subItem.isModal
-                                ? (subItem as SubItem).modalType === "comingSoon"
+                                ? (subItem as SubItem).modalType ===
+                                  "comingSoon"
                                   ? () => setShowComingSoonModal(true)
                                   : undefined
                                 : undefined

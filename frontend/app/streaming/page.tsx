@@ -1,6 +1,13 @@
 "use client";
 
-import { ExternalLink, Play, Volume2, Target, Music, Calendar } from "lucide-react";
+import {
+  ExternalLink,
+  Play,
+  Volume2,
+  Target,
+  Music,
+  Calendar,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -39,7 +46,9 @@ export default function StreamingPage() {
                 <div className="flex items-center gap-2">
                   <Music className="w-4 h-4 text-mint-primary" />
                   <span className="font-medium">Maybe Tomorrow</span>
-                  <Badge variant="secondary" className="text-xs">대표곡</Badge>
+                  <Badge variant="secondary" className="text-xs">
+                    대표곡
+                  </Badge>
                 </div>
                 <Button
                   size="sm"
@@ -47,12 +56,12 @@ export default function StreamingPage() {
                   onClick={() => {
                     // 여러 플랫폼 동시에 열기
                     const urls = [
-                      'https://www.melon.com/song/detail.htm?songId=31650949',
-                      'https://www.genie.co.kr/detail/songInfo?xgnm=31650949',
-                      'https://music.bugs.co.kr/track/20447162',
-                      'https://www.youtube.com/watch?v=I1gI9ZCcSJs'
+                      "https://www.melon.com/song/detail.htm?songId=31650949",
+                      "https://www.genie.co.kr/detail/songInfo?xgnm=31650949",
+                      "https://music.bugs.co.kr/track/20447162",
+                      "https://www.youtube.com/watch?v=I1gI9ZCcSJs",
                     ];
-                    urls.forEach(url => window.open(url, '_blank'));
+                    urls.forEach((url) => window.open(url, "_blank"));
                   }}
                 >
                   원클릭 스트리밍
@@ -62,19 +71,21 @@ export default function StreamingPage() {
                 <div className="flex items-center gap-2">
                   <Music className="w-4 h-4 text-mint-primary" />
                   <span className="font-medium">끝났지</span>
-                  <Badge variant="secondary" className="text-xs">인기곡</Badge>
+                  <Badge variant="secondary" className="text-xs">
+                    인기곡
+                  </Badge>
                 </div>
                 <Button
                   size="sm"
                   className="bg-mint-primary hover:bg-mint-dark text-white text-xs px-3 py-1 h-7"
                   onClick={() => {
                     const urls = [
-                      'https://www.melon.com/song/detail.htm?songId=32841635',
-                      'https://www.genie.co.kr/detail/songInfo?xgnm=32841635',
-                      'https://music.bugs.co.kr/track/20985432',
-                      'https://www.youtube.com/watch?v=RZr3EcLeT_k'
+                      "https://www.melon.com/song/detail.htm?songId=32841635",
+                      "https://www.genie.co.kr/detail/songInfo?xgnm=32841635",
+                      "https://music.bugs.co.kr/track/20985432",
+                      "https://www.youtube.com/watch?v=RZr3EcLeT_k",
                     ];
-                    urls.forEach(url => window.open(url, '_blank'));
+                    urls.forEach((url) => window.open(url, "_blank"));
                   }}
                 >
                   원클릭 스트리밍
@@ -86,6 +97,34 @@ export default function StreamingPage() {
                 <Calendar className="w-4 h-4" />
                 <strong>오늘의 목표:</strong> 각 플랫폼에서 30분씩 스트리밍하기
               </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 가이드 안내 카드 */}
+        <Card className="bg-blue-50 border-blue-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-lg">📖</span>
+                </div>
+                <div>
+                  <div className="font-medium text-blue-900">
+                    스트리밍 가이드
+                  </div>
+                  <div className="text-sm text-blue-700">
+                    효과적인 스트리밍 방법을 확인하세요
+                  </div>
+                </div>
+              </div>
+              <Button
+                size="sm"
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+                onClick={() => window.open("/guide", "_blank")}
+              >
+                가이드 보기
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -153,13 +192,15 @@ export default function StreamingPage() {
                       </div>
                       <div>
                         <div className="font-medium text-gray-900">DAY6.kr</div>
-                        <div className="text-sm text-gray-500">플레이리스트 & 디스코그래피</div>
+                        <div className="text-sm text-gray-500">
+                          플레이리스트 & 디스코그래피
+                        </div>
                       </div>
                     </div>
                     <Button
                       size="sm"
                       className="bg-mint-primary hover:bg-mint-dark text-white"
-                      onClick={() => window.open('https://day6.kr/', '_blank')}
+                      onClick={() => window.open("https://day6.kr/", "_blank")}
                     >
                       <ExternalLink className="w-4 h-4 mr-1" />
                       방문하기
@@ -211,21 +252,33 @@ export default function StreamingPage() {
                         <div>
                           <div className="font-medium flex items-center gap-2">
                             The DECADE Trailer Film
-                            <Badge variant="secondary" className="text-xs bg-mint-primary text-white">NEW</Badge>
+                            <Badge
+                              variant="secondary"
+                              className="text-xs bg-mint-primary text-white"
+                            >
+                              NEW
+                            </Badge>
                           </div>
-                          <div className="text-sm text-gray-500">4th Full Album • 2025.09.05 발매</div>
+                          <div className="text-sm text-gray-500">
+                            4th Full Album • 2025.09.05 발매
+                          </div>
                         </div>
                       </div>
                       <Button
                         size="sm"
                         className="bg-mint-primary hover:bg-mint-dark text-white"
-                        onClick={() => window.open('https://www.youtube.com/watch?v=0zdkvGDDnQg', '_blank')}
+                        onClick={() =>
+                          window.open(
+                            "https://www.youtube.com/watch?v=0zdkvGDDnQg",
+                            "_blank"
+                          )
+                        }
                       >
                         <Play className="w-4 h-4 mr-1" />
                         시청하기
                       </Button>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
@@ -233,40 +286,58 @@ export default function StreamingPage() {
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">Maybe Tomorrow</div>
-                            <div className="text-xs text-gray-500">Official</div>
+                            <div className="font-medium text-sm">
+                              Maybe Tomorrow
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Official
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=I1gI9ZCcSJs', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=I1gI9ZCcSJs",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">끝났지 (game over)</div>
-                            <div className="text-xs text-gray-500">Official</div>
+                            <div className="font-medium text-sm">
+                              끝났지 (game over)
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Official
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=RZr3EcLeT_k', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=RZr3EcLeT_k",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
@@ -274,79 +345,113 @@ export default function StreamingPage() {
                           </div>
                           <div>
                             <div className="font-medium text-sm">HAPPY</div>
-                            <div className="text-xs text-gray-500">Official Audio</div>
+                            <div className="text-xs text-gray-500">
+                              Official Audio
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://m.youtube.com/watch?v=2o1zdX72400', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://m.youtube.com/watch?v=2o1zdX72400",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">녹아내려요 (Melt Down)</div>
-                            <div className="text-xs text-gray-500">Official</div>
+                            <div className="font-medium text-sm">
+                              녹아내려요 (Melt Down)
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Official
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=bShOVeYi_vg', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=bShOVeYi_vg",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">한 페이지가 될 수 있게</div>
-                            <div className="text-xs text-gray-500">Time of Our Life</div>
+                            <div className="font-medium text-sm">
+                              한 페이지가 될 수 있게
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Time of Our Life
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=-9fC6oDFl5k', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=-9fC6oDFl5k",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">그녀가 웃었다</div>
-                            <div className="text-xs text-gray-500">She Smiled</div>
+                            <div className="font-medium text-sm">
+                              그녀가 웃었다
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              She Smiled
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=iXEKXoReuA0', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=iXEKXoReuA0",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
@@ -354,53 +459,78 @@ export default function StreamingPage() {
                           </div>
                           <div>
                             <div className="font-medium text-sm">예뻤어</div>
-                            <div className="text-xs text-gray-500">You Were Beautiful</div>
+                            <div className="text-xs text-gray-500">
+                              You Were Beautiful
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=BS7tz2rAOSA', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=BS7tz2rAOSA",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">Welcome to the Show</div>
-                            <div className="text-xs text-gray-500">Official MV</div>
+                            <div className="font-medium text-sm">
+                              Welcome to the Show
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Official MV
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=RowlrvmyFEk', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=RowlrvmyFEk",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
                             <Play className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium text-sm">Congratulations</div>
-                            <div className="text-xs text-gray-500">Official</div>
+                            <div className="font-medium text-sm">
+                              Congratulations
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Official
+                            </div>
                           </div>
                         </div>
                         <Button
                           size="sm"
                           className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 h-7"
-                          onClick={() => window.open('https://www.youtube.com/watch?v=siF3GM68IDE', '_blank')}
+                          onClick={() =>
+                            window.open(
+                              "https://www.youtube.com/watch?v=siF3GM68IDE",
+                              "_blank"
+                            )
+                          }
                         >
                           <Play className="w-3 h-3 mr-1" />
                           재생
@@ -426,14 +556,23 @@ export default function StreamingPage() {
                         <Play className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900">DAY6 모든 뮤직비디오</div>
-                        <div className="text-sm text-gray-500">JYP Entertainment Official</div>
+                        <div className="font-medium text-gray-900">
+                          DAY6 모든 뮤직비디오
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          JYP Entertainment Official
+                        </div>
                       </div>
                     </div>
                     <Button
                       size="sm"
                       className="bg-red-500 hover:bg-red-600 text-white"
-                      onClick={() => window.open('https://www.youtube.com/jypentertainment', '_blank')}
+                      onClick={() =>
+                        window.open(
+                          "https://www.youtube.com/jypentertainment",
+                          "_blank"
+                        )
+                      }
                     >
                       <ExternalLink className="w-4 h-4 mr-1" />
                       채널 방문
