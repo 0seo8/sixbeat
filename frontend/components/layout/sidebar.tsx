@@ -77,7 +77,13 @@ const navigation: NavigationItem[] = [
     name: "다운로드 가이드",
     icon: Download,
     hasChildren: true,
+
     children: [
+      {
+        name: "다운로드",
+        href: "/download",
+        icon: Music,
+      },
       {
         name: "음원 다운로드",
         icon: Download,
