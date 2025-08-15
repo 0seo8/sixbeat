@@ -26,31 +26,22 @@ export const metadata: Metadata = {
   publisher: "",
 
   // Next.js 15 메타데이터 베이스 URL
-  metadataBase: new URL("https://.vercel.app"),
+  metadataBase: new URL("https://sixbeat.vercel.app"),
 
   // Open Graph 메타데이터
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: "https://.vercel.app",
-    title: "DAY6 음원정보팀",
+    url: "https://sixbeat.vercel.app",
+    title: "데이식스 음원총공팀",
     description: "DAY6 음원 차트 실시간 추적 및 스트리밍/투표 지원 서비스",
-    images: [
-      {
-        url: "/day6-banner.jpeg",
-        width: 1200,
-        height: 800,
-        alt: "DAY6 - 음원정보팀",
-      },
-    ],
   },
 
   // Twitter Card 메타데이터
   twitter: {
     card: "summary_large_image",
-    title: " - DAY6 음원정보팀",
+    title: "데이식스 음원총공팀",
     description: "DAY6 음원 차트 실시간 추적 및 스트리밍/투표 지원 서비스",
-    images: ["/day6-banner.jpeg"],
     creator: "@Day6_vote_team",
   },
 
@@ -72,7 +63,7 @@ export const metadata: Metadata = {
 
   // Next.js 15 기능 - 대체 언어
   alternates: {
-    canonical: "https://.vercel.app",
+    canonical: "https://sixbeat.vercel.app",
   },
 
   // 검증
