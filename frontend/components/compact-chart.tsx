@@ -10,10 +10,10 @@ import {
 } from "@/lib/utils";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/free-mode';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, FreeMode } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
 
 export function CompactChart() {
   const { data: chartData, isLoading } = useQuery({
@@ -43,7 +43,6 @@ export function CompactChart() {
   ];
   const platformData: { platform: string; song: ChartSong | null }[] = [];
 
-
   platforms.forEach((platform) => {
     const songs =
       (chartData?.[platform as keyof typeof chartData] as ChartSong[]) || [];
@@ -57,8 +56,8 @@ export function CompactChart() {
       platformData.push({ platform, song: bestSong });
     } else {
       // 차트에 곡이 없으면 차트아웃 상태 표시
-      platformData.push({ 
-        platform, 
+      platformData.push({
+        platform,
         song: {
           title: "차트아웃",
           artist: "DAY6",
@@ -66,7 +65,7 @@ export function CompactChart() {
           rank: null,
           change: 0,
           timestamp: "",
-        } as ChartSong 
+        } as ChartSong,
       });
     }
   });
@@ -110,59 +109,58 @@ export function CompactChart() {
         >
           {platformData.map(({ platform, song }) => (
             <SwiperSlide key={platform}>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src={getPlatformLogo(platform)}
-                    alt={getPlatformName(platform)}
-                    width={20}
-                    height={20}
-                    className="rounded-sm object-cover"
-                  />
-                  <span className="text-sm font-medium text-gray-800">
-                    {getPlatformName(platform)}
-                  </span>
-                </div>
-                {song?.change !== undefined && (
-                  <div
-                    className={`text-xs font-medium ${getRankChangeColor(
-                      song.change
-                    )}`}
-                  >
-                    {getRankChangeIcon(song.change)}
+              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={getPlatformLogo(platform)}
+                      alt={getPlatformName(platform)}
+                      width={20}
+                      height={20}
+                      className="rounded-sm object-cover"
+                    />
+                    <span className="text-sm font-medium text-gray-800">
+                      {getPlatformName(platform)}
+                    </span>
                   </div>
-                )}
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  <div
-                    className={`text-xl font-bold ${
-                      song?.rank ? "text-gray-900" : "text-orange-500"
-                    }`}
-                  >
-                    {song?.rank || "-"}
-                  </div>
-                  <div className="text-xs text-gray-400">위</div>
-                </div>
-                <div className="flex-1 min-w-0 text-center">
-                  {song?.rank ? (
-                    <>
-                      <p className="font-medium text-sm truncate text-gray-900">
-                        {song.title}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {song.artist}
-                      </p>
-                    </>
-                  ) : (
-                    <p className="font-medium text-sm text-orange-600">❌</p>
+                  {song?.change !== undefined && (
+                    <div
+                      className={`text-xs font-medium ${getRankChangeColor(
+                        song.change
+                      )}`}
+                    >
+                      {getRankChangeIcon(song.change)}
+                    </div>
                   )}
                 </div>
+
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
+                    <div
+                      className={`text-xl font-bold ${
+                        song?.rank ? "text-gray-900" : "text-orange-500"
+                      }`}
+                    >
+                      {song?.rank || "-"}
+                    </div>
+                    <div className="text-xs text-gray-400">위</div>
+                  </div>
+                  <div className="flex-1 min-w-0 text-center">
+                    {song?.rank ? (
+                      <>
+                        <p className="font-medium text-sm truncate text-gray-900">
+                          {song.title}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {song.artist}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="font-medium text-sm text-orange-600">❌</p>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
             </SwiperSlide>
           ))}
         </Swiper>

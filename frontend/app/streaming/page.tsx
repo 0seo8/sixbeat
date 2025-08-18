@@ -67,17 +67,18 @@ export default function StreamingPage() {
   const deviceLabel = getDeviceLabel(deviceType, appType);
 
   const handleOneClickStreaming = () => {
-    // 각 플랫폼에 대해 최적의 링크 열기
-    MUSIC_PLATFORMS.forEach((platform) => {
-      const bestLink = getBestStreamingLink(
-        platform.id,
-        platform.urls,
-        platform.url
-      );
-      if (bestLink) {
-        window.open(bestLink, "_blank");
-      }
-    });
+    const urls = [
+      "https://www.melon.com/album/detail.htm?albumId=11796328",
+      "https://mw.genie.co.kr/detail/albumInfo?axnm=86234533",
+      "https://music.bugs.co.kr/album/20724195",
+      "https://vibe.naver.com/search?query=DAY6",
+      "https://www.music-flo.com/detail/album/437566658/albumtrack",
+      "https://www.youtube.com/watch?v=0fyZqS0N19o",
+      "https://open.spotify.com/album/2HhzHLoaQWdkvPQjoopUy6",
+      "https://music.apple.com/us/album/maybe-tomorrow-single/1810090445",
+      "https://stationhead.com/day6strmteam",
+    ];
+    urls.forEach((url) => window.open(url, "_blank"));
   };
 
   return (
@@ -189,33 +190,6 @@ export default function StreamingPage() {
                   className="md:hidden -mx-9"
                   style={{ borderBottom: "0.6rem solid #f7f8f9" }}
                 ></div>
-
-                <Card className="bg-gradient-to-r from-mint-50 to-mint-100/50 border-mint-200">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-mint-100">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-mint-primary rounded-lg flex items-center justify-center">
-                          <Music className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900">
-                            DAY6.kr
-                          </div>
-                        </div>
-                      </div>
-                      <Button
-                        size="sm"
-                        className="bg-mint-primary hover:bg-mint-dark text-white"
-                        onClick={() =>
-                          window.open("https://day6.kr/", "_blank")
-                        }
-                      >
-                        <ExternalLink className="w-4 h-4 mr-1" />
-                        방문하기
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
               </motion.div>
             </TabsContent>
 
@@ -257,30 +231,6 @@ export default function StreamingPage() {
                         <Play className="w-3 h-3 mr-1" />
                         재생
                       </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Mobile Divider */}
-                <div
-                  className="md:hidden -mx-9"
-                  style={{ borderBottom: "0.6rem solid #f7f8f9" }}
-                ></div>
-
-                {/* MV 다운로드 섹션 */}
-                <Card>
-                  <CardContent className="p-4">
-                    <h3 className="text-sm font-medium text-gray-700 mb-3">
-                      MV 다운로드
-                    </h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {MV_PLATFORMS.map((platform) => (
-                        <PlatformCard
-                          key={platform.id}
-                          platform={platform}
-                          variant="grid"
-                        />
-                      ))}
                     </div>
                   </CardContent>
                 </Card>
