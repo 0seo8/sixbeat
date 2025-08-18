@@ -9,19 +9,19 @@
     }
   ],
   "melon_top100": [
-    { "rank": 15, "title": "Maybe Tomorrow", "artist": "DAY6" },
-    { "rank": 23, "title": "예뻤어", "artist": "DAY6" },
-    { "rank": 45, "title": "Time Of Our Life", "artist": "DAY6" },
-    { "rank": 67, "title": "Welcome to the Show", "artist": "DAY6" }
+    { "rank": 15, "title": "Maybe Tomorrow", "artist": "DAY6", "change": -3 },
+    { "rank": 23, "title": "예뻤어", "artist": "DAY6", "change": 5 },
+    { "rank": 45, "title": "Time Of Our Life", "artist": "DAY6", "change": 0 },
+    { "rank": 67, "title": "Welcome to the Show", "artist": "DAY6", "change": -10 }
   ],
   "melon_hot100": [],
   "genie": [],
   "bugs": [],
   "vibe": [],
   "flo": [
-    { "rank": 15, "title": "Maybe Tomorrow", "artist": "DAY6" },
-    { "rank": 23, "title": "예뻤어", "artist": "DAY6" },
-    { "rank": 45, "title": "Time Of Our Life", "artist": "DAY6" },
-    { "rank": 67, "title": "Welcome to the Show", "artist": "DAY6" }
+    { "rank": 15, "title": "Maybe Tomorrow", "artist": "DAY6", "change": 8 },
+    { "rank": 23, "title": "예뻤어", "artist": "DAY6", "change": -2 },
+    { "rank": 45, "title": "Time Of Our Life", "artist": "DAY6", "change": 12 },
+    { "rank": 67, "title": "Welcome to the Show", "artist": "DAY6", "change": 0 }
   ]
 }
