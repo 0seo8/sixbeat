@@ -404,7 +404,12 @@ export default function ComebackPage() {
                           </Button>
                         ) : mission.title === "Maybe Tomorrow 조회수" ? (
                           <Button
-                            onClick={() => window.open("https://www.youtube.com/watch?v=I1gI9ZCcSJs", "_blank")}
+                            onClick={() =>
+                              window.open(
+                                "https://www.youtube.com/watch?v=I1gI9ZCcSJs",
+                                "_blank"
+                              )
+                            }
                             size="sm"
                             variant="outline"
                             className="w-full border-[#49c4b0] text-[#49c4b0] hover:bg-[#49c4b0] hover:text-white transition-all duration-200"
@@ -448,9 +453,10 @@ export default function ComebackPage() {
               </button>
             </div>
             <p className="text-sm text-gray-600 mb-4">
-              정규 4집 &ldquo;The DECADE&rdquo; 9월 5일 발매! 미리 영상을 보고 준비해보세요.
+              정규 4집 &ldquo;The DECADE&rdquo; 9월 5일 발매! 미리 영상을 보고
+              준비해보세요.
             </p>
-            
+
             <div className="space-y-3 mb-4">
               <a
                 href="https://www.youtube.com/watch?v=0zdkvGDDnQg"
@@ -462,8 +468,12 @@ export default function ComebackPage() {
                   <Music className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <div className="font-medium text-sm">The DECADE Trailer Film</div>
-                  <div className="text-xs text-red-700">정규 4집 트레일러 영상 보기</div>
+                  <div className="font-medium text-sm">
+                    The DECADE Trailer Film
+                  </div>
+                  <div className="text-xs text-red-700">
+                    정규 4집 트레일러 영상 보기
+                  </div>
                 </div>
               </a>
               <a

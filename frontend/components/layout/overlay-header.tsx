@@ -39,14 +39,15 @@ export function OverlayHeader({
 
       {/* Title */}
       <Link href="/" className="flex items-center gap-2">
-        <Image 
-          src="/day6 Logo Vector.svg" 
-          alt="DAY6 Logo" 
-          width={36} 
-          height={36} 
+        <Image
+          src="/day6 Logo Vector.svg"
+          alt="DAY6 Logo"
+          width={36}
+          height={36}
           className="w-9 h-9"
-          style={{ 
-            filter: 'brightness(0) saturate(100%) invert(60%) sepia(91%) saturate(449%) hue-rotate(118deg) brightness(96%) contrast(91%)' 
+          style={{
+            filter:
+              "brightness(0) saturate(100%) invert(60%) sepia(91%) saturate(449%) hue-rotate(118deg) brightness(96%) contrast(91%)",
           }}
         />
         <h1
