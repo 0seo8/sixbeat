@@ -135,3 +135,6 @@ Frontend-specific variables (place in `frontend/.env.local`):
 ```
 NEXT_PUBLIC_DATA_BASE_URL=https://raw.githubusercontent.com/<OWNER>/<REPO>/master/docs/public-data
 ```
+
+- 49C480 색으로!
+- 49C480 색으로!
