@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import Link from "next/link";
 
 // TODO: 실제 날짜 계산 로직으로 변경 필요
 const comebackInfo = {
@@ -158,7 +159,10 @@ export default function ComebackPage() {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* 음악중심 뮤빗 */}
-            <button className="flex items-center gap-3 p-4 bg-gradient-to-r from-mint-primary to-mint-dark hover:from-mint-dark hover:to-mint-primary transition-colors rounded-lg shadow-md text-white w-full text-left">
+            <Link
+              href="/guide/mubeat"
+              className="flex items-center gap-3 p-4 bg-gradient-to-r from-mint-primary to-mint-dark hover:from-mint-dark hover:to-mint-primary transition-colors rounded-lg shadow-md text-white w-full text-left"
+            >
               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                 <Smartphone className="h-5 w-5" />
               </div>
@@ -166,10 +170,13 @@ export default function ComebackPage() {
                 <h3 className="font-bold">음악중심</h3>
                 <p className="text-sm opacity-90">뮤빗 모으기</p>
               </div>
-            </button>
+            </Link>
 
             {/* 인기가요 하이어 */}
-            <button className="flex items-center gap-3 p-4 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 transition-colors rounded-lg shadow-md text-white w-full text-left">
+            <Link
+              href="/guide/highter"
+              className="flex items-center gap-3 p-4 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 transition-colors rounded-lg shadow-md text-white w-full text-left"
+            >
               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                 <Heart className="h-5 w-5" />
               </div>
@@ -177,10 +184,13 @@ export default function ComebackPage() {
                 <h3 className="font-bold">인기가요</h3>
                 <p className="text-sm opacity-90">하이어 루비 모으기</p>
               </div>
-            </button>
+            </Link>
 
             {/* 인기가요 링크 */}
-            <button className="flex items-center gap-3 p-4 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 transition-colors rounded-lg shadow-md text-white w-full text-left">
+            <Link
+              href="/guide/inkigayo"
+              className="flex items-center gap-3 p-4 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 transition-colors rounded-lg shadow-md text-white w-full text-left"
+            >
               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                 <Star className="h-5 w-5" />
               </div>
@@ -188,7 +198,7 @@ export default function ComebackPage() {
                 <h3 className="font-bold">인기가요</h3>
                 <p className="text-sm opacity-90">링크 팬 포인트 모으기</p>
               </div>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
