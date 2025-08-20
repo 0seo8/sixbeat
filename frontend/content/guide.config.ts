@@ -96,8 +96,8 @@ export const GUIDE_CATEGORIES: GuideCategory[] = [
   {
     slug: "apple-music",
     label: "애플뮤직",
-    heroImage: "/guide/apple-streaming.webp",
-    images: ["/guide/apple-streaming.webp"],
+    heroImage: "/guide/apple-music-streming.jpg",
+    images: ["/guide/apple-music-streming.jpg"],
     cta: {
       label: "Apple Music으로 이동",
       href: "https://music.apple.com/us/album/maybe-tomorrow-single/1810090445",
@@ -108,8 +108,8 @@ export const GUIDE_CATEGORIES: GuideCategory[] = [
   {
     slug: "spotify",
     label: "스포티파이",
-    heroImage: "/guide/spotify-streaming.webp",
-    images: ["/guide/spotify-streaming.webp"],
+    heroImage: "/guide/spotify-streamint.jpg",
+    images: ["/guide/spotify-streamint.jpg"],
     cta: {
       label: "Spotify로 이동",
       href: "https://open.spotify.com/album/2HhzHLoaQWdkvPQjoopUy6",
@@ -325,7 +325,7 @@ export const GUIDE_CATEGORIES: GuideCategory[] = [
   },
   {
     slug: "musiccore",
-    label: "뮤빗",
+    label: "음악중심",
     date: "2025.08.10",
     heroImage: "/vote/music-shows/music-core.png",
     images: ["/vote/music-shows/music-core.png"],
