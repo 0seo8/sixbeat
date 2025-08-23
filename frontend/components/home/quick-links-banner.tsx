@@ -54,13 +54,10 @@ export function QuickLinksBanner() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-4">
-              DAY6 &ldquo;Maybe Tomorrow&rdquo; 신청을 위해 모바일에서
-              접속해주세요.
-            </p>
+
             <div className="space-y-3">
               <a
-                href="sms:%238910?body=DAY6"
+                href="sms:%238910?body=DAY6(데이식스)의 INSIDE OUT 신청합니다."
                 target="_blank"
                 rel="noreferrer"
                 className="block w-full p-3 bg-red-500 hover:bg-red-600 text-white text-center rounded-lg font-medium transition-colors"
@@ -68,7 +65,7 @@ export function QuickLinksBanner() {
                 KBS 라디오 신청
               </a>
               <a
-                href="sms:%238000?body=DAY6"
+                href="sms:%238000?body=DAY6(데이식스)의 INSIDE OUT 신청합니다."
                 target="_blank"
                 rel="noreferrer"
                 className="block w-full p-3 bg-blue-500 hover:bg-blue-600 text-white text-center rounded-lg font-medium transition-colors"
@@ -76,7 +73,7 @@ export function QuickLinksBanner() {
                 MBC 라디오 신청
               </a>
               <a
-                href="sms:%231077?body=DAY6"
+                href="sms:%231077?body=DAY6(데이식스)의 INSIDE OUT 신청합니다."
                 target="_blank"
                 rel="noreferrer"
                 className="block w-full p-3 bg-green-500 hover:bg-green-600 text-white text-center rounded-lg font-medium transition-colors"
