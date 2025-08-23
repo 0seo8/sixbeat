@@ -180,8 +180,8 @@ export const GUIDE_CATEGORIES: GuideCategory[] = [
   {
     slug: "stagion-head",
     label: "스테이션헤드",
-    heroImage: "/download/music/station-head-download.png",
-    images: ["/download/music/station-head-download.png"],
+    heroImage: "/download/music/Guide_stationhead.png",
+    images: ["/download/music/Guide_stationhead.png"],
     cta: {
       label: "스테이션헤드 다운로드",
       href: "https://stationhead.com/day6strmteam",
