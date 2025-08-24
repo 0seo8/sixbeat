@@ -16,10 +16,7 @@ interface SectionHeaderProps {
 
 export function SectionHeader({
   title,
-  showDateTime = true,
-  showMoreButton = false,
-  moreButtonText = "더보기",
-  moreButtonHref = "#",
+  showDateTime = false,
 }: SectionHeaderProps) {
   const currentTime = new Date();
 
